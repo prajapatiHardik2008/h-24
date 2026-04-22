@@ -3,18 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>H-24 | Base64 Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base64.css') }}">
 </head>
 <body>
-    <div id="encoding">
-        <label for="enb64" >Enter Text to encode in base 64 </label>
-        <input type="text" id="enb64">
-        <br>
-        <button id="encodebase64" onclick="Encode()">Convert</button>
+    <div class="container">
+        <h1>Base64 Encoder & Decoder</h1>
+
+        <div class="card">
+            <h3>Encode Text</h3>
+            <label for="enb64">Enter plain text:</label>
+            <input type="text" id="enb64" placeholder="Type here...">
+            <button id="encodebase64" onclick="Encode()">Convert to Base64</button>
+            
+            <div class="result-box">
+                <span id="enresult">Result will appear here...</span>
+                <button class="copy-btn" onclick="copyToClipboard('enresult')">Copy</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Decode Text</h3>
+            <label for="decodeText">Enter Base64 text:</label>
+            <input type="text" id="decodeText" placeholder="Paste Base64 here...">
+            <button id="decode-btn" onclick="Decode()">Decode to Text</button>
+            
+            <div class="result-box">
+                <span id="decoresult">Result will appear here...</span>
+                <button class="copy-btn" onclick="copyToClipboard('decoresult')">Copy</button>
+            </div>
+        </div>
     </div>
-    <h4>Your Enocded Text </h4>
-    <div id="enresult">
-    </div>
+
     <script src="{{ url_for('static', filename='base64.js') }}"></script>
 </body>
 </html>

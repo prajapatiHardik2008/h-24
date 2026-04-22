@@ -1,0 +1,67 @@
+body {
+    background-color: #0d1117;
+    color: #c9d1d9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+}
+
+.container {
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+}
+
+h1 { color: #ff4b2b; text-shadow: 0 0 10px rgba(255, 75, 43, 0.5); }
+
+.card {
+    background: #161b22;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    border: 1px solid #30363d;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    color: white;
+    border-radius: 5px;
+}
+
+button {
+    background: #ff4b2b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button:hover { background: #ff416c; transform: scale(1.05); }
+
+.result-box {
+    margin-top: 15px;
+    padding: 15px;
+    background: #0d1117;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px dashed #444;
+}
+
+.copy-btn {
+    background: #30363d;
+    font-size: 12px;
+    padding: 5px 10px;
+}
+
+.copy-btn:hover { background: #58a6ff; }

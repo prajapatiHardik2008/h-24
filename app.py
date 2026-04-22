@@ -7,6 +7,10 @@ def encodebase64(text):
     text = text.decode()
     return text
 
+def decodebase64(text):
+    DecodeText = pybase64.b64decode(text)
+    return DecodeText.decode()
+
 app = Flask(__name__)
 
 #-------------------------------------------------------
@@ -30,5 +34,16 @@ def base64Enod():
         return jsonify({"EncodedText": EText})
     except:
         return jsonify({"EncodedText": "Something went wrong !"})
+    
+@app.route('/base64D',methods=['POST'])
+def base64Deco():
+    data = request.get_json()
+    encText = data.get('encText')
+    try:
+        DecodeText = decodebase64(encText)
+        return jsonify({"DecodedText":DecodeText})
+    except:
+        return jsonify({"DecodedText": "Something went wrong !"})
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
