@@ -18,7 +18,7 @@
             <a href="#">Contact Us</a>
         </div>
         <div class="search-box">
-            <input type="text" placeholder="Search Tools...">
+            <input type="text" placeholder="Search Tools..." id="search">
             <button><i class="fas fa-search"></i></button>
         </div>
     </nav>
@@ -43,7 +43,7 @@
                     <h3>Nexa AI Assistant</h3>
                     <p>Voice-activated Python assistant for browsing and automation.</p>
                 </div>
-                <button class="btn-tool disabled">Coming Soon</button>
+                <button class="btn-tool" onclick="document.location='https://github.com/prajapatiHardik2008/Nexa'">Download</button>
             </div>
             <div class="tool-card">
                 <div class="tool-info">
@@ -57,6 +57,6 @@
         <p>Keep Securing. Keep Building.</p>
         <p>Made with <span class="heart">❤</span> by H-24</p>
     </footer>
-
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
 </body>
 </html>
