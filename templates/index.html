@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H-24 | Cyber Portfolio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="H-24 Logo">
+        </div>
+        <div class="nav-links">
+            <a href="#">About Us</a>
+            <a href="#">Contact Us</a>
+        </div>
+        <div class="search-box">
+            <input type="text" placeholder="Search Tools...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+    </nav>
+
+    <main class="content">
+        <header class="hero">
+            <h1>Welcome, I'm <span class="neon-text">H-24</span></h1>
+            <p>BCA Student | Cybersecurity & Automation</p>
+        </header>
+
+        <section class="tools-container">
+            <div class="tool-card">
+                <div class="tool-info">
+                    <h3>Base64 Encoder/Decoder</h3>
+                    <p>Securely encode your strings to Base64 format using Python backend.</p>
+                </div>
+                <button onclick="location.href='/base64_tool'" class="btn-tool">Open Tool</button>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-info">
+                    <h3>Nexa AI Assistant</h3>
+                    <p>Voice-activated Python assistant for browsing and automation.</p>
+                </div>
+                <button class="btn-tool disabled">Coming Soon</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Keep Securing. Keep Building.</p>
+        <p>Made with <span class="heart">❤</span> by H-24</p>
+    </footer>
+
+</body>
+</html>

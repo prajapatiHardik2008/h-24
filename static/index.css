@@ -1,0 +1,161 @@
+:root {
+    --bg-dark: #050505; /* Pure, deep black background */
+    --card-bg: #121212; /* Slightly gray black for cards */
+    --neon-red: #ff073a; /* Intense crimson red accent */
+    --text-white: #e0e0e0;
+    --text-gray: #888888;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    font-family: 'Segoe UI', 'Input Mono', monospace; /* Modern tech font */
+    min-height: 100vh;
+}
+
+/* --- Navbar (Stealth Mode) --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background: rgba(0, 0, 0, 0.9);
+    border-bottom: 2px solid var(--neon-red); /* Red accent below navbar */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-logo img {
+    height: 45px; /* Perfect height for the new logo */
+    animation: pulseGlow 2s infinite; /* Red pulsing effect on logo */
+}
+
+.nav-links a {
+    color: var(--text-white);
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--neon-red);
+    text-shadow: 0 0 10px var(--neon-red); /* Red glow effect on hover */
+}
+
+/* --- Content Body --- */
+.content {
+    padding: 40px 10%;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    color: var(--text-white);
+}
+
+.hero .neon-text {
+    color: var(--neon-red);
+    text-shadow: 0 0 15px var(--neon-red);
+}
+
+.hero p {
+    color: var(--text-gray);
+    margin-top: 10px;
+}
+
+/* --- Tools (Rank & Security style) --- */
+.tools-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.tool-card {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #222;
+    transition: 0.3s ease;
+}
+
+/* Sharingan Hover Effect on Card */
+.tool-card:hover {
+    border-color: var(--neon-red);
+    box-shadow: 0 0 20px rgba(255, 7, 58, 0.3); /* Subtly red glow */
+    transform: scale(1.01);
+}
+
+.tool-info h3 {
+    color: var(--text-white);
+}
+
+.tool-info p {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.btn-tool {
+    background: transparent;
+    border: 2px solid var(--neon-red);
+    color: var(--neon-red);
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.btn-tool:hover {
+    background: var(--neon-red);
+    color: white;
+    box-shadow: 0 0 15px var(--neon-red);
+}
+
+.disabled {
+    border-color: var(--text-gray);
+    color: var(--text-gray);
+    cursor: not-allowed;
+}
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    padding: 60px;
+    color: var(--text-gray);
+    border-top: 1px solid #222;
+}
+
+.heart { color: var(--neon-red); animation: beat 1s infinite; display: inline-block; }
+
+/* --- Animations --- */
+@keyframes beat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* Logo pulse animation */
+@keyframes pulseGlow {
+    0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 7, 58, 0.5)); }
+    50% { filter: drop-shadow(0 0 15px rgba(255, 7, 58, 1)); }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .navbar { flex-direction: column; gap: 15px; }
+    .tool-card { flex-direction: column; text-align: center; gap: 15px; }
+    .content { padding: 20px 5%; }
+}

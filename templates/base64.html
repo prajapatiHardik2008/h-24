@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="encoding">
+        <label for="enb64" >Enter Text to encode in base 64 </label>
+        <input type="text" id="enb64">
+        <br>
+        <button id="encodebase64" onclick="Encode()">Convert</button>
+    </div>
+    <h4>Your Enocded Text </h4>
+    <div id="enresult">
+    </div>
+    <script src="{{ url_for('static', filename='base64.js') }}"></script>
+</body>
+</html>
