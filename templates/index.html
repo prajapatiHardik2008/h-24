@@ -14,8 +14,8 @@
             <img src="{{ url_for('static', filename='images/logo.png') }}" alt="H-24 Logo">
         </div>
         <div class="nav-links">
-            <a href="#">About Us</a>
-            <a href="#">Contact Us</a>
+            <a href="/aboutus">About Us</a>
+            <a href="/contactus">Contact Us</a>
         </div>
         <div class="search-box">
             <input type="text" placeholder="Search Tools..." id="search">
@@ -51,8 +51,40 @@
                 </div>
             </div>
         </section>
+        <section class="feedback-section">
+    <div class="tool-card feedback-card">
+        <h3><i class="fas fa-comment-alt"></i> Feedback Form</h3>
+        <form id="feedbackForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phonenumber">Phone Number</label>
+                <input type="tel" id="phonenumber" placeholder="10-digit number" pattern="[0-9]{10}">
+            </div>
+            <div class="form-group">
+            <label>Rate your experience:</label>
+            <div class="star-rating">
+                <input type="radio" name="rating" id="star5" value="5"><label for="star5" class="fas fa-star"></label>
+                <input type="radio" name="rating" id="star4" value="4"><label for="star4" class="fas fa-star"></label>
+                <input type="radio" name="rating" id="star3" value="3"><label for="star3" class="fas fa-star"></label>
+                <input type="radio" name="rating" id="star2" value="2"><label for="star2" class="fas fa-star"></label>
+                <input type="radio" name="rating" id="star1" value="1"><label for="star1" class="fas fa-star"></label>
+            </div>
+            <input type="hidden" id="selected-rating" value="0">
+        </div>
+            <div class="form-group">
+                <label for="discry">Your Query or Complaint</label>
+                <textarea id="discry" rows="4" placeholder="How can I help you?" required></textarea>
+            </div>
+            
+            <button type="submit" class="btn-tool full-width">Submit Feedback</button>
+        </form>
+    </div>
+</section>
     </main>
-
     <footer>
         <p>Keep Securing. Keep Building.</p>
         <p>Made with <span class="heart">❤</span> by H-24</p>

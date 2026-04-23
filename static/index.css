@@ -159,3 +159,102 @@ footer {
     .tool-card { flex-direction: column; text-align: center; gap: 15px; }
     .content { padding: 20px 5%; }
 }
+
+/* --- Feedback Form Styling --- */
+.feedback-section {
+    padding: 0 10%;
+    margin-bottom: 50px;
+}
+
+.feedback-card {
+    flex-direction: column; /* Tool card horizontal tha, form vertical chahiye */
+    align-items: flex-start;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.feedback-card h3 {
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--neon-red);
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+#feedbackForm {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.form-group label {
+    display: block;
+    color: var(--text-gray);
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.form-group input, 
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    background: #050505; /* Black background like the body */
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: var(--text-white);
+    font-family: inherit;
+    transition: 0.3s;
+}
+
+/* Input Focus Effect (Red Glow) */
+.form-group input:focus, 
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--neon-red);
+    box-shadow: 0 0 10px rgba(255, 7, 58, 0.2);
+}
+
+.full-width {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Chrome/Safari me arrows hatane ke liye (Phone number input) */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse; /* UI ulta dikhega par logic sahi rahega */
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.star-rating input {
+    display: none; /* Radio buttons chhupa do */
+}
+
+.star-rating label {
+    font-size: 25px;
+    color: #333; /* Default gray stars */
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Jab star par hover ho ya click ho */
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label {
+    color: var(--neon-red);
+    text-shadow: 0 0 10px var(--neon-red);
+}
+
+.star-rating label:active {
+    transform: scale(1.2);
+}

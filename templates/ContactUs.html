@@ -3,9 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Contact H-24 | Hardik</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-red: #ff4b2b;
+            --dark-bg: #0d1117;
+            --card-bg: #161b22;
+            --text-gray: #c9d1d9;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .contact-container {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid #30363d;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h2 { color: var(--primary-red); margin-bottom: 30px; }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            background: #0d1117;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-gray);
+            transition: 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .contact-item:hover {
+            border-color: var(--primary-red);
+            transform: translateX(10px);
+            color: white;
+        }
+
+        .contact-item i {
+            font-size: 20px;
+            margin-right: 15px;
+            color: var(--primary-red);
+        }
+
+        .btn-home {
+            margin-top: 20px;
+            background: transparent;
+            border: 1px solid var(--primary-red);
+            color: var(--primary-red);
+            padding: 10px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-home:hover {
+            background: var(--primary-red);
+            color: white;
+            box-shadow: 0 0 15px var(--primary-red);
+        }
+
+        .social-icons {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-icons a {
+            color: var(--text-gray);
+            font-size: 24px;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover { color: var(--primary-red); }
+    </style>
 </head>
 <body>
-    88
+
+    <div class="contact-container">
+        <h2>Get in Touch</h2>
+
+        <a href="mailto:hardikprajapati242008@gmail.com" class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <span>hardikprajapati242008@gmail.com</span>
+        </a>
+
+        <a href="https://wa.me/918849880204" target="_blank" class="contact-item">
+            <i class="fab fa-whatsapp"></i>
+            <span>+91 8849880204 (WhatsApp)</span>
+        </a>
+
+        <a href="#" class="contact-item">
+            <i class="fas fa-users"></i>
+            <span>Join Our Team</span>
+        </a>
+
+        <div class="social-icons">
+            <a href="https://github.com/prajapatiHardik2008" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+
+        <br>
+        <button class="btn-home" onclick="document.location='/'">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </button>
+    </div>
+
 </body>
 </html>

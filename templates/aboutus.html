@@ -3,9 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>About Me | Hardik Prajapati</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-red: #ff4b2b;
+            --dark-bg: #0d1117;
+            --card-bg: #161b22;
+            --text-gray: #c9d1d9;
+            --border-color: #30363d;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header-section h1 {
+            color: var(--primary-red);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header-section p {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .about-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 12px;
+            transition: 0.3s ease;
+        }
+
+        .about-card:hover {
+            border-color: var(--primary-red);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 75, 43, 0.1);
+        }
+
+        .about-card h3 {
+            color: var(--primary-red);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .skill-tag {
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        .highlight {
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn-back {
+            display: block;
+            width: fit-content;
+            margin: 40px auto;
+            background: transparent;
+            border: 1px solid var(--primary-red);
+            color: var(--primary-red);
+            padding: 10px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-back:hover {
+            background: var(--primary-red);
+            color: white;
+            box-shadow: 0 0 20px var(--primary-red);
+        }
+
+        @media (max-width: 768px) {
+            .grid-container { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-    my name is hardik 
+
+    <div class="container">
+        <div class="header-section">
+            <h1>Hardik Prajapati</h1>
+            <p>BCA Student | Cybersecurity Enthusiast | Python Developer</p>
+        </div>
+
+        <div class="grid-container">
+            <div class="about-card">
+                <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                <p>Currently pursuing <span class="highlight">BCA (2nd Semester)</span> in Ahmedabad.</p>
+                <p>Foundational knowledge in C, Basic Accounting (Tally), and CCC certified.</p>
+            </div>
+
+            <div class="about-card">
+                <h3><i class="fas fa-code"></i> Technical Skills</h3>
+                <div class="skill-list">
+                    <span class="skill-tag">Python (Pro)</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">C Language</span>
+                    <span class="skill-tag">HTML/CSS</span>
+                    <span class="skill-tag">Cryptography</span>
+                </div>
+            </div>
+
+            <div class="about-card" style="grid-column: span 1;">
+                <h3><i class="fas fa-project-diagram"></i> Key Projects</h3>
+                <p><span class="highlight">Nexa AI:</span> A Python-based voice assistant with system control & web capabilities.</p>
+                <p><span class="highlight">H-24 Portal:</span> My personal tool hub for encoding and security scripts.</p>
+            </div>
+
+            <div class="about-card">
+                <h3><i class="fas fa-user-shield"></i> Focus Area</h3>
+                <p>Active participant in <span class="highlight">CTF (Capture The Flag)</span> challenges and hackathons. Learning by doing is my main mantra.</p>
+            </div>
+        </div>
+
+        <div class="about-card" style="margin-top: 20px;">
+            <h3><i class="fas fa-gamepad"></i> Beyond Coding</h3>
+            <p>In my free time, you'll find me strategizing in <span class="highlight">Battle Royale games</span>. I believe the strategy used in gaming often helps in solving complex bugs!</p>
+        </div>
+
+        <a href="/" class="btn-back"><i class="fas fa-home"></i> Back to Home</a>
+    </div>
+
 </body>
 </html>
