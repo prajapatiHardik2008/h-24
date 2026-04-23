@@ -84,6 +84,11 @@ def base16():
 def dforensics():
     return render_template('digitalfor.html')
 #-------------------------------------------------------
+# certificates page
+@app.route('/certificates')
+def certificates():
+    return render_template("certif.html")
+#-------------------------------------------------------
 # All Api's 
 #----------------------------------------------------
 # base 64 Encoding and decoding API 

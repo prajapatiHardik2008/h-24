@@ -1,0 +1,121 @@
+
+
+.achievements-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #9c8f8f; /* Poore page ka dark background */
+}
+
+.cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    justify-items: center; /* Laptop/Phone dono pe center align karega */
+}
+
+.cert-card {
+    /* AB BACKGROUND DIKHEGA */
+    background-color: #252525; /* Thoda light grey background */
+    border: 2px solid #333;
+    border-radius: 12px;
+    
+    width: 100%;
+    max-width: 320px; /* Card ko zyada failne se rokega */
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Halka shadow taaki depth dikhe */
+}
+
+.cert-card:hover {
+    transform: translateY(-10px);
+    border-color: #ff3e3e; /* Hover pe red border chamkega */
+    box-shadow: 0 10px 25px rgba(255, 62, 62, 0.2);
+}
+
+/* Image section background - Taaki certificate alag se dikhe */
+.cert-header {
+    background-color: #000000; /* Image ke peeche ka solid black background */
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.cert-header img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border: 1px solid #444; /* Image ki apni border */
+}
+
+.cert-body {
+    padding: 15px;
+    background-color: #252525; /* Text area ka background */
+}
+
+.cert-body h3 {
+    color: #ffffff;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.issuer {
+    color: #ff3e3e; /* Red color for highlight */
+    font-size: 0.85rem;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.desc {
+    color: #cccccc;
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+/* Back to Home Button Styling */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    background-color: transparent;
+    color: #ff3e3e; /* Tumhari theme ka red color */
+    text-decoration: none;
+    border: 1px solid #ff3e3e;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.back-btn .arrow {
+    margin-right: 8px;
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+/* Hover Effect: Glow aur Movement */
+.back-btn:hover {
+    background-color: #ff3e3e;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(255, 62, 62, 0.4);
+    transform: translateX(-5px); /* Button halka sa peeche move hoga */
+}
+
+.back-btn:hover .arrow {
+    transform: translateX(-3px); /* Arrow bhi move hogi */
+}
+
+/* Mobile Compatibility */
+@media (max-width: 600px) {
+    .back-btn {
+        width: 100%; /* Mobile par full width button taaki click karne mein aasani ho */
+        justify-content: center;
+        margin-top: 10px;
+    }
+}

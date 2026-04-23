@@ -1,70 +1,45 @@
-const ALPHABET = 'abcdefghijklmnop';
 
-// --- ENCODING LOGIC ---
-function Encodeb16(plainText) {
-    let enc = "";
-    for(let i = 0 ; i < plainText.length ; i++) {
-        let Charcode = plainText.charCodeAt(i);
-        let binary = Charcode.toString(2).padStart(8, '0');
-        let firsthalf = binary.substring(0, 4);
-        let sechalf = binary.substring(4);
-        
-        enc += ALPHABET[parseInt(firsthalf, 2)];
-        enc += ALPHABET[parseInt(sechalf, 2)];
-    }
-    return enc;
+let encode= document.querySelector("#encodebase64");
+async function Encode()
+{
+    const plainText = document.querySelector('#enb64').value;
+    const response = await fetch('/base64E',
+        {
+            "method":"POST",
+            "headers":{
+                "Content-Type":"application/json"
+                },
+            "body":JSON.stringify({"plainText":plainText})
+        });
+    const data = await response.json();
+    let encodedText = data.EncodedText;
+    let result = document.querySelector("#enresult")
+    result.innerText = encodedText;
 }
 
-// --- DECODING LOGIC ---
-function Decodeb16(encText) {
-    // Remove spaces if any
-    encText = encText.trim();
-    let org_text = "";
-    
-    // Base16 (a-p) always in pair 
-    if (encText.length % 2 !== 0) return "Invalid Encoded Text!";
 
-    for(let i = 0; i < encText.length ; i += 2) {
-        let pose1 = ALPHABET.indexOf(encText[i]);
-        let pose2 = ALPHABET.indexOf(encText[i + 1]);
-        
-        // if char are not valid 
-        if (pose1 === -1 || pose2 === -1) return "Error: Invalid Characters!";
+let decode = document.querySelector("#decode-btn");
 
-        let charcode = (pose1 << 4) | pose2;
-        org_text += String.fromCharCode(charcode);
-    }
-    return org_text;
-}
-
-// --- EVENT LISTENERS ---
-
-// Encoding Button
-let Ebtn = document.querySelector("#b16Encoding");
-if(Ebtn) {
-    Ebtn.addEventListener('click', () => {
-        let text = document.querySelector("#Enctext").value;
-        let resultEn = document.querySelector("#Encresult");
-        
-        if(text.trim() !== "") {
-            resultEn.innerText = Encodeb16(text);
-        } else {
-            resultEn.innerText = "Please enter some text...";
-        }
+async function Decode() {
+    const encText = document.querySelector("#decodeText").value;
+    console.log(encText); // remove after testing
+    const response = await fetch('/base64D',{
+        "method":"POST",
+        "headers":{
+            "Content-Type":"application/json"
+        },
+        "body":JSON.stringify({"encText":encText})
     });
-}
+    const data = await response.json();
+    let Decode_Text = data.DecodedText;
+    let result = document.querySelector("#decoresult");
+    result.innerText = Decode_Text;
 
-// Decoding Button
-let Dbtn = document.querySelector("#b16decoding");
-if(Dbtn) {
-    Dbtn.addEventListener("click", () => {
-        let text = document.querySelector("#Decotext").value;
-        let Dresult = document.querySelector("#Decresult");
-        
-        if(text.trim() !== "") {
-            Dresult.innerText = Decodeb16(text);
-        } else {
-            Dresult.innerText = "Please enter encoded text...";
-        }
+};
+// Copy Function
+function copyToClipboard(elementId) {
+    const text = document.getElementById(elementId).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        alert("Copied to clipboard!");
     });
 }
