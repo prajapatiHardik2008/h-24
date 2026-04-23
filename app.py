@@ -73,6 +73,16 @@ def contactus():
 @app.route('/aboutus')
 def aboutus():
     return render_template("aboutus.html")
+#------------------------------------------------------
+#Base 16 page 
+@app.route('/base16')
+def base16():
+    return render_template('base16.html')
+#-------------------------------------------------------
+# Digtal forensics page 
+@app.route('/Forensics_tool')
+def dforensics():
+    return render_template('digitalfor.html')
 #-------------------------------------------------------
 # All Api's 
 #----------------------------------------------------

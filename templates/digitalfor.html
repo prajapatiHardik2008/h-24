@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #result {
+    background: #302a2a;
+    color: #00ff00;
+    height: 300px;
+    overflow-y: scroll; /* Ye scroll bar la dega */
+    padding: 10px;
+    border: 1px solid #444;
+    font-family: monospace;
+}
+    </style>
+     <link rel="stylesheet" href="{{ url_for('static', filename='digitalfor.css') }}">
+</head>
+<body><div class="forensics-container">
+    <h2 class="title">🕵️ Forensics <span class="red-text">Lab</span></h2>
+    
+    <div class="upload-section">
+        <label for="filein" class="custom-file-upload">
+            <span class="icon">📁</span> Choose Target File
+        </label>
+        <input type="file" id="filein">
+    </div>
+
+    <div class="tool-grid">
+        <div class="glass-card">
+            <h3>String Extraction</h3>
+            <p class="desc">Find hidden readable text in binary data.</p>
+            <button class="cyber-btn" onclick="extractStrings(document.getElementById('filein').files[0])">
+                Run Strings Scan
+            </button>
+            <pre id="result" class="terminal-box"></pre>
+        </div>
+
+        <div class="glass-card">
+            <h3>Metadata Analysis</h3>
+            <p class="desc">Extract EXIF tags (Camera, GPS, Time).</p>
+            <button class="cyber-btn red-btn" onclick="getmetadate()">
+                Analyze Metadata
+            </button>
+            <pre id="Exif-result" class="terminal-box"></pre>
+        </div>
+    </div>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+    <script src="{{ url_for('static', filename='Forensics_tool.js') }}"></script>
+</body>
+</html>

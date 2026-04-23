@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='base16.css') }}">
+</head>
+<body>
+    <div class="main-container">
+    <h2><span class="highlight">Base 16</span> Decoding & Encoding</h2>
+    
+    <div class="tool-grid">
+        <div class="tool-card"> 
+            <h3>Encoding (Plain ➔ B16)</h3>
+            <label for="Enctext">Enter Your Plain Text</label>
+            <textarea id="Enctext" placeholder="Type something..."></textarea>
+            <button id="b16Encoding" class="btn">Encode Now</button>
+            <div class="result-box">
+                <p>Result:</p>
+                <div id="Encresult" class="output-text"></div>
+            </div>
+        </div>
+
+        <div class="tool-card">
+            <h3>Decoding (B16 ➔ Plain)</h3>
+            <label for="Decotext">Enter Encoded Text</label>
+            <textarea id="Decotext" placeholder="e.g. gbghgc..."></textarea>
+            <button id="b16decoding" class="btn btn-alt">Decode Now</button>
+            <div class="result-box">
+                <p>Result:</p>
+                <div id="Decresult" class="output-text"></div>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="document.location='/'" class="back-btn">Back to Home</button>
+</div>
+<script src="{{ url_for('static', filename='base16.js') }}"></script>
+</body>
+</html>
