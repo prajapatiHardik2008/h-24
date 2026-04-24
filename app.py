@@ -88,6 +88,16 @@ def dforensics():
 @app.route('/certificates')
 def certificates():
     return render_template("certif.html")
+#--------------------------------------------------------
+# Web Terminal 
+@app.route('/webTerminal')
+def terminal():
+    return render_template("webterminal.html")
+#------------------------------------------------------
+# Just a normal cyber security Challange 
+@app.route('/challange')
+def challange():
+    return render_template('cybersecurity.html')
 #-------------------------------------------------------
 # All Api's 
 #----------------------------------------------------

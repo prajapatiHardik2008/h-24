@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mini JS Terminal</title>
+  <style>
+    body {
+      margin: 0;
+      background: #0b0b0b;
+      font-family: monospace;
+      color: #00ff9c;
+    }
+
+    .terminal {
+      width: 90%;
+      max-width: 800px;
+      height: 450px;
+      margin: 50px auto;
+      background: #000;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0, 255, 156, 0.3);
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .terminal-header {
+      color: #00ffaa;
+      margin-bottom: 10px;
+    }
+
+    .terminal-body {
+      flex: 1;
+      overflow-y: auto;
+      font-size: 14px;
+    }
+
+    .input-line {
+      display: flex;
+      align-items: center;
+    }
+
+    .prompt {
+      margin-right: 5px;
+    }
+
+    input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #00ff9c;
+      font-family: monospace;
+      font-size: 14px;
+      width: 100%;
+    }
+    .terminal-line {
+  text-align: center;
+  font-family: monospace;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  color: #00ff9c;
+
+  margin: 10px 0 20px 0;
+  padding: 8px 0;
+
+  border-top: 1px solid rgba(0, 255, 156, 0.4);
+  border-bottom: 1px solid rgba(0, 255, 156, 0.4);
+
+  text-shadow: 0 0 6px rgba(0, 255, 156, 0.6);
+}
+
+    .commandRunner
+    {
+      background-color: black;
+      color: #00ff9c;
+    }
+    .commandRunner:hover
+    {
+      border: #00ff9c 1.5px solid;
+    }
+    /* Terminal scrollbar */
+
+    .back
+    {
+      background-color: black;
+      color: #00ff9c;
+    }
+    .back:hover
+    {
+      border: #00ff9c 1.5px solid;
+    }
+.terminal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.terminal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+  background-color: #00ff9c;
+  border-radius: 4px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb:hover {
+  background-color: #00ffaa;
+}
+
+  </style>
+  <script>
+    function runcommand()
+    {
+      let backCommand = document.getElementById("usercommand").value;
+      console.log(backCommand);
+        if(backCommand === "WS-24" || backCommand === "ws-24")
+        {
+           output.innerHTML += `<pre>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⠁⠸⢳⡄⠀⠀⠀⠀⠀⠀⠀
+                    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠃⠀⠀⢸⠸⠀⡠⣄⠀⠀⠀⠀⠀
+                    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⠃⠀⠀⢠⣞⣀⡿⠀⠀⣧⠀⠀⠀⠀
+                    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⡖⠁⠀⠀⠀⢸⠈⢈⡇⠀⢀⡏⠀⠀⠀⠀
+                    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⡴⠩⢠⡴⠀⠀⠀⠀⠀⠈⡶⠉⠀⠀⡸⠀⠀⠀⠀⠀
+                    ⠀⠀⠀⠀⠀⠀⠀⢀⠎⢠⣇⠏⠀⠀⠀⠀⠀⠀⠀⠁⠀⢀⠄⡇⠀⠀⠀⠀⠀
+                    ⠀⠀⠀⠀⠀⠀⢠⠏⠀⢸⣿⣴⠀⠀⠀⠀⠀⠀⣆⣀⢾⢟⠴⡇⠀⠀⠀⠀⠀
+                    ⠀⠀⠀⠀⠀⢀⣿⠀⠠⣄⠸⢹⣦⠀⠀⡄⠀⠀⢋⡟⠀⠀⠁⣇⠀⠀⠀⠀⠀
+                    ⠀⠀⠀⠀⢀⡾⠁⢠⠀⣿⠃⠘⢹⣦⢠⣼⠀⠀⠉⠀⠀⠀⠀⢸⡀⠀⠀⠀⠀
+                    ⠀⠀⢀⣴⠫⠤⣶⣿⢀⡏⠀⠀⠘⢸⡟⠋⠀⠀⠀⠀⠀⠀⠀⠀⢳⠀⠀⠀⠀
+                    ⠐⠿⢿⣿⣤⣴⣿⣣⢾⡄⠀⠀⠀⠀⠳⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢣⠀⠀⠀
+                    ⠀⠀⠀⣨⣟⡍⠉⠚⠹⣇⡄⠀⠀⠀⠀⠀⠀⠀⠀⠈⢦⠀⠀⢀⡀⣾⡇⠀⠀
+                    ⠀⠀⢠⠟⣹⣧⠃⠀⠀⢿⢻⡀⢄⠀⠀⠀⠀⠐⣦⡀⣸⣆⠀⣾⣧⣯⢻⠀⠀
+                    ⠀⠀⠘⣰⣿⣿⡄⡆⠀⠀⠀⠳⣼⢦⡘⣄⠀⠀⡟⡷⠃⠘⢶⣿⡎⠻⣆⠀⠀
+                    ⠀⠀⠀⡟⡿⢿⡿⠀⠀⠀⠀⠀⠙⠀⠻⢯⢷⣼⠁⠁⠀⠀⠀⠙⢿⡄⡈⢆⠀
+                    ⠀⠀⠀⠀⡇⣿⡅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠦⠀⠀⠀⠀⠀⠀⡇⢹⢿⡀
+                    ⠀⠀⠀⠀⠁⠛⠓⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠼⠇⠁ 
+        </pre>`
+        }
+        else if(backCommand == "ws-date" || backCommand ==  "WS-date")
+        {
+          const currentDate = new Date();
+          output.innerHTML+=`<div> ${currentDate} <div>`;
+          console.log(currentDate);
+        }
+        else if (backCommand == "Profile" || backCommand == "profile")
+         {
+             output.innerHTML+= 
+             `<div>
+              Name            : Hardik Prajapati <br>
+              Alias           : wolf@wc24 <br>
+              Skills          : C , JavaScript (basic), Python.<br>
+              Focus           : Terminal Projects,Nexa AI.<br>
+              Status          : Learning Mode 🐺<br>
+              Secret message  : 5472757374207468652070726f636573732c206b656570206c6561726e696e67<br>
+              hint            : type (Ws-hint)<br>
+              </div>`
+        }
+        else if (backCommand == "WS-hint" || backCommand == "ws-hint")
+        {
+          output.innerHTML += `<pre>
+                                                                            
+                                                                          
+HHHHHHHHH     HHHHHHHHH    EEEEEEEEEEEEEEEEEEEEEE    XXXXXXX       XXXXXXX
+H:::::::H     H:::::::H    E::::::::::::::::::::E    X:::::X       X:::::X
+H:::::::H     H:::::::H    E::::::::::::::::::::E    X:::::X       X:::::X
+HH::::::H     H::::::HH    EE::::::EEEEEEEEE::::E    X::::::X     X::::::X
+  H:::::H     H:::::H        E:::::E       EEEEEE    XXX:::::X   X:::::XXX
+  H:::::H     H:::::H        E:::::E                    X:::::X X:::::X   
+  H::::::HHHHH::::::H        E::::::EEEEEEEEEE           X:::::X:::::X    
+  H:::::::::::::::::H        E:::::::::::::::E            X:::::::::X     
+  H:::::::::::::::::H        E:::::::::::::::E            X:::::::::X     
+  H::::::HHHHH::::::H        E::::::EEEEEEEEEE           X:::::X:::::X    
+  H:::::H     H:::::H        E:::::E                    X:::::X X:::::X   
+  H:::::H     H:::::H        E:::::E       EEEEEE    XXX:::::X   X:::::XXX
+HH::::::H     H::::::HH    EE::::::EEEEEEEE:::::E    X::::::X     X::::::X
+H:::::::H     H:::::::H    E::::::::::::::::::::E    X:::::X       X:::::X
+H:::::::H     H:::::::H    E::::::::::::::::::::E    X:::::X       X:::::X
+HHHHHHHHH     HHHHHHHHH    EEEEEEEEEEEEEEEEEEEEEE    XXXXXXX       XXXXXXX
+                                                                  
+                                                                              
+            </pre>`
+        }
+        else if(backCommand == "ws-root" || backCommand ==  "WS-root" || backCommand == "ws-admin" || backCommand == "WS-admin")
+        {
+          let user = prompt("please Enter your UserID");
+          let pass = prompt("please Your password ");
+          if (user == "Prajapati__Hardik_24" && pass == "8849880204")
+          {
+            let islogin = true;
+            output.innerHTML+= `<div>Login successful </div>`
+              output.innerHTML +=`
+                            <pre>
+                            User   : ${user} <br>
+                            Alias  : wolf@wc24<br>
+                            Status : Logged In 🐺<br>
+                            </pre>`;
+          }
+          else
+          {
+            alert("Wrong Password !");
+          }
+        }
+        else if(backCommand =="help" || backCommand == "HELP")
+        {
+          output.innerHTML+= `<div>Here are the available commands:</div>`
+          output.innerHTML+=`<div>
+                      <br>WS-24
+                      <br>WS-root
+                      <br>WS-date
+                      <br>Profile
+                      <br> Help
+                      </div>`
+        }
+        else if(backCommand == "WS-ctf" || backCommand == "ws-ctf")
+        {
+          output.innerHTML+=`<div><a href="/challange">Enter in Game !</a></div>`
+        }
+        else if (backCommand == 'clear' || backCommand == "CLEAR")
+        {
+          output.innerHTML=`<div></div>`;
+        }
+        else if(backCommand == 'whoiam')
+        {
+          output.innerTEXt+= `Prajapati Hardik `;
+        }
+        else
+        {
+          output.innerHTML+=(` ${backCommand} Command  not Found !`);
+        }
+     }
+  </script>
+</head>
+<body>
+
+  <div class="terminal">
+    <div class="terminal-header">
+      <strong>WolfSec Terminal</strong> v1.0
+    </div>
+
+    <div class="terminal-body" id="output">
+      <div>Type <b>help</b> to see available commands.</div>
+      <h3 class="terminal-line">-- built by learning, not luck --</h3>
+    </div>
+    <div class="input-line">
+      <span class="prompt">wolf@wc24:~$</span>
+      <input type="text" placeholder="enter command..." id="usercommand">
+      <button onclick=runcommand() class="commandRunner">Run command</button>
+    </div>
+  </div>
+  <button onclick="document.location='/'" class="back">Back to Home</button>
+</body>
+</html>

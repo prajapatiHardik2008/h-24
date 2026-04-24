@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Enhanced Cybersecurity Mini-CTF</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body { font-family:'Orbitron',sans-serif; background:#050505; color:#0ff; margin:0; padding:20px; }
+  h1,h2,h3 { color:#5af; text-shadow:0 0 10px #0ff; }
+  .card { border:1px solid #0ff; box-shadow:0 0 15px #0ff; padding:20px; margin:18px 0; border-radius:10px; background:rgba(0,255,255,0.05); backdrop-filter:blur(4px); }
+  button { background:#0ff; border:none; padding:10px 16px; border-radius:6px; cursor:pointer; color:#000; font-weight:bold; transition:.3s; }
+  button:hover { background:#5af; box-shadow:0 0 15px #5af; }
+  input { background:#000; color:#0ff; border:1px solid #0ff; padding:10px; border-radius:6px; }
+  .flag { background:rgba(0,255,255,0.1); padding:10px; border:1px solid #0ff; border-radius:8px; }
+  @keyframes neonPulse { 0%{box-shadow:0 0 5px #0ff;} 50%{box-shadow:0 0 20px #0ff;} 100%{box-shadow:0 0 5px #0ff;} }
+  .neonPulse { animation: neonPulse 2s infinite; }
+  .topnav { display:flex; gap:20px; background:#000; padding:15px; border-bottom:2px solid #0ff; position:sticky; top:0; z-index:100; }
+  .navItem { color:#0ff; cursor:pointer; font-weight:bold; }
+  .navItem:hover { color:#5af; text-shadow:0 0 10px #5af; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🔥 Cyberpunk Single-File CTF</h1>
+  <p>Intentionally Vulnerable • Local Use Only</p>
+</header>
+<div class="topnav">
+  <div class="navItem" onclick="scrollToChallenge(1)">Login Bypass</div>
+  <div class="navItem" onclick="scrollToChallenge(2)">Admin Discovery</div>
+  <div class="navItem" onclick="scrollToChallenge(5)">Base64</div>
+  <div class="navItem" onclick="scrollToChallenge(6)">XOR</div>
+</div>
+<div class="container">
+  <div class="card" id="challenge1">
+    <h3>Challenge 1: Login Bypass</h3>
+    <input id="user" placeholder="username"><br>
+    <input id="pass" type="password" placeholder="password"><br>
+    <button onclick="login()">Login</button>
+    <p id="loginResult"></p>
+  </div>
+  <div class="card" id="challenge2">
+    <h3>Challenge 2: Hidden Admin Panel</h3>
+    <input id="path" placeholder="Enter path e.g. /admin">
+    <button onclick="checkPath()">Go</button>
+    <div id="adminResult"></div>
+  </div>
+  <div class="card" id="challenge5">
+    <h3>Challenge 5: Base64 Decode</h3>
+    <code>RkxBR3tCQVNFMjRfREVDT0RFRH0=</code>
+    <button onclick="addScore(5,'base64')">Mark Complete +5pts</button>
+  </div>
+  <div class="card" id="challenge6">
+    <h3>Challenge 6: XOR Crypto</h3>
+    <code>JH]ZWS</code>
+    <button onclick="addScore(5,'xor')">Mark Complete +5pts</button>
+  </div>
+  <!-- Flag Submit Challenge -->
+  <div class="card" id="flagSubmit">
+    <h3>Flag Submit System</h3>
+    <p>Enter any valid flag to get points:</p>
+    <input id="flagInput" placeholder="FLAG{...}" />
+    <button onclick="submitFlag()">Submit</button>
+    <p id="flagMsg"></p>
+  </div>
+<!-- Scoreboard -->
+  <div class="card neonPulse" style="position:fixed; bottom:20px; right:20px; padding:15px; width:180px; text-align:center;">
+    <h3 style="font-size:18px;">Score Board</h3>
+    <div id="scoreBoard">Score: 0</div>
+  </div>
+</div>
+<script>
+// Challenge 1 Login
+function login(){
+  const u=document.getElementById('user').value.toLowerCase().trim();
+  if(u.includes("' or '1'='1")){
+    document.getElementById('loginResult').innerHTML="✅ SQLi Bypass Success!<br><div class='flag'>FLAG{SQLI_LOGIN_PWNED}</div>";
+    addScore(10,'login'); return;
+  }
+  if(u==='admin'){
+    document.getElementById('loginResult').innerHTML="⚠️ Simple Login Success<br><div class='flag'>FLAG{CLIENT_SIDE_BAD}</div>";
+    addScore(5,'login'); return;
+  }
+  document.getElementById('loginResult').innerText="❌ Login Failed – Try SQLi";
+}
+// Challenge 2 Admin
+function checkPath(){
+  const p=document.getElementById('path').value.trim().toLowerCase();
+  const paths={'/admin':'FLAG{DIRECTORY_ADMIN_FOUND}','/root':'FLAG{ROOT_PATH_HUNTER}','/super':'FLAG{SUPER_SECRET_DIRECTORY}'};
+  const box=document.getElementById('adminResult');
+  if(paths[p]){
+    box.innerHTML=`🎉 Path Found!<br><div class='flag'>${paths[p]}</div>`;
+    addScore(5,'admin_'+p);
+  } else box.innerHTML='❌ No such path.';
+}
+// FLAG SUBMITTER SYSTEM
+// VALID FLAGS (OBFUSCATED)
+const validFlags = JSON.parse(atob("eyJGTEFHeyRTUUxJX0xPR0lOX1BXTkVEfSI6MTAsIkZMQUd7Q0xJRU5UX1NJREVfQkFEfSI6NSwiRkxBR3tESVJFQ1RPUllfQURNSU5fRk9VTkR9Ijo1LCJGTEFHf1JPT1RfUEFUSF9IVU5URX0iOjUsIkZMQUd7U1VQRVJfU0VDUkVUX0RJUkVDVE9SWX0iOjUsIkZMQUd7SkFWQV9TQ1JJUFRfSVNfTk9UX1NFQ1VSRX0iOjUsIkZMQUd7SElERERVTl9TT1VSQ0VfRkxBR30iOjUsIkZMQUd7QkFTRTI0X0RFQ09ERUR9Ijo1LCJGTEFHf1hPUl9DUkFDS0VEfSI6NSwiRkxBR3tTVEVHT19JTUFHRV9ISURERU59Ijo1LCJGTEFHf0NPTU1FTlRfU0VDVElPTl9TRUNSRVR9Ijo1LCJGTEFHf01FVEFfVEFHX0RJU0NPVkVSRUR9Ijo1LCJGTEFHf0NTU19ISURERU5fRkxBR30iOjUsIkZMQUd7RU5DT0RFRF9IRVhfS0VZfSI6NSwiRkxBR3tST1QxM19TT0xWRUR9Ijo1LCJGTEFHf0FOQUxZRV9KU19TT1VSQ0V9Ijo1LCJGTEFHf0hBUl9GSUxFX1NFQ1JFVH0iOjUsIkZMQUd7Uk9CT1RTX1RYVF9GT1VORH0iOjUsIkZMQUd7U0lURU1BUF9FTlVNQVJBVElPTn0iOjUsIkZMQUd7SElERERVTl9ESVZfRElTQ09WRVJFRH0iOjUsIkZMQUd7U1RPUkFHRV9LRVlfQ0FQVFVSREV9Ijo1LCJGTEFHf0xPQ0FMRFNUT1JBR0VfVEFNUEVSfSI6NSwiRkxBR3tDT09LSUVTX0RFVEVDVEVEfSI6NSwiRkxBR3tERU9CRlVTQ0FURUJEX0pTfSI6NSwiRkxBR3tPTkNMSUNLX0VWRU5UX0ZMQUd9Ijo1LCJGTEFHf1BBR0VfU09VUkNFX1RSRUFTVVJFfSI6NSwiRkxBR3tJTlNQRUNUX0VMRU1FTlRfV0lOfSI6NSwiRkxBR3tORVRXT1JLX1RBQl9MRUFLfSI6NSwiRkxBR3tCRUFDT05fQVBJX1RSQUNFfSI6NSwiRkxBR3tPQlNDUkVfRU5EUE9JTlRfRk9VTkR9Ijo1fQ=="));
+function submitFlag(){
+  let f=document.getElementById('flagInput').value.trim();
+  const msg=document.getElementById('flagMsg');
+  if(validFlags[f]){
+    if(!localStorage.getItem('done_'+f)){
+      addScore(validFlags[f],f);
+      msg.innerHTML="✅ Correct Flag! +"+validFlags[f]+" pts";
+      localStorage.setItem('done_'+f,true);
+    } else msg.innerHTML="⚠️ Flag already submitted!";
+  } else msg.innerHTML="❌ Invalid flag";
+}
+
+// SCORE SYSTEM
+if(!localStorage.getItem('ctf_score')) localStorage.setItem('ctf_score',0);
+function addScore(points, challenge){
+  let s=parseInt(localStorage.getItem('ctf_score'));
+  if(!localStorage.getItem('done_'+challenge)){
+    s+=points; localStorage.setItem('ctf_score',s);
+    localStorage.setItem('done_'+challenge,true);
+    updateScoreBoard();
+  }
+}
+function updateScoreBoard(){
+  let s=localStorage.getItem('ctf_score');
+  document.getElementById('scoreBoard').innerText='Score: '+s;
+}
+window.onload=updateScoreBoard;
+function scrollToChallenge(id){document.getElementById('challenge'+id).scrollIntoView({behavior:'smooth'});}
+</script>
+</body>
+</html>
