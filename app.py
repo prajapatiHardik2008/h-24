@@ -107,7 +107,7 @@ def image():
 # Help
 @app.route('/help')
 def help():
-    return render_template("Helpcenter.html")
+    return render_template("helpcenter.html")
 #-------------------------------------------------------
 # All Api's 
 #----------------------------------------------------
