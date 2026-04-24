@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #0d1117; /* Dark background */
+    color: #e6edf3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Container styling */
+label {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: #58a6ff;
+    font-weight: bold;
+    display: block;
+}
+
+input[type="text"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 15px;
+    border: 2px solid #30363d;
+    border-radius: 8px;
+    background-color: #161b22;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+    margin-bottom: 15px;
+}
+
+input[type="text"]:focus {
+    border-color: #58a6ff;
+    box-shadow: 0 0 8px rgba(88, 166, 255, 0.3);
+}
+
+button {
+    padding: 12px 25px;
+    background-color: #238636; /* Green success color */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease, transform 0.1s active;
+}
+
+button:hover {
+    background-color: #2ea043;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+p {
+    margin-top: 15px;
+    font-style: italic;
+    color: #8b949e;
+    display: none; /* JavaScript se show/hide karne ke liye */
+}
+
+/* Result Area */
+.result {
+    margin-top: 30px;
+    width: 100%;
+    max-width: 512px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    background: #161b22;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.result img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #30363d;
+}
+/* Result div ko flexbox banao taaki image aur button column mein aayein */
+.result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Image aur button ke beech gap */
+    margin-top: 20px;
+    padding: 10px;
+}
+
+/* Download button ki special styling */
+#downloadBtn {
+    padding: 10px 20px;
+    background-color: #0366d6; /* Blue for download */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+    width: auto;
+    margin-top: 10px;
+}
+
+#downloadBtn:hover {
+    background-color: #0256b9;
+}
+    </style>
+</head>
+<body>
+    <label for="prompt">Enter your Prompt</label>
+    <input type="text" id="prompt">
+    <button id="make">Submit</button>
+    <p>Wait a min. </p>
+    <div class="result">
+
+    </div>
+    <button onclick="document.location='/'" id="back">Bcak to Home</button>
+    <script src="{{ url_for('static', filename='imageai.js') }}"></script>
+</body>
+</html>

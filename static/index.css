@@ -258,3 +258,28 @@ input::-webkit-inner-spin-button {
 .star-rating label:active {
     transform: scale(1.2);
 }
+/* AI Tool Card Specific Hover Glow (Violet/Purple) */
+.tool-card:has(.btn-ai):hover {
+    border-color: #a371f7;
+    box-shadow: 0 8px 25px rgba(163, 113, 247, 0.15);
+}
+
+/* AI Badge Color */
+.badge.ai-badge {
+    background: rgba(163, 113, 247, 0.15);
+    color: #a371f7;
+    border: 1px solid #8957e5;
+}
+
+/* AI Tech Stack Tag Color */
+.tool-card:has(.btn-ai) .tech-stack span {
+    color: #a371f7;
+    background: rgba(163, 113, 247, 0.1);
+}
+
+/* AI Button Specific Styling (Violet) */
+.btn-ai:hover {
+    background: #6f42c1;
+    border-color: #8957e5;
+    color: white;
+}

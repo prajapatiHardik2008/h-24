@@ -16,6 +16,7 @@
         <div class="nav-links">
             <a href="/aboutus">About Us</a>
             <a href="/contactus">Contact Us</a>
+            <a href="/help">Help</a>
         </div>
         <div class="search-box">
             <input type="text" placeholder="Search Tools..." id="search">
@@ -108,16 +109,45 @@
                 </div>
                 <button class="btn-tool" onclick="document.location='https://github.com/prajapatiHardik2008/pico-CTF-solve-challanges.git'">Download</button>
             </div>
-            <!--Web-based Terminal-->
             <div class="tool-card">
-                <div class="tool-info">
-                    <h3> Web-based Terminal </h3>
-                   <p>
-                        <strong>WolfShell-Web v1.0</strong> is an interactive, web-based terminal simulator that brings a Linux-style shell environment directly to the browser. Built with <strong>Vanilla JavaScript</strong>, it features a custom command engine supporting specialized functions like admin authentication (WS-root) and ASCII art rendering. With its cyberpunk retro aesthetic, this project bridges the gap between web design and command-line utility, providing a unique way to explore my developer profile and CTF links.
-                    </p>
-                </div>
-                <button class="btn-tool" onclick="document.location='/webTerminal'">Open</button>
-            </div>
+    <div class="tool-info">
+        <div class="tool-header">
+            <h3><i class="fas fa-magic"></i> AI Image Generator</h3>
+            <span class="badge ai-badge">Active - Flux Model</span>
+        </div>
+        <p>
+            An advanced generative AI tool integrated directly into the portal. This tool leverages the power of open-source models like <strong>Flux.1</strong> (via Pollinations.ai API) to transform text descriptions into stunning, high-resolution visuals. Built using <strong>Vanilla JavaScript</strong> for the frontend, it supports dynamic prompt encoding, real-time generation feedback, and a built-in download function, bridging creative expression with modern web technology.
+        </p>
+        <div class="tech-stack">
+            <span>#GenerativeAI</span> <span>#FluxModel</span> <span>#API_Integration</span> <span>#VanillaJS</span>
+        </div>
+    </div>
+    <div class="tool-action">
+        <button class="btn-tool btn-ai" onclick="document.location='/image'">
+            <i class="fas fa-paint-brush"></i> Create Art
+        </button>
+    </div>
+</div>
+            <!-- Image Genrator Ai  -->
+             <div class="tool-card">
+    <div class="tool-info">
+        <div class="tool-header">
+            <h3><i class="fas fa-terminal"></i> Web-based Terminal</h3>
+            <span class="badge">v1.0 - Active</span>
+        </div>
+        <p>
+            <strong>WolfShell-Web v1.0</strong> is an interactive, web-based terminal simulator that brings a Linux-style shell environment directly to the browser. Built with <strong>Vanilla JavaScript</strong>, it features a custom command engine supporting specialized functions like admin authentication (WS-root) and ASCII art rendering. With its cyberpunk retro aesthetic, this project bridges the gap between web design and command-line utility, providing a unique way to explore my developer profile and CTF links.
+        </p>
+        <div class="tech-stack">
+            <span>#JavaScript</span> <span>#LinuxSim</span> <span>#CyberpunkUI</span> <span>#WS-Root</span>
+        </div>
+    </div>
+    <div class="tool-action">
+        <button class="btn-tool" onclick="document.location='/webTerminal'">
+            <i class="fas fa-external-link-alt"></i> Launch Shell
+        </button>
+    </div>
+</div>
         </section>
         <section class="feedback-section">
     <div class="tool-card feedback-card">

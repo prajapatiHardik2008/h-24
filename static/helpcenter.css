@@ -1,0 +1,136 @@
+/* General Reset & Background */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Fira Code', 'Segoe UI', monospace; /* Tech feel ke liye */
+}
+
+body {
+    background-color: #0d1117;
+    color: #c9d1d9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Heading Styling */
+body > b { /* "Help Center" text ke liye */
+    font-size: 2.5rem;
+    color: #10b981; /* Emerald Green */
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 5px;
+    display: block;
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+}
+
+p {
+    color: #8b949e;
+    margin-bottom: 30px;
+    font-size: 1rem;
+}
+
+/* Input Container */
+div:has(#query) {
+    background: #161b22;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #30363d;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+label {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    color: #58a6ff; /* Blue accents */
+    text-align: left;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    color: #e6edf3;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    outline: none;
+    transition: 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.2);
+}
+
+/* Button Styling */
+#getans {
+    width: 100%;
+    padding: 12px;
+    background-color: #10b981;
+    color: #0d1117;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#getans:hover {
+    background-color: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+}
+
+/* Result Area */
+.result {
+    margin-top: 25px;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    background: rgba(16, 185, 129, 0.05);
+    border-left: 4px solid #10b981;
+    border-radius: 4px;
+    text-align: left;
+    line-height: 1.6;
+    min-height: 50px;
+    white-space: pre-wrap; /* AI ke formatting (lines) ko preserve karega */
+}
+
+/* Scrollbar Styling (Optional) */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-thumb {
+    background: #30363d;
+    border-radius: 10px;
+}
+ button
+ {
+    width: 50%;
+    padding: 12px;
+    background-color: #10b981;
+    color: #0d1117;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+}

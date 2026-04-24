@@ -99,6 +99,16 @@ def terminal():
 def challange():
     return render_template('cybersecurity.html')
 #-------------------------------------------------------
+# image maker 
+@app.route('/image')
+def image():
+    return render_template("createimage.html")
+#------------------------------------------------------
+# Help
+@app.route('/help')
+def help():
+    return render_template("Helpcenter.html")
+#-------------------------------------------------------
 # All Api's 
 #----------------------------------------------------
 # base 64 Encoding and decoding API 
