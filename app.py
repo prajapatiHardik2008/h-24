@@ -6,14 +6,42 @@ from email.message import EmailMessage
 import threading
 from dotenv import load_dotenv
 import os
-
+import socket
 #----------------------------------------------------------------------
 # tools 
+#----------------------------------------------------------------------
+# Port Scanner import socket
+
+def port_scanner(TargetIp, port):
+    # Socket create kiya
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(0.3) # Fast scanning ke liye thoda kam timeout
+    
+    try:
+        # connect_ex 0 return karta hai agar connection success ho
+        result = s.connect_ex((TargetIp, port))
+        
+        if result == 0:
+            try:
+                service = socket.getservbyport(port)
+            except:
+                service = "Unknown Service"
+            
+            s.close() 
+            return f"Port {port} ({service}) is Open"
+        
+        s.close()
+        return None 
+        
+    except Exception as e:
+        s.close()
+        return f"Error scanning port {port}"
+
 def encodebase64(text):
     text = pybase64.encodebytes(text)
     text = text.decode()
     return text
-
+#-----------------------------------------------------------------------
 def decodebase64(text):
     DecodeText = pybase64.b64decode(text)
     return DecodeText.decode()
@@ -48,7 +76,8 @@ def emailSender():
                 open("userRequest.txt", "w").close()
                 
         except Exception as e:
-            print(f"Error in EmailSender: {e}")#------------------------------------------------------
+            print(f"Error in EmailSender: {e}")
+#------------------------------------------------------
 # all Pages 
 app = Flask(__name__)
 
@@ -99,7 +128,7 @@ def terminal():
 def challange():
     return render_template('cybersecurity.html')
 #-------------------------------------------------------
-# image maker 
+# image maker  
 @app.route('/image')
 def image():
     return render_template("createimage.html")
@@ -108,6 +137,45 @@ def image():
 @app.route('/help')
 def help():
     return render_template("helpcenter.html")
+#------------------------------------------------------
+#Rot 
+@app.route("/rot")
+def rot():
+    return render_template("rot.html")
+#-----------------------------------------------------
+#IP Look Up 
+@app.route("/iplookup")
+def iplookup():
+    return render_template("IPlookup.html")
+#-------------------------------------------------------
+# Port Scanner 
+@app.route("/portscan")
+def portscanner():
+    return render_template("portscan.html")
+import socket
+from flask import Flask, request, jsonify
+
+@app.route('/scan_port', methods=['POST'])
+def scan_port():
+    data = request.json
+    target = data.get('ip')
+    port = data.get('port')
+    
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(0.4) # Faster response
+    
+    result = s.connect_ex((target, port))
+    
+    if result == 0:
+        try:
+            service = socket.getservbyport(port)
+        except:
+            service = "unknown"
+        s.close()
+        return jsonify({"status": "open", "port": port, "service": service})
+    
+    s.close()
+    return jsonify({"status": "closed", "port": port})
 #-------------------------------------------------------
 # All Api's 
 #----------------------------------------------------

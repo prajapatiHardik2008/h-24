@@ -1,0 +1,135 @@
+/* Poore Page ka Background - Deep Gradient */
+body {
+    background: radial-gradient(circle at top, #1a0f0f, #050505);
+    color: #e0e0e0;
+    font-family: 'Consolas', monospace;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main Container */
+.rot-container {
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid rgba(255, 62, 62, 0.2);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(255, 62, 62, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 40px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+
+/* Title Styling with Neon Glow */
+.title {
+    font-size: 2rem;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 62, 62, 0.7);
+    margin-bottom: 5px;
+}
+
+.red-text {
+    color: #ff3e3e;
+}
+
+/* Input Fields - Deep Dark Red Borders */
+.input-field {
+    margin: 25px 0;
+    text-align: left;
+}
+
+label {
+    color: #ff3e3e;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="number"], textarea {
+    background: #000 !important;
+    border: 1px solid #444 !important;
+    border-left: 4px solid #ff3e3e !important; /* Left accent border */
+    color: #00ff41 !important; /* Matrix Green Text */
+    padding: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 4px;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus, textarea:focus {
+    border-color: #ff3e3e !important;
+    box-shadow: 0 0 15px rgba(255, 62, 62, 0.3);
+}
+
+/* Encrypt Button - Solid Neon Style */
+.cyber-btn {
+    background: transparent;
+    color: #fff;
+    border: 2px solid #ff3e3e;
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 50px; /* Pill shape */
+    transition: 0.4s;
+    letter-spacing: 2px;
+    margin-top: 10px;
+}
+
+.cyber-btn:hover {
+    background: #ff3e3e;
+    box-shadow: 0 0 25px rgba(255, 62, 62, 0.6);
+    transform: scale(1.02);
+}
+
+/* Result Area - Terminal Style */
+.result-card {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.terminal-box {
+    background: #050505;
+    border: 1px solid #222;
+    padding: 20px;
+    border-radius: 10px;
+    color: #00ff41;
+    font-size: 1.1rem;
+    min-height: 50px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Scanline effect for terminal */
+.terminal-box::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+    background-size: 100% 4px, 3px 100%;
+    pointer-events: none;
+}
+
+/* Back Button */
+.back-btn {
+    margin-top: 30px;
+    color: #666;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.back-btn:hover {
+    color: #ff3e3e;
+    text-decoration: underline;
+}

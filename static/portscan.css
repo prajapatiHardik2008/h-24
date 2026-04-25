@@ -1,0 +1,175 @@
+/* Poore page ka animation aur background */
+body {
+    background: #050505;
+    background-image: 
+        linear-gradient(rgba(255, 62, 62, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 62, 62, 0.05) 1px, transparent 1px);
+    background-size: 30px 30px; /* Cyber Grid Effect */
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.scanner-container {
+    width: 90%;
+    max-width: 800px;
+    padding: 20px;
+}
+
+/* Glassmorphism Card */
+.glass-card {
+    background: rgba(15, 15, 15, 0.95);
+    border: 1px solid #ff3e3e;
+    box-shadow: 0 0 20px rgba(255, 62, 62, 0.2);
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Red Neon Title */
+.title {
+    font-family: 'Courier New', monospace;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+}
+
+.red-text {
+    color: #ff3e3e;
+    text-shadow: 0 0 15px #ff3e3e;
+}
+
+/* Input & Button Styling */
+.input-group label {
+    display: block;
+    color: #888;
+    text-align: left;
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+}
+
+.flex-row {
+    display: flex;
+    gap: 15px;
+}
+
+input[type="text"] {
+    flex: 1;
+    background: #000;
+    border: 1px solid #333;
+    color: #00ff41;
+    padding: 15px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #ff3e3e;
+    box-shadow: 0 0 10px rgba(255, 62, 62, 0.3);
+}
+
+.cyber-btn {
+    background: #ff3e3e;
+    color: #fff;
+    border: none;
+    padding: 0 30px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.cyber-btn:hover {
+    background: #fff;
+    color: #ff3e3e;
+    box-shadow: 0 0 25px #fff;
+}
+
+/* Advanced Progress Bar */
+.progress-bar-bg {
+    width: 100%;
+    height: 4px;
+    background: #1a1a1a;
+    margin-top: 25px;
+    border-radius: 2px;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #ff3e3e;
+    box-shadow: 0 0 15px #ff3e3e;
+    transition: 0.4s;
+}
+
+/* Terminal / Console Body */
+.console-box {
+    background: #000;
+    border: 1px solid #222;
+    border-top: 3px solid #ff3e3e;
+    border-radius: 4px;
+}
+
+.console-header {
+    background: #111;
+    padding: 8px 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: #ff3e3e;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.console-body {
+    height: 300px;
+    padding: 20px;
+    overflow-y: auto;
+    font-family: 'Courier New', monospace;
+    text-align: left;
+    color: #00ff41; /* Classic Matrix Green */
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Result status styles */
+.open-port { color: #fff; background: rgba(0, 255, 65, 0.2); padding: 2px 5px; border-radius: 3px; }
+.closed-port { color: #444; }
+
+/* Custom Scrollbar for Terminal */
+.console-body::-webkit-scrollbar { width: 5px; }
+.console-body::-webkit-scrollbar-track { background: #000; }
+.console-body::-webkit-scrollbar-thumb { background: #333; }
+
+
+
+button {
+    background: #ff3e3e;
+    color: #fff;
+    border: none;
+    padding: 0 30px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.4s;
+}
+button:hover {
+    background: #fff;
+    color: #ff3e3e;
+    box-shadow: 0 0 25px #fff;
+}

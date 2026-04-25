@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Intelligence | H-24 Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='IPlook.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>🌐 IP <span style="color: #ff3e3e;">Intelligence</span></h2>
+        
+        <div class="search-box">
+            <div style="flex: 1; text-align: left;">
+                <label for="IP">Target IP Address</label>
+                <input type="text" id="IP" placeholder="e.g. 8.8.8.8">
+            </div>
+            <button id="Getdata" style="align-self: flex-end; margin-bottom: 2px;">Look Up</button>
+        </div>
+
+        <div class="result-label">Raw Intelligence Data:</div>
+        <div class="result">
+            </div>
+
+        <button class="back-btn" onclick="document.location='/'">← Back to Home</button>
+    </div>
+
+    <script src="{{ url_for('static', filename='IPlook.js') }}"></script>
+</body>
+</html>

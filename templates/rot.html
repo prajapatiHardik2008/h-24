@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='rot.css') }}">
+</head>
+<body>
+   <div class="rot-container">
+    <h2 class="title">🔄 ROT <span class="red-text">Cipher</span></h2>
+    <p class="subtitle">Caesar Shift Encryption Tool</p>
+
+    <div class="glass-card">
+        <div class="input-field">
+            <label for="key">Shift Key (0-25)</label>
+            <input type="number" id="key" value="13" min="0" max="25">
+        </div>
+
+        <div class="input-field">
+            <label for="Text">Input Message</label>
+            <textarea id="Text" placeholder="Type your secret message here..."></textarea>
+        </div>
+
+        <button id="rot" class="cyber-btn">Encrypt / Decrypt</button>
+    </div>
+
+    <div class="result-card">
+        <h4>Result Log:</h4>
+        <div class="result terminal-box" id="result-output">
+            </div>
+    </div>
+
+    <button class="back-btn" onclick="document.location='/'">← Back to Home</button>
+</div>
+    <script src="{{ url_for('static', filename='rot.js') }}"></script>
+</body>
+</html>

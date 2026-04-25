@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Port Scanning</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='portscan.css') }}">
+</head>
+<body><div class="scanner-container">
+    <h2 class="title">📡 Port <span class="red-text">Scanner</span></h2>
+    <p class="subtitle">Security Reconnaissance & Service Discovery</p>
+
+    <div class="glass-card">
+        <div class="input-group">
+            <label>Target IP / Domain</label>
+            <div class="flex-row">
+                <input type="text" id="targetIp" placeholder="e.g. 127.0.0.1 or google.com">
+                <button id="startScan" class="cyber-btn">Start Scan</button>
+            </div>
+        </div>
+
+        <div id="progress-area" style="display: none;">
+            <div class="progress-bar-bg">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+            <p id="scan-status">Scanning...</p>
+        </div>
+    </div>
+
+    <div class="console-box">
+        <div class="console-header">
+            <span>TERMINAL OUTPUT</span>
+            <span class="status-dot"></span>
+        </div>
+        <div id="scan-results" class="console-body">
+            Waiting for target...
+        </div>
+    </div>
+
+    <button class="back-btn" onclick="document.location='/'">← Back to Home</button>
+    <script src="{{ url_for('static', filename='portscanner.js') }}"></script>
+
+</div>
+</body>
+</html>

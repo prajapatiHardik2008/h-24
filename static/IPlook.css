@@ -1,0 +1,123 @@
+/* Body & Background */
+body {
+    background: radial-gradient(circle at top, #1a0f0f, #050505);
+    color: #e0e0e0;
+    font-family: 'Consolas', 'Courier New', monospace;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Main Container */
+.container {
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid rgba(255, 62, 62, 0.2);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 35px;
+    width: 100%;
+    max-width: 650px;
+    text-align: center;
+}
+
+h2 {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 62, 62, 0.5);
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+}
+
+/* Input Section */
+.search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    text-align: left;
+    color: #ff3e3e;
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+input[type="text"] {
+    flex: 1;
+    background: #000;
+    border: 1px solid #333;
+    border-left: 4px solid #ff3e3e;
+    color: #00ff41;
+    padding: 12px;
+    border-radius: 5px;
+    outline: none;
+    font-size: 1rem;
+}
+
+input:focus {
+    border-color: #ff3e3e;
+    box-shadow: 0 0 15px rgba(255, 62, 62, 0.2);
+}
+
+/* Look Up Button */
+#Getdata {
+    background: #ff3e3e;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+#Getdata:hover {
+    background: #d32f2f;
+    box-shadow: 0 0 20px rgba(255, 62, 62, 0.4);
+}
+
+/* Result Box - Terminal Look */
+.result-label {
+    text-align: left;
+    color: #888;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+}
+
+.result {
+    background: #050505;
+    border: 1px solid #222;
+    color: #00ff41;
+    padding: 20px;
+    border-radius: 8px;
+    min-height: 150px;
+    text-align: left;
+    font-size: 0.95rem;
+    white-space: pre-wrap; /* JSON format maintain karne ke liye */
+    word-wrap: break-word;
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+/* Back Button */
+.back-btn {
+    margin-top: 25px;
+    background: transparent;
+    border: 1px solid #444;
+    color: #888;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    color: #ff3e3e;
+    border-color: #ff3e3e;
+}
