@@ -283,3 +283,31 @@ input::-webkit-inner-spin-button {
     border-color: #8957e5;
     color: white;
 }
+.user-stats-container {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.stat-card {
+    background: rgba(255, 62, 62, 0.05);
+    border: 1px solid rgba(255, 62, 62, 0.2);
+    padding: 15px 40px;
+    border-radius: 10px;
+    text-align: center;
+    backdrop-filter: blur(5px);
+}
+
+.stat-label {
+    color: #888;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+}
+
+.stat-value {
+    margin: 5px 0 0 0;
+    font-size: 2rem;
+    font-family: 'Courier New', monospace;
+    color: #fff;
+}

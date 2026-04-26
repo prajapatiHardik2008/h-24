@@ -11,7 +11,7 @@ import socket
 # tools 
 #----------------------------------------------------------------------
 # Port Scanner import socket
-
+ #set bydefualt 1
 def port_scanner(TargetIp, port):
     # Socket create kiya
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -80,12 +80,16 @@ def emailSender():
 #------------------------------------------------------
 # all Pages 
 app = Flask(__name__)
-
+StarOnWeb = 0
+person = 0
+voted_ips = set()
 #-------------------------------------------------------
 #index  Page 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    global StarOnWeb,person
+    rating_val = StarOnWeb / person if person > 0 else 0
+    return render_template('index.html',Rating = rating_val)
 #------------------------------------------------------
 #Base 64 page 
 @app.route('/base64_tool')
@@ -201,12 +205,17 @@ def base64Deco():
         return jsonify({"DecodedText": "Something went wrong !"})
 @app.route('/feedBack', methods=["POST"])
 def feedBack():
+    global StarOnWeb,person
     data = request.get_json()
     username = data.get('username')
     userphone = data.get('userphone')
     userquery = data.get('userquery')
+    user_ip = request.remote_addr
+    if user_ip in voted_ips:
+        return jsonify({"Ans": "Fail", "msg": "You have already voted!"})
     star = data.get('star')
-
+    StarOnWeb += int(star)
+    person+= 1
     try:
         # 'a' (append) use karo taaki purana data delete na ho
         with open('userRequest.txt', 'a') as file:
@@ -219,7 +228,7 @@ def feedBack():
         return jsonify({"Ans": "Success"}) # Success message bhejo
     except Exception as e:
         print(f"Error: {e}")
-        return jsonify({'Ans': 'Fail'})
+        return jsonify({'Ans': 'Fail',"msg":"Server Error"})
 if __name__ == '__main__':
     #thread = threading.Thread(target=emailSender,daemon=True)
     #thread.start()

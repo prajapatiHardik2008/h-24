@@ -56,7 +56,7 @@ if(feedbackForm) {
                     alert("Feedback Submitted Successfully! ✅");
                     feedbackForm.reset();
                 } else {
-                    alert("Form not Submit. Try again! ❌");
+                    alert(`Form not Submit. ${result.msg}❌`);
                 }
             }
         } catch(error) {
