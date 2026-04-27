@@ -96,6 +96,10 @@ else:
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+with app.app_context():
+    db.create_all()
+    print("Database Tables Created! ✅")
 #-------------------------------------------------------
 #class for adding and Handling  the Feedback in data base 
 class Feedback(db.Model):
