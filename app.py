@@ -7,6 +7,8 @@ import threading
 from dotenv import load_dotenv
 import os
 import socket
+from flask_sqlalchemy import SQLAlchemy
+
 #----------------------------------------------------------------------
 # tools 
 #----------------------------------------------------------------------
@@ -77,19 +79,44 @@ def emailSender():
                 
         except Exception as e:
             print(f"Error in EmailSender: {e}")
+
 #------------------------------------------------------
 # all Pages 
 app = Flask(__name__)
-StarOnWeb = 0
-person = 0
-voted_ips = set()
+#---------------------------------------------------------------------
+#connecting with data base 
+basedir = os.path.abspath(os.path.dirname(__file__)) # geting current folder path
+db_url = os.getenv('DATABASE_URL')
+if db_url:
+    if db_url.startswith("postgres://"):
+        db_url = db_url.replace("postgres://", "postgresql://", 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir,"database.db")
+
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+#-------------------------------------------------------
+#class for adding and Handling  the Feedback in data base 
+class Feedback(db.Model):
+    id = db.Column(db.Integer , primary_key=True)
+    username = db.Column(db.String(50) , nullable=False)
+    phone = db.Column(db.String(12) , nullable=False)
+    stars = db.Column(db.Integer , nullable=False)
+    query = db.Column(db.Text , nullable=False)
+    ip_address = db.Column(db.String(50) , nullable=False)
 #-------------------------------------------------------
 #index  Page 
 @app.route('/')
 def index():
-    global StarOnWeb,person
-    rating_val = StarOnWeb / person if person > 0 else 0
-    return render_template('index.html',Rating = rating_val)
+    total_feedbacks = db.session.query(Feedback).count() # count the total row in db 
+    if total_feedbacks:
+        all_stars = db.session.query(db.func.sum(Feedback.stars)).scalar()
+        rating_val = all_stars / total_feedbacks
+    else:
+        rating_val = 0
+    
+    return render_template('index.html',Rating = round(rating_val,1))
 #------------------------------------------------------
 #Base 64 page 
 @app.route('/base64_tool')
@@ -205,31 +232,29 @@ def base64Deco():
         return jsonify({"DecodedText": "Something went wrong !"})
 @app.route('/feedBack', methods=["POST"])
 def feedBack():
-    global StarOnWeb,person
     data = request.get_json()
-    username = data.get('username')
-    userphone = data.get('userphone')
-    userquery = data.get('userquery')
     user_ip = request.remote_addr
-    if user_ip in voted_ips:
+    already_voted = db.session.query(Feedback).filter_by(ip_address=user_ip).first()
+
+    if already_voted:
         return jsonify({"Ans": "Fail", "msg": "You have already voted!"})
-    star = data.get('star')
-    StarOnWeb += int(star)
-    person+= 1
     try:
-        # 'a' (append) use karo taaki purana data delete na ho
-        with open('userRequest.txt', 'a') as file:
-            file.write("\n" + "-"*30 + "\n")
-            file.write(f"Username: {username}\n")
-            file.write(f"Phone: {userphone}\n")
-            file.write(f"Star: {star}\n")
-            file.write(f"Request: {userquery}\n")
-        
+        new_entry =Feedback(
+            username = data.get('username'),
+            phone = data.get('userphone'),
+            query = data.get('userquery'),
+            stars = int(data.get('star')),
+            ip_address = user_ip
+        ) 
+        db.session.add(new_entry)
+        db.session.commit()
         return jsonify({"Ans": "Success"}) # Success message bhejo
     except Exception as e:
-        print(f"Error: {e}")
+        db.session.rollback()
         return jsonify({'Ans': 'Fail',"msg":"Server Error"})
 if __name__ == '__main__':
     #thread = threading.Thread(target=emailSender,daemon=True)
     #thread.start()
+    with app.app_context():
+        db.create_all()
     app.run(host='0.0.0.0', port=5000, debug=True)
