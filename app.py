@@ -84,32 +84,30 @@ def emailSender():
 # all Pages 
 app = Flask(__name__)
 #---------------------------------------------------------------------
-#connecting with data base 
-basedir = os.path.abspath(os.path.dirname(__file__)) # geting current folder path
-db_url = os.getenv('DATABASE_URL')
-if db_url:
-    if db_url.startswith("postgres://"):
-        db_url = db_url.replace("postgres://", "postgresql://", 1)
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_url
-else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir,"database.db")
+#connecting with data base # ... app = Flask(__name__) ke niche ...
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+db_url = os.getenv('DATABASE_URL')
+if db_url and db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url or 'sqlite:///' + os.path.join(basedir, "database.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+# --- PEHLE CLASS LIKHO ---
+class Feedback(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), nullable=False)
+    phone = db.Column(db.String(12), nullable=False)
+    stars = db.Column(db.Integer, nullable=False)
+    query = db.Column(db.Text, nullable=False)
+    ip_address = db.Column(db.String(50), nullable=False)
+
+# --- PHIR TABLE CREATE KARO ---
 with app.app_context():
     db.create_all()
-    print("Database Tables Created! ✅")
-#-------------------------------------------------------
-#class for adding and Handling  the Feedback in data base 
-class Feedback(db.Model):
-    id = db.Column(db.Integer , primary_key=True)
-    username = db.Column(db.String(50) , nullable=False)
-    phone = db.Column(db.String(12) , nullable=False)
-    stars = db.Column(db.Integer , nullable=False)
-    query = db.Column(db.Text , nullable=False)
-    ip_address = db.Column(db.String(50) , nullable=False)
-#-------------------------------------------------------
+    print("Database synced! ✅")
 #index  Page 
 @app.route('/')
 def index():
