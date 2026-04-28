@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H-24 Admin Login</title>
+    <style>
+        :root {
+            --neon-green: #00ff41;
+            --dark-bg: #0a0a0a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            background-image: 
+                linear-gradient(rgba(0, 255, 65, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+        }
+
+        .login-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            width: 350px;
+            text-align: center;
+        }
+
+        .login-card h2 {
+            margin-bottom: 30px;
+            color: var(--neon-green);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 24px;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: var(--neon-green);
+            outline: none;
+            transition: 0.3s;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: var(--neon-green);
+            border: none;
+            border-radius: 5px;
+            color: black;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #00cc33;
+            box-shadow: 0 0 15px var(--neon-green);
+            transform: translateY(-2px);
+        }
+
+        .error-msg {
+            color: #ff4d4d;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .back-home {
+            display: block;
+            margin-top: 20px;
+            color: #888;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .back-home:hover {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <h2>H-24 Admin</h2>
+        <form method="POST" action="/h24_login">
+            <div class="input-group">
+                <input type="text" name="username" placeholder="Terminal Username" required>
+            </div>
+            <div class="input-group">
+                <input type="password" name="password" placeholder="Access Token" required>
+            </div>
+            <button type="submit">Authenticate</button>
+        </form>
+
+        {% if error %}
+        <p class="error-msg">{{ error }}</p>
+        {% endif %}
+
+        <a href="/" class="back-home">← Back to Portal</a>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>

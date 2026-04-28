@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2FA Verification | H-24</title>
+    <style>
+        :root {
+            --neon-blue: #00d4ff;
+            --error-red: #ff4d4d;
+            --dark-bg: #080808;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--dark-bg);
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Scanline effect for hacker feel */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .verify-container {
+            background: rgba(20, 20, 20, 0.9);
+            padding: 40px;
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+            text-align: center;
+            width: 400px;
+            position: relative;
+            z-index: 3;
+        }
+
+        h2 {
+            color: var(--neon-blue);
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 30px;
+        }
+
+        .otp-input-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        /* Aise boxes banenge */
+        .otp-box {
+            width: 45px;
+            height: 55px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 24px;
+            color: var(--neon-blue);
+            font-weight: bold;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .otp-box:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Hidden real input for the form */
+        #real-otp {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .verify-btn {
+            background: transparent;
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 12px 30px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        .verify-btn:hover {
+            background: var(--neon-blue);
+            color: black;
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        .error-msg {
+            color: var(--error-red);
+            margin-top: 20px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="verify-container">
+        <h2>2FA VERIFICATION</h2>
+        <p>A secure access code has been sent to your registered email. Enter it below to authorize this session.</p>
+
+        <form method="POST" id="otp-form">
+            <div class="otp-input-group">
+                <input type="text" maxlength="1" class="otp-box" required autofocus>
+                <input type="text" maxlength="1" class="otp-box" required>
+                <input type="text" maxlength="1" class="otp-box" required>
+                <input type="text" maxlength="1" class="otp-box" required>
+                <input type="text" maxlength="1" class="otp-box" required>
+                <input type="text" maxlength="1" class="otp-box" required>
+            </div>
+            
+            <input type="hidden" name="otp" id="final-otp">
+            
+            <button type="submit" class="verify-btn">Authorize Access</button>
+        </form>
+
+        {% if error %}
+        <p class="error-msg">{{ error }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        const inputs = document.querySelectorAll('.otp-box');
+        const finalInput = document.getElementById('final-otp');
+
+        // Auto-focus logic for boxes
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+                combineOTP();
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+
+        function combineOTP() {
+            let code = "";
+            inputs.forEach(input => code += input.value);
+            finalInput.value = code;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>H-24 CTF Lab</title>
+    <style>
+        body { background: #050505; color: #0f0; font-family: monospace; padding: 50px; }
+        .lab-box { border: 1px dashed #0f0; padding: 20px; max-width: 600px; margin: auto; }
+        button { background: transparent; border: 1px solid #0f0; color: #0f0; cursor: pointer; padding: 10px; margin-top: 10px;}
+        button:hover { background: #0f0; color: #000; }
+        #result { margin-top: 20px; color: yellow; }
+    </style>
+</head>
+<body>
+    <div class="lab-box">
+        <h2>Mission: Identity Theft</h2>
+        <p>Target: <code>/api/get_flag</code></p>
+        <p>Hint: The server thinks you are a <b>guest</b>. Can you convince it that you are the <b>admin</b>?</p>
+        
+        <button onclick="tryAccess()">Request Flag</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function tryAccess() {
+            // Default request jo 'guest' bhejta hai
+            fetch('/api/get_flag', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ "role": "guest" })
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('result').innerText = data.message || "Flag: " + data.flag;
+            });
+        }
+    </script>
+</body>
+</html>

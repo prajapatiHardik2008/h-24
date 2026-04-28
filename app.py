@@ -1,4 +1,5 @@
-from  flask import Flask,render_template,render_template_string,request,jsonify
+import random
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for ,render_template_string
 import pybase64
 import time
 import smtplib
@@ -8,7 +9,8 @@ from dotenv import load_dotenv
 import os
 import socket
 from flask_sqlalchemy import SQLAlchemy
-
+import hashlib
+from werkzeug.security import generate_password_hash, check_password_hash
 #----------------------------------------------------------------------
 # tools 
 #----------------------------------------------------------------------
@@ -83,6 +85,7 @@ def emailSender():
 #------------------------------------------------------
 # all Pages 
 app = Flask(__name__)
+app.secret_key = os.getenv('SECRET_KEY')
 #---------------------------------------------------------------------
 #connecting with data base # ... app = Flask(__name__) ke niche ...
 
@@ -209,6 +212,111 @@ def scan_port():
     
     s.close()
     return jsonify({"status": "closed", "port": port})
+#---------------------------------------------------------
+#OTP
+def send_otp_email(otp):
+    emailAdd = os.getenv('EMAIL_USER')
+    Apppass = os.getenv('EMAIL_PASS')
+    fakeotp = random.randint(0,1000000)
+    msg = EmailMessage()
+    msg['Subject'] = f"{fakeotp} is your H-24 Access Code"
+    msg['From'] = emailAdd
+    msg['To'] = "hardikprajapati242008@gmail.com"
+    line = ['18-year-old BCA student and Cybersecurity enthusiast at LJ University',
+             'Python developer passionate about building secure portals and hacking tools.',
+             'Active CTF player with a knack for network forensics and ethical hacking.',
+             'Building the H-24 Portal: A blend of web development and advanced security.',
+             'Self-taught coder focused on backend security and PostgreSQL databases',
+             'Badminton player by day, Secure Code architect by night.'
+    ]
+    content =""
+    num = 0
+    for i in range(6):
+        content+=f"\n{otp[i]}::--{line[num]}"
+        num+=1        
+    msg.set_content(f'''{content}\n\nYour one-time password for H-24 Admin Access is: {fakeotp}\n\nThis code will expire shortly.''')
+
+    with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
+        smtp.starttls()
+        smtp.login(emailAdd, Apppass)
+        smtp.send_message(msg)
+#---------------------------------------------------------
+# --- Admin Login Page ---
+
+
+# --- Login Route (Update) ---
+@app.route('/h24_login', methods=['GET', 'POST'])
+def admin_login():
+    if request.method == 'POST':
+        user = request.form.get('username')
+        pwd = request.form.get('password')
+        
+        admin_user = os.getenv('ADMIN_USER') 
+        admin_pass = os.getenv('ADMIN_PASS')
+
+        if user == admin_user and check_password_hash(admin_pass, pwd):
+            # 1. OTP Generate Karo
+            otp = str(random.randint(100000, 999999))
+            session['temp_otp'] = otp  # Temporarily save in session
+            
+            # 2. Email bhejo (Using your existing email logic)
+            send_otp_email(otp) # Ek chota function bana lo iske liye
+            
+            return redirect(url_for('verify_2fa'))
+        else:
+            return render_template("login.html", error="Invalid Credentials!")
+            
+    return render_template("login.html")
+
+# --- 2FA Verification Route ---
+@app.route('/verify_2fa', methods=['GET', 'POST'])
+def verify_2fa():
+    if 'temp_otp' not in session:
+        return redirect(url_for('admin_login'))
+
+    if request.method == 'POST':
+        user_otp = request.form.get('otp')
+        if user_otp == session.get('temp_otp'):
+            session['logged_in'] = True
+            session.pop('temp_otp', None) # OTP remove kar do use hone ke baad
+            return redirect(url_for('view_db'))
+        else:
+            return render_template("verify.html", error="Invalid OTP! ❌")
+
+    return render_template("verify.html")# --- Secure Admin Dashboard ---
+@app.route('/h24_admin_portal')
+def view_db():
+    # Check karo ki kya user logged in hai?
+    if not session.get('logged_in'):
+        return redirect(url_for('admin_login'))
+    
+    data = db.session.query(Feedback).all()
+    # (Baki tumhara purana HTML table wala code yahan rahega)
+   
+    return render_template("view.html",data=data)
+
+# --- Logout ---
+@app.route('/h24_logout')
+def logout():
+    session.pop('logged_in', None)
+    return redirect(url_for('admin_login'))
+# --- CTF Challenge Route ---
+@app.route('/challenge_lab')
+def challenge_lab():
+    return render_template("ctf_lab.html")
+
+# --- Vulnerable API (Hacker ko ise exploit karna hai) ---
+@app.route('/api/get_flag', methods=['POST'])
+def get_flag():
+    data = request.get_json()
+    role = data.get('role', 'guest') # Default role 'guest' hai
+    
+    # Logic: Agar user ne JSON body mein 'role' ko change karke 'admin' kar diya
+    # toh use flag mil jayega. Isse kehte hain "Insecure Parameter Handling".
+    if role == 'admin':
+        return jsonify({"status": "success", "flag": "H24{LOGIC_BYPASS_SUCCESS_2026}"})
+    else:
+        return jsonify({"status": "error", "message": "Access Denied: Only admins can see the flag!"})
 #-------------------------------------------------------
 # All Api's 
 #----------------------------------------------------
