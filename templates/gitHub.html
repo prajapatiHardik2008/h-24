@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='github.css') }}">
+</head>
+<body>
+    <div class="search-box">
+        <label for="gitname">GitHub Username</label>
+        <input type="text" id="gitname" placeholder="e.g. torvalds">
+        <button id="config">Analyze</button>
+    </div>
+
+    <div class="container">
+        <div class="result" id="result"></div>
+        
+        <div class="chart-container">
+            <canvas id="repoChart"></canvas>
+        </div>
+    </div>
+    <div class="nav-controls">
+    <a href="/" class="btn-home">BACK TO TERMINAL</a>
+</div>
+    <script src="{{ url_for('static', filename='github.js') }}"></script>
+</body>
+</html>

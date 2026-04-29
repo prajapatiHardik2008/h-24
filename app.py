@@ -11,6 +11,7 @@ import socket
 from flask_sqlalchemy import SQLAlchemy
 import hashlib
 from werkzeug.security import generate_password_hash, check_password_hash
+import requests
 #----------------------------------------------------------------------
 # tools 
 #----------------------------------------------------------------------
@@ -212,6 +213,16 @@ def scan_port():
     
     s.close()
     return jsonify({"status": "closed", "port": port})
+@app.route("/news")
+def news():
+    return render_template("Cyber-News.html")
+#----------------------------------------------------
+#News Api 
+@app.route('/get-news-data')
+def get_news_data():
+    api_key = os.getenv("VITE_NEWS_API_KEY")
+    # Yahan se news fetch karke frontend ko bhej sakte ho ya srif key
+    return jsonify({"apiKey": api_key})
 #---------------------------------------------------------
 #OTP
 def send_otp_email(otp):
@@ -317,8 +328,49 @@ def get_flag():
         return jsonify({"status": "success", "flag": "H24{LOGIC_BYPASS_SUCCESS_2026}"})
     else:
         return jsonify({"status": "error", "message": "Access Denied: Only admins can see the flag!"})
+@app.route("/git_config")
+def git_config():
+    return render_template("gitHub.html")
 #-------------------------------------------------------
 # All Api's 
+#----------------------------------------------------
+# Git hub analysis
+@app.route("/Git_Hub", methods=["POST"])
+def GITHUB():
+    data = request.get_json()
+    username = data.get("Username")
+    
+    user_res = requests.get(f"https://api.github.com/users/{username}")
+    repo_res = requests.get(f"https://api.github.com/users/{username}/repos")
+    
+    user_data = user_res.json()
+    repo_data = repo_res.json()
+
+    if "message" in user_data and user_data['message'] == 'Not Found':
+        return jsonify({"status": "error", "message": "User not found!"})
+    
+    # 1. Dictionary use karo, string nahi!
+    user_final_data = {
+        "Name": user_data.get('name') or username,
+        "Followers": user_data.get('followers', 0),
+        "PublicRepos": user_data.get('public_repos', 0),
+        "Repos": [] # Capital R
+    }
+
+    # 2. Repo data ko Repos list mein dalo
+    if isinstance(repo_data, list): # Check ki data list hi hai
+        for repo in repo_data:
+            user_final_data["Repos"].append({
+                'Name': repo.get('name'),
+                'Stars': repo.get('stargazers_count', 0),
+                'Language': repo.get('language') or "None",
+                'Forks': repo.get('forks_count', 0)
+            })
+
+    # 3. f-string mat lagana yahan!
+    return jsonify({"status": "success", "User_information": user_final_data})
+
+
 #----------------------------------------------------
 # base 64 Encoding and decoding API 
 @app.route('/base64E',methods=['POST'])

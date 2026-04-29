@@ -1,0 +1,150 @@
+:root {
+    --neon: #00ff41;
+    --bg: #0a0a0a;
+}
+
+body {
+    background-color: var(--bg);
+    color: white;
+    font-family: 'Share Tech Mono', monospace;
+    padding: 20px;
+}
+
+.search-box {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+input {
+    background: #111;
+    border: 1px solid var(--neon);
+    color: white;
+    padding: 10px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.result {
+    flex: 1;
+    border-left: 3px solid var(--neon);
+    padding: 20px;
+    background: #111;
+}
+
+.chart-container {
+    flex: 1;
+    max-width: 400px; /* Chart ka size chota rakha hai */
+    background: #111;
+    padding: 15px;
+    border: 1px solid #333;
+}
+/* Button Container for spacing */
+.search-box {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Base Button Style */
+#config, .btn {
+    background: transparent;
+    color: var(--neon);
+    border: 1px solid var(--neon);
+    padding: 10px 25px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0, 255, 65, 0.2);
+}
+
+/* Hover Effect: Glow and Fill */
+#config:hover, .btn:hover {
+    background: var(--neon);
+    color: #000;
+    box-shadow: 0 0 20px var(--neon), 0 0 40px rgba(0, 255, 65, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Active/Click Effect */
+#config:active, .btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 10px var(--neon);
+}
+
+/* Pseudo-element for "Scanline" effect on button (Optional) */
+#config::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(45deg);
+    transition: all 0.5s;
+    pointer-events: none;
+}
+
+#config:hover::before {
+    left: 100%;
+    top: 100%;
+}
+
+/* Input box ko bhi thoda aesthetic banate hain */
+#gitname {
+    background: #000;
+    border: 1px solid #333;
+    padding: 10px;
+    color: var(--neon);
+    font-family: 'Share Tech Mono', monospace;
+    outline: none;
+    width: 250px;
+    transition: border 0.3s;
+}
+
+#gitname:focus {
+    border-color: var(--neon);
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
+}
+/* Back to Home Button Styling */
+.btn-home {
+    text-decoration: none; /* Link underline hatane ke liye */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 0, 0, 0.05); /* Halki red tint (exit feel) */
+    color: #ff3e3e; /* Red/Orange neon for Back button */
+    border: 1px solid #ff3e3e;
+    padding: 8px 20px;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.btn-home:hover {
+    background: #ff3e3e;
+    color: #000;
+    box-shadow: 0 0 15px #ff3e3e;
+    transform: translateX(-5px); /* Left ki taraf slide hoga */
+}
+
+/* Button ke andar ka arrow icon */
+.btn-home::before {
+    content: '< ';
+    font-weight: bold;
+    margin-right: 8px;
+}
