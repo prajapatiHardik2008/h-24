@@ -228,29 +228,41 @@ def get_news_data():
 def send_otp_email(otp):
     emailAdd = os.getenv('EMAIL_USER')
     Apppass = os.getenv('EMAIL_PASS')
-    fakeotp = random.randint(0,1000000)
+    fakeotp = random.randint(100000, 999999) # 6 digit random
+    
     msg = EmailMessage()
     msg['Subject'] = f"{fakeotp} is your H-24 Access Code"
     msg['From'] = emailAdd
     msg['To'] = "hardikprajapati242008@gmail.com"
-    line = ['18-year-old BCA student and Cybersecurity enthusiast at LJ University',
-             'Python developer passionate about building secure portals and hacking tools.',
-             'Active CTF player with a knack for network forensics and ethical hacking.',
-             'Building the H-24 Portal: A blend of web development and advanced security.',
-             'Self-taught coder focused on backend security and PostgreSQL databases',
-             'Badminton player by day, Secure Code architect by night.'
+    
+    lines = [
+        '18-year-old BCA student and Cybersecurity enthusiast at LJ University',
+        'Python developer passionate about building secure portals and hacking tools.',
+        'Active CTF player with a knack for network forensics and ethical hacking.',
+        'Building the H-24 Portal: A blend of web development and advanced security.',
+        'Self-taught coder focused on backend security and PostgreSQL databases',
+        'Badminton player by day, Secure Code architect by night.'
     ]
-    content =""
-    num = 0
-    for i in range(6):
-        content+=f"\n{otp[i]}::--{line[num]}"
-        num+=1        
+    
+    # Efficient content building
+    content = ""
+    for i in range(min(len(otp), len(lines))):
+        content += f"\n{otp[i]}::--{lines[i]}"
+        
     msg.set_content(f'''{content}\n\nYour one-time password for H-24 Admin Access is: {fakeotp}\n\nThis code will expire shortly.''')
 
-    with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
-        smtp.starttls()
-        smtp.login(emailAdd, Apppass)
-        smtp.send_message(msg)
+    try:
+        # 1. Timeout add kiya (10 seconds) taaki server hang na ho
+        with smtplib.SMTP("smtp.gmail.com", 587, timeout=10) as smtp:
+            smtp.starttls()
+            smtp.login(emailAdd, Apppass)
+            smtp.send_message(msg)
+            print("Email sent successfully")
+    except Exception as e:
+        # 2. Error log karo taaki server crash hone ke bajaye agle step par jaye
+        print(f"SMTP Error: {e}")
+        return False
+    return True
 #---------------------------------------------------------
 # --- Admin Login Page ---
 
