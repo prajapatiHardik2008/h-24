@@ -12,6 +12,7 @@ from flask_sqlalchemy import SQLAlchemy
 import hashlib
 from werkzeug.security import generate_password_hash, check_password_hash
 import requests
+
 #----------------------------------------------------------------------
 # tools 
 #----------------------------------------------------------------------
@@ -41,6 +42,17 @@ def port_scanner(TargetIp, port):
     except Exception as e:
         s.close()
         return f"Error scanning port {port}"
+
+
+#------------------------------------------------------------------
+# AI 
+def Aiprocess(command):
+    prompt = f"Answer in 1-2 lines. If it's a coding task, provide only the code without explanation: {command}"
+    
+    response = requests.get(f"https://text.pollinations.ai/{prompt}?model=openai")
+    return response.text
+#----------------------------------------------------------------------
+#-----------------------------------------------------
 
 def encodebase64(text):
     text = pybase64.encodebytes(text)
@@ -174,6 +186,15 @@ def image():
 @app.route('/help')
 def help():
     return render_template("helpcenter.html")
+@app.route("/getaians",methods=["POST","GET"])
+def getans():
+    data = request.get_json()
+    command = data.get("command")
+    try:
+        response = Aiprocess(command)
+        return jsonify({"ans":response})
+    except:
+        return jsonify({"ans":"Server Error !"})
 #------------------------------------------------------
 #Rot 
 @app.route("/rot")
@@ -221,8 +242,25 @@ def news():
 @app.route('/get-news-data')
 def get_news_data():
     api_key = os.getenv("VITE_NEWS_API_KEY")
-    # Yahan se news fetch karke frontend ko bhej sakte ho ya srif key
-    return jsonify({"apiKey": api_key})
+    url = f'''https://newsapi.org/v2/everything?q=cybersecurity&pageSize=20&apiKey={api_key}'''
+    response = requests.get(url)
+    data = response.json()
+    articles = data.get('articles', [])
+    if not articles:
+            return jsonify({"news": ">> ERROR: No fresh intel found in the database."})
+
+        # In 30 articles mein se koi bhi ek random select karo
+    selected_article = random.choice(articles)
+        
+    title = selected_article.get('title', 'No Title')
+    description = selected_article.get('description', 'No Content')
+    clean_data = f"Title: {title} | Description: {description}"
+    command = f"Cyber Mentor: Summarize this hacking news. 1.Simple Explain, 2.Signs to Identify, 3.Safety Steps. Bullet points only, 4 how to do it for eithcaly practice in my local host , this is data - {clean_data} "
+    news = Aiprocess(command)
+    if "Support Pollinations.AI" in news:
+        news = news.split("Support Pollinations.AI")[0]
+    news = news.strip()
+    return jsonify({"news": news})
 #---------------------------------------------------------
 #OTP
 def send_otp_email(otp):

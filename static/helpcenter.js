@@ -20,12 +20,22 @@ Instructions:
 const userquery = document.querySelector('#query').value;
 
 const finalPrompt =encodeURIComponent(`${my_data} and User query are :- ${userquery}`);
-const apiurl = `https://text.pollinations.ai/${finalPrompt}?model=openai`;
+const apiurl = `/getaians`;
     
 let result = document.querySelector(".result");
 result.innerText = `wait a minute!`;
-const response = await fetch(apiurl);
-const data = await response.text();
-result.innerText = `AI :- ${data}`;
+const response = await fetch(apiurl,{
+    "method":"POST",
+            "headers":{
+                "Content-Type":"application/json"
+                },
+            "body":JSON.stringify({"command":finalPrompt})
+});
+const data = await response.json();
+const ans = await data.ans
+result.innerText = `AI :- ${ans}`;
 
 });
+
+
+//getaians

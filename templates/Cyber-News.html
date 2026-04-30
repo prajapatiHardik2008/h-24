@@ -132,6 +132,30 @@
             0% { top: 0; }
             100% { top: 100%; }
         }
+        #news-content pre {
+    color: #00ff41;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    
+    /* Ye teen lines zaroori hain responsive banane ke liye */
+    white-space: pre-wrap;       /* Text wrap hoga, bahar nahi jayega */
+    word-wrap: break-word;       /* Lambe words break ho jayenge */
+    overflow-x: hidden;          /* Horizontal scroll hatane ke liye */
+    
+    border: 1px solid #00ff41;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 100%;             /* Card ki width se bahar nahi jayega */
+}
+
+/* Mobile ke liye font thoda chota kar do */
+@media (max-width: 600px) {
+    #news-content pre {
+        font-size: 12px;
+        padding: 10px;
+    }
+}
     </style>
 </head>
 <body>
