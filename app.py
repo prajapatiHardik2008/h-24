@@ -292,7 +292,7 @@ def send_otp_email(otp):
         # 1. Timeout add kiya (10 seconds) taaki server hang na ho
         with smtplib.SMTP("smtp.gmail.com", 465, timeout=15) as smtp:
             smtp.starttls()
-            #smtp.login(emailAdd, Apppass)
+            smtp.login(emailAdd, Apppass)
             smtp.send_message(msg)
             print("Email sent successfully")
     except Exception as e:
