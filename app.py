@@ -12,7 +12,6 @@ from flask_sqlalchemy import SQLAlchemy
 import hashlib
 from werkzeug.security import generate_password_hash, check_password_hash
 import requests
-
 #----------------------------------------------------------------------
 # tools 
 #----------------------------------------------------------------------
@@ -291,7 +290,7 @@ def send_otp_email(otp):
 
     try:
         # 1. Timeout add kiya (10 seconds) taaki server hang na ho
-        with smtplib.SMTP("smtp.gmail.com", 587, timeout=10) as smtp:
+        with smtplib.SMTP("smtp.gmail.com", 465, timeout=15) as smtp:
             smtp.starttls()
             smtp.login(emailAdd, Apppass)
             smtp.send_message(msg)

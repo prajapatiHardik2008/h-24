@@ -1,48 +1,46 @@
 import requests
-import pandas as pd
-import matplotlib.pyplot as plt
+import json
 
-def get_github_data(username):
-    # GitHub Public API URL
-    url = f"https://api.github.com/users/{username}"
-    repos_url = f"https://api.github.com/users/{username}/repos"
-    
-    # User profile data fetch karna
-    user_data = requests.get(url).json()
-    # Repositories data fetch karna
-    repos_data = requests.get(repos_url).json()
-    
-    if 'message' in user_data and user_data['message'] == 'Not Found':
-        print("User nahi mila! Username check karein.")
-        return None
+# --- CONFIGURATION ---
+# Aapka token yahan paste karein
+access_token = "EAAN9xoW90PoBRQwDOjMtP1WaA80ZA4Hnv7xCE2MDzJCvRi89qNMVjnlgncNCRd4ODZCdLra2YMqoxvUG7lsZCSdXEhK9AqX6jwAzyuCpHFuLegLVsuTcEdbwqdFWxV8k1YKsAkqOyDapk6InoG7U4jCzTZBFtHBzsQvZCMiRAAvnapDMGVzdPlZAmkxwcOgCoGT5ZBAka0ZBdUSSZCQ2aEZCoBcgjHnc3dzT4yQHiorDd4dVDizhHqqAL2mqzwZATyZBsZCWm4j6vfNWdbIHAMRwLrSG5K7WPA5l936KiZCiEhmpf07soYdjYcYXlVXjT84XZArwiEovkZBl661V"
 
-    print(f"--- Profile: {user_data['name']} ---")
-    print(f"Followers: {user_data['followers']}")
-    print(f"Public Repos: {user_data['public_repos']}")
-    
-    # Data ko table (DataFrame) mein convert karna
-    repo_list = []
-    for repo in repos_data:
-        repo_list.append({
-            'Name': repo['name'],
-            'Stars': repo['stargazers_count'],
-            'Language': repo['language'] if repo['language'] else "None",
-            'Forks': repo['forks_count']
-        })
-    
-    df = pd.DataFrame(repo_list)
-    return df
+# Meta dashboard (API Setup) se "Phone Number ID" yahan daalein
+phone_number_id = "982716530938106" 
 
-# Apna GitHub username yahan likhein
-username = "prajapati-hardik-24" # Aapka GitHub ID
-df = get_github_data(username)
+# Jis number par message bhejna hai (Country code ke saath, e.g., 91XXXXXXXXXX)
+recipient_number = "8141220703"
 
-if df is not None:
-    print("\n--- Aapki Repositories ki Table ---")
-    print(df)
+# API Endpoint
+url = f"https://graph.facebook.com/v18.0/{phone_number_id}/messages"
 
-    # Graph: Top Languages used in Repos
-    df['Language'].value_counts().plot(kind='pie', autopct='%1.1f%%', figsize=(8, 6))
-    plt.title(f"Languages used by {username}")
-    plt.ylabel('') # Y-axis label hatane ke liye
-    plt.show()
+# Headers
+headers = {
+    "Authorization": f"Bearer {access_token}",
+    "Content-Type": "application/json"
+}
+
+# Message Data (Template use karna sabse easy aur safe hai)
+data = {
+    "messaging_product": "whatsapp",
+    "to": recipient_number,
+    "type": "template",
+    "template": {
+        "name": "hello_world",
+        "language": {
+            "code": "en_US"
+        }
+    }
+}
+
+# API Call
+try:
+    response = requests.post(url, headers=headers, data=json.dumps(data))
+    if response.status_code == 200:
+        print("✅ Message successfully sent!")
+        print(response.json())
+    else:
+        print(f"❌ Error {response.status_code}:")
+        print(response.json())
+except Exception as e:
+    print(f"An error occurred: {e}")
