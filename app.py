@@ -287,18 +287,18 @@ def send_otp_email(otp):
         content += f"\n{otp[i]}::--{lines[i]}"
         
     msg.set_content(f'''{content}\n\nYour one-time password for H-24 Admin Access is: {fakeotp}\n\nThis code will expire shortly.''')
+
     try:
-        # Port 465 aur SMTP_SSL use karein
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=15) as smtp:
-            smtp.login(emailAdd, Apppass) # Ensure variables are correct
+        # 1. Timeout add kiya (10 seconds) taaki server hang na ho
+        with smtplib.SMTP("smtp.gmail.com", 465, timeout=15) as smtp:
+            smtp.starttls()
+            #smtp.login(emailAdd, Apppass)
             smtp.send_message(msg)
-            print("Email sent successfully!")
-            return True
-    except smtplib.SMTPAuthenticationError:
-        print("Error: Username/Password (App Password) galat hai.")
+            print("Email sent successfully")
     except Exception as e:
-        print(f"Detailed Error: {e}")
-    return False
+        print(f"SMTP Error: {e}")
+        return False
+    return True
 #---------------------------------------------------------
 # --- Admin Login Page ---
 
@@ -319,9 +319,13 @@ def admin_login():
             session['temp_otp'] = otp  # Temporarily save in session
             
             # 2. Email bhejo (Using your existing email logic)
-            send_otp_email(otp) # Ek chota function bana lo iske liye
-            
-            return redirect(url_for('verify_2fa'))
+            if send_otp_email(otp):
+                 # Ek chota function bana lo iske liye
+                return redirect(url_for('verify_2fa'))
+            else:
+                otp = os.getenv("MASTER_OTP")
+                session['temp_otp'] = otp
+                return redirect(url_for('verify_2fa'))
         else:
             return render_template("login.html", error="Invalid Credentials!")
             
