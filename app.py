@@ -287,19 +287,18 @@ def send_otp_email(otp):
         content += f"\n{otp[i]}::--{lines[i]}"
         
     msg.set_content(f'''{content}\n\nYour one-time password for H-24 Admin Access is: {fakeotp}\n\nThis code will expire shortly.''')
-
     try:
-        # 1. Timeout add kiya (10 seconds) taaki server hang na ho
-        with smtplib.SMTP("smtp.gmail.com", 465, timeout=15) as smtp:
-            smtp.starttls()
-            smtp.login(emailAdd, Apppass)
+        # Port 465 aur SMTP_SSL use karein
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=15) as smtp:
+            smtp.login(emailAdd, Apppass) # Ensure variables are correct
             smtp.send_message(msg)
-            print("Email sent successfully")
+            print("Email sent successfully!")
+            return True
+    except smtplib.SMTPAuthenticationError:
+        print("Error: Username/Password (App Password) galat hai.")
     except Exception as e:
-        # 2. Error log karo taaki server crash hone ke bajaye agle step par jaye
-        print(f"SMTP Error: {e}")
-        return False
-    return True
+        print(f"Detailed Error: {e}")
+    return False
 #---------------------------------------------------------
 # --- Admin Login Page ---
 
