@@ -1,5 +1,5 @@
 import random
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for ,render_template_string
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for ,render_template_string,send_from_directory
 import pybase64
 import time
 import smtplib
@@ -204,6 +204,15 @@ def rot():
 @app.route("/iplookup")
 def iplookup():
     return render_template("IPlookup.html")
+#-------------------------------------------------------
+#./well-known/securit.txt page 
+@app.route('/.well-known/security.txt')
+def security_txt():
+    try:
+        return send_from_directory(os.path.join(app.root_path, 'static', '.well-known'), 
+                               'security.txt', mimetype='text/plain')
+    except Exception as e:
+        return "Contact: mailto:hardikprajapati242008@gmail.com", 404
 #-------------------------------------------------------
 # Port Scanner 
 @app.route("/portscan")
@@ -448,6 +457,10 @@ def base64Deco():
 def feedBack():
     data = request.get_json()
     user_ip = request.remote_addr
+    if request.headers.getlist("X-Forwarded-For"):
+        user_ip = request.headers.getlist("X-Forwarded-For")[0].split(',')[0]
+    else:
+        user_ip = request.remote_addr
     already_voted = db.session.query(Feedback).filter_by(ip_address=user_ip).first()
 
     if already_voted:
