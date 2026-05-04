@@ -6,7 +6,7 @@ function Encodeb16(plainText)
     for(let i = 0 ; i < plainText.length ; i++)
     {
         let Charcode = plainText.charCodeAt(i);
-        // make binary code of 8 bit like 01100110
+        // make binary code of 8 bit like 0110   0110
         let binary = Charcode.toString(2).padStart(8,'0');
         let firsthalf = binary.substring(0, 4);
         let sechalf = binary.substring(4);

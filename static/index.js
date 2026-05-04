@@ -1,5 +1,5 @@
 
-const tools = document.querySelectorAll('.card');
+const tools = document.querySelectorAll('.tool-card');
 
 let timer;
 document.querySelector("#search").addEventListener('keyup',(event)=>{

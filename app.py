@@ -305,7 +305,7 @@ def send_otp_email(otp):
             smtp.send_message(msg)
             print("Email sent successfully")
     except Exception as e:
-        print(f"SMTP Error: {e}")
+        print(f"SMTP Error: {e}") 
         return False
     return True
 #---------------------------------------------------------
@@ -484,4 +484,4 @@ if __name__ == '__main__':
     #thread.start()
     with app.app_context():
         db.create_all()
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=True)
