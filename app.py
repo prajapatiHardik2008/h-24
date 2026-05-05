@@ -479,6 +479,18 @@ def feedBack():
     except Exception as e:
         db.session.rollback()
         return jsonify({'Ans': 'Fail',"msg":"Server Error"})
+    
+#-------------------------------------------------------------
+#Fix Click Jacking 
+@app.after_request
+def add_security_headers(response):
+    # X - Frame for old browsers
+     response.headers["X-Frame-Options"] = "SAMEORIGIN"
+
+     # 2. Content-Security-Policy: FOR  Modern browsers  (MOST  Powerful)
+     response.headers['Content-Security-Policy'] = "frame-ancestors 'self'"
+     return response
+
 if __name__ == '__main__':
     #thread = threading.Thread(target=emailSender,daemon=True)
     #thread.start()
