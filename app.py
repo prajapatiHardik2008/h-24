@@ -12,6 +12,7 @@ from flask_sqlalchemy import SQLAlchemy
 import hashlib
 from werkzeug.security import generate_password_hash, check_password_hash
 import requests
+from flask_talisman import Talisman
 #----------------------------------------------------------------------
 # tools 
 #----------------------------------------------------------------------
@@ -496,4 +497,12 @@ if __name__ == '__main__':
     #thread.start()
     with app.app_context():
         db.create_all()
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    port = int(os.environ.get("PORT", 8000))
+    if os.environ.get("RENDER"): # for render 
+        Talisman(app, content_security_policy=None)
+        debug_mode = False
+    else: # for Local Test
+        Talisman(app, content_security_policy=None,force_https=False)
+        debug_mode = True
+
+    app.run(host='0.0.0.0', port=port, debug=debug_mode)
