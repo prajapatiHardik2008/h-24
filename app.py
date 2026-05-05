@@ -492,17 +492,29 @@ def add_security_headers(response):
      response.headers['Content-Security-Policy'] = "frame-ancestors 'self'"
      return response
 
+permissions_policy = {
+    'geolocation': '()',      # Not allowed to use geolocation 
+    'microphone': '()',       # Not allowed to use Microphone
+    'camera': '()',           # Not allowed to use camera in future i'll remove this
+    'display-capture': '()',  # Screen recording block
+    'payment': '()'           # Payment APIs block
+    }
+
+is_render = os.environ.get("RENDER")
+if is_render:
+    Talisman(app, content_security_policy=None,permissions_policy=permissions_policy)
+    debug_mode = False
+
+else:
+    Talisman(app, content_security_policy=None,force_https=False,permissions_policy=permissions_policy)
+    debug_mode = True
+
+with app.app_context():
+        db.create_all()
 if __name__ == '__main__':
+
     #thread = threading.Thread(target=emailSender,daemon=True)
     #thread.start()
-    with app.app_context():
-        db.create_all()
     port = int(os.environ.get("PORT", 8000))
-    if os.environ.get("RENDER"): # for render 
-        Talisman(app, content_security_policy=None)
-        debug_mode = False
-    else: # for Local Test
-        Talisman(app, content_security_policy=None,force_https=False)
-        debug_mode = True
 
     app.run(host='0.0.0.0', port=port, debug=debug_mode)
