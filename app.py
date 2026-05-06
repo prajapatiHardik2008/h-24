@@ -13,6 +13,11 @@ import hashlib
 from werkzeug.security import generate_password_hash, check_password_hash
 import requests
 from flask_talisman import Talisman
+from datetime import timedelta
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+from flask_limiter.errors import RateLimitExceeded
+import resend
 #----------------------------------------------------------------------
 # tools 
 #----------------------------------------------------------------------
@@ -98,7 +103,13 @@ def emailSender():
 #------------------------------------------------------
 # all Pages 
 app = Flask(__name__)
+is_render = os.environ.get("RENDER")
 app.secret_key = os.getenv('SECRET_KEY')
+if is_render:
+    app.permanent_session_lifetime = timedelta(minutes=20)
+else:
+    app.permanent_session_lifetime = timedelta(seconds=50) # for only localy test a
+
 #---------------------------------------------------------------------
 #connecting with data base # ... app = Flask(__name__) ke niche ...
 
@@ -273,46 +284,253 @@ def get_news_data():
 #---------------------------------------------------------
 #OTP
 def send_otp_email(otp):
-    emailAdd = os.getenv('EMAIL_USER')
-    Apppass = os.getenv('EMAIL_PASS')
-    fakeotp = random.randint(100000, 999999) # 6 digit random
-    
-    msg = EmailMessage()
-    msg['Subject'] = f"{fakeotp} is your H-24 Access Code"
-    msg['From'] = emailAdd
-    msg['To'] = "hardikprajapati242008@gmail.com"
+    fakeotp = random.randint(100000, 999999)
     
     lines = [
-        '18-year-old BCA student and Cybersecurity enthusiast at LJ University',
-        'Python developer passionate about building secure portals and hacking tools.',
-        'Active CTF player with a knack for network forensics and ethical hacking.',
-        'Building the H-24 Portal: A blend of web development and advanced security.',
-        'Self-taught coder focused on backend security and PostgreSQL databases',
-        'Badminton player by day, Secure Code architect by night.'
+        ('🎓', 'BCA Student', '18-year-old Cybersecurity enthusiast at LJ University'),
+        ('🐍', 'Python Dev', 'Building secure portals and hacking tools.'),
+        ('🚩', 'CTF Player', 'Network forensics and ethical hacking specialist.'),
+        ('🛡️', 'H-24 Portal', 'A blend of web development and advanced security.'),
+        ('🗄️', 'Backend', 'Self-taught, focused on PostgreSQL and secure code.'),
+        ('🏸', 'Fun Fact', 'Badminton player by day, Code architect by night.')
     ]
-    
-    # Efficient content building
-    content = ""
+
+    rows = ""
     for i in range(min(len(otp), len(lines))):
-        content += f"\n{otp[i]}::--{lines[i]}"
-        
-    msg.set_content(f'''{content}\n\nYour one-time password for H-24 Admin Access is: {fakeotp}\n\nThis code will expire shortly.''')
+        emoji, title, desc = lines[i]
+        rows += f"""
+        <tr>
+            <td style="padding:8px 12px;font-size:20px">{emoji}</td>
+            <td style="padding:8px 12px;color:#00ff88;font-weight:bold;
+                       white-space:nowrap">{otp[i]} — {title}</td>
+            <td style="padding:8px 12px;color:#aaaaaa">{desc}</td>
+        </tr>"""
+
+    html = f"""
+    <!DOCTYPE html>
+    <html>
+    <body style="margin:0;padding:0;background:#0a0a0a;font-family:'Courier New',monospace">
+
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td align="center" style="padding:40px 20px">
+            <table width="600" style="background:#111;border:1px solid #00ff88;
+                                      border-radius:12px;overflow:hidden">
+
+              <!-- Header -->
+              <tr>
+                <td style="background:#00ff88;padding:24px;text-align:center">
+                  <h1 style="margin:0;color:#0a0a0a;font-size:28px;
+                             letter-spacing:4px">H-24 PORTAL</h1>
+                  <p style="margin:4px 0 0;color:#0a0a0a;font-size:12px;
+                            letter-spacing:2px">SECURE ACCESS SYSTEM</p>
+                </td>
+              </tr>
+
+              <!-- OTP Box -->
+              <tr>
+                <td style="padding:32px;text-align:center">
+                  <p style="color:#888;font-size:13px;letter-spacing:2px;
+                            margin:0 0 12px">YOUR ONE-TIME ACCESS CODE</p>
+                  <div style="display:inline-block;background:#0a0a0a;
+                              border:2px solid #00ff88;border-radius:8px;
+                              padding:16px 40px">
+                    <span style="color:#00ff88;font-size:36px;
+                                 letter-spacing:8px;font-weight:bold">{fakeotp}</span>
+                  </div>
+                  <p style="color:#555;font-size:11px;margin:12px 0 0">
+                    ⏱ Expires in 5 minutes &nbsp;|&nbsp; Do not share this code
+                  </p>
+                </td>
+              </tr>
+
+              <!-- Divider -->
+              <tr>
+                <td style="padding:0 32px">
+                  <hr style="border:none;border-top:1px solid #222">
+                </td>
+              </tr>
+
+              <!-- About Section -->
+              <tr>
+                <td style="padding:24px 32px">
+                  <p style="color:#555;font-size:11px;letter-spacing:2px;
+                            margin:0 0 16px">// OPERATOR PROFILE</p>
+                  <table width="100%" cellpadding="0" cellspacing="0">
+                    {rows}
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background:#0a0a0a;padding:16px;text-align:center;
+                           border-top:1px solid #222">
+                  <p style="color:#333;font-size:11px;margin:0">
+                    H-24 Portal &nbsp;•&nbsp; Hardik Prajapati 
+                    &nbsp;•&nbsp; If you didn't request this, ignore it.
+                  </p>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+
+    </body>
+    </html>"""
 
     try:
-        # 1. Timeout add kiya (10 seconds) taaki server hang na ho
-        with smtplib.SMTP("smtp.gmail.com", 465, timeout=15) as smtp:
-            smtp.starttls()
-            smtp.login(emailAdd, Apppass)
-            smtp.send_message(msg)
-            print("Email sent successfully")
+        resend.api_key = os.getenv("RESEND_API")
+        r = resend.Emails.send({
+            "from": "onboarding@resend.dev",
+            "to": "hardikprajapati242008@gmail.com",
+            "subject": f"{fakeotp} is your H-24 Access Code",
+            "html": html
+        })
+        print("Email sent successfully")
+
     except Exception as e:
-        print(f"SMTP Error: {e}") 
+        print(f"Error: {e}")
         return False
+
     return True
+
+
+# ============================================================
+# VIEWER LOGIN SYSTEM — Devang ke liye (Read-only access)
+# Ye sab apne existing app.py mein add karo
+# ============================================================
+
+# --- 1. IMPORTS (top pe add karo) ---
+# from datetime import timedelta  # already hoga tumhare paas
+
+# --- 2. DB MODEL (existing models ke niche add karo) ---
+
+class BlockedIP(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    ip_address = db.Column(db.String(50), unique=True, nullable=False)
+    reason = db.Column(db.String(200), nullable=True)
+
+# db.create_all() wala block already handle kar lega — koi change nahi
+
+# ============================================================
+# --- 3. BLOCKED IP MIDDLEWARE (add_security_headers ke pehle) ---
+# ============================================================
+
+@app.before_request
+def check_blocked_ip():
+    user_ip = request.remote_addr
+    if request.headers.getlist("X-Forwarded-For"):
+        user_ip = request.headers.getlist("X-Forwarded-For")[0].split(',')[0]
+
+    # Admin aur viewer login pages ko block mat karo
+    allowed_routes = ['viewer_login', 'admin_login', 'static']
+    if request.endpoint in allowed_routes:
+        return
+
+    blocked = db.session.query(BlockedIP).filter_by(ip_address=user_ip).first()
+    if blocked:
+        return render_template("blocked.html", ip=user_ip), 403
+
+# ============================================================
+# --- 4. VIEWER LOGIN ROUTES ---
+# ============================================================
+limiter = Limiter(
+    get_remote_address,
+    default_limits=[],
+    app=app
+)
+@app.route('/viewer_login', methods=['GET', 'POST'])
+@limiter.limit("5 per minute")
+def viewer_login():
+    if request.method == 'POST':
+        user = request.form.get('username')
+        pwd  = request.form.get('password')
+
+        viewer_user = os.getenv('VIEWER_USER')   # .env mein set karo
+        viewer_pass = os.getenv('VIEWER_PASS')   # hashed password
+
+        if user == viewer_user and check_password_hash(viewer_pass, pwd):
+            session.permanent = True
+            session['viewer_logged_in'] = True
+            return redirect(url_for('viewer_dashboard'))
+        else:
+            return render_template("viewer_login.html", error="Invalid Credentials!")
+
+    return render_template("viewer_login.html")
+
+
+@app.route('/viewer_dashboard')
+def viewer_dashboard():
+    if not session.get('viewer_logged_in'):
+        return redirect(url_for('viewer_login'))
+
+    data     = db.session.query(Feedback).all()
+    blocked  = db.session.query(BlockedIP).all()
+    return render_template("viewer_dashboard.html", data=data, blocked=blocked)
+
+
+@app.route('/viewer_logout')
+def viewer_logout():
+    session.pop('viewer_logged_in', None)
+    return redirect(url_for('viewer_login'))
+
+# ============================================================
+# --- 5. IP BLOCK / UNBLOCK APIs (sirf ADMIN ke liye) ---
+# ============================================================
+
+@app.route('/admin/block_ip', methods=['POST'])
+def block_ip():
+    if not session.get('logged_in'):          # sirf main admin
+        return jsonify({"status": "error", "msg": "Unauthorized"}), 403
+
+    req_data  = request.get_json()
+    ip        = req_data.get('ip', '').strip()
+    reason    = req_data.get('reason', 'Blocked by admin')
+
+    if not ip:
+        return jsonify({"status": "error", "msg": "IP required"})
+
+    existing = db.session.query(BlockedIP).filter_by(ip_address=ip).first()
+    if existing:
+        return jsonify({"status": "error", "msg": "IP already blocked"})
+
+    new_block = BlockedIP(ip_address=ip, reason=reason)
+    db.session.add(new_block)
+    db.session.commit()
+    return jsonify({"status": "success", "msg": f"{ip} blocked!"})
+
+
+@app.route('/admin/unblock_ip', methods=['POST'])
+def unblock_ip():
+    if not session.get('logged_in'):          # sirf main admin
+        return jsonify({"status": "error", "msg": "Unauthorized"}), 403
+
+    req_data = request.get_json()
+    ip       = req_data.get('ip', '').strip()
+
+    record = db.session.query(BlockedIP).filter_by(ip_address=ip).first()
+    if not record:
+        return jsonify({"status": "error", "msg": "IP not found"})
+
+    db.session.delete(record)
+    db.session.commit()
+    return jsonify({"status": "success", "msg": f"{ip} unblocked!"})
+
+
+# ============================================================
+# --- 6. .ENV MEIN YE ADD KARO ---
+# ============================================================
+# VIEWER_USER=devang
+# VIEWER_PASS=<werkzeug se generate karo>
+#
+# Password generate karna:
+# python3 -c "from werkzeug.security import generate_password_hash; print(generate_password_hash('tumhara_password'))"
+# ============================================================
 #---------------------------------------------------------
 # --- Admin Login Page ---
-
-
 # --- Login Route (Update) ---
 @app.route('/h24_login', methods=['GET', 'POST'])
 def admin_login():
@@ -342,7 +560,18 @@ def admin_login():
     return render_template("login.html")
 
 # --- 2FA Verification Route ---
+limiter =Limiter( 
+    get_remote_address,
+    app=app,
+    default_limits=[]
+    )
+
+@app.errorhandler(RateLimitExceeded)
+def rate_limit_handler(e):
+    return render_template("login.html", 
+           error="Too many attempts! Wait 1 minute. 🚫"), 429
 @app.route('/verify_2fa', methods=['GET', 'POST'])
+@limiter.limit("3 per minute")
 def verify_2fa():
     if 'temp_otp' not in session:
         return redirect(url_for('admin_login'))
@@ -350,13 +579,16 @@ def verify_2fa():
     if request.method == 'POST':
         user_otp = request.form.get('otp')
         if user_otp == session.get('temp_otp'):
+            session.permanent = True
             session['logged_in'] = True
+
             session.pop('temp_otp', None) # OTP remove kar do use hone ke baad
             return redirect(url_for('view_db'))
         else:
             return render_template("verify.html", error="Invalid OTP! ❌")
 
-    return render_template("verify.html")# --- Secure Admin Dashboard ---
+    return render_template("verify.html")
+# --- Secure Admin Dashboard ---
 @app.route('/h24_admin_portal')
 def view_db():
     # Check karo ki kya user logged in hai?
@@ -480,7 +712,13 @@ def feedBack():
     except Exception as e:
         db.session.rollback()
         return jsonify({'Ans': 'Fail',"msg":"Server Error"})
-    
+
+#--------------------------------------------------------------
+# For limited time admin panel 
+# @app.before_request
+# def make_session_parmanent():
+#     session.permanent = True
+#     app.permanent_session_lifetime = timedelta(seconds=10)
 #-------------------------------------------------------------
 #Fix Click Jacking 
 @app.after_request
@@ -500,7 +738,7 @@ permissions_policy = {
     'payment': '()'           # Payment APIs block
     }
 
-is_render = os.environ.get("RENDER")
+
 if is_render:
     Talisman(app, content_security_policy=None,permissions_policy=permissions_policy)
     debug_mode = False

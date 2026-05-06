@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>H-24 | Viewer Dashboard</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+
+    :root {
+      --green:  #00ff88;
+      --dim:    #00aa55;
+      --bg:     #060a06;
+      --card:   #0d120d;
+      --border: #1a2e1a;
+      --red:    #ff4444;
+      --yellow: #ffcc00;
+      --text:   #aaaaaa;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      color: var(--text);
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,255,136,0.012) 2px, rgba(0,255,136,0.012) 4px
+      );
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: #0a110a;
+      border-bottom: 1px solid var(--border);
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-family: 'Orbitron', monospace;
+      color: var(--green);
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 4px;
+    }
+
+    .nav-brand span {
+      color: #2a5a2a;
+      font-size: 11px;
+      font-family: 'Share Tech Mono', monospace;
+      letter-spacing: 2px;
+      margin-left: 12px;
+    }
+
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+
+    .access-badge {
+      background: rgba(0,255,136,0.06);
+      border: 1px solid rgba(0,255,136,0.2);
+      color: var(--dim);
+      font-size: 10px;
+      padding: 4px 12px;
+      border-radius: 2px;
+      letter-spacing: 2px;
+    }
+
+    .logout-btn {
+      background: transparent;
+      border: 1px solid #2a2a2a;
+      color: #555;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      padding: 6px 14px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .logout-btn:hover { border-color: var(--red); color: var(--red); }
+
+    /* ── MAIN ── */
+    main { padding: 32px; max-width: 1200px; margin: 0 auto; }
+
+    .section-title {
+      color: var(--dim);
+      font-size: 11px;
+      letter-spacing: 3px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── STATS ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--green);
+      opacity: 0.4;
+    }
+
+    .stat-label {
+      color: #3a5c3a;
+      font-size: 10px;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .stat-value {
+      font-family: 'Orbitron', monospace;
+      color: var(--green);
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    /* ── TABLE ── */
+    .table-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 36px;
+    }
+
+    .table-header {
+      background: #0a110a;
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .table-title {
+      color: var(--green);
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+
+    .table-count {
+      color: #3a5c3a;
+      font-size: 11px;
+    }
+
+    .search-box {
+      background: #080d08;
+      border: 1px solid var(--border);
+      color: var(--green);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      padding: 7px 12px;
+      border-radius: 2px;
+      outline: none;
+      width: 220px;
+      transition: border-color 0.2s;
+    }
+
+    .search-box:focus { border-color: rgba(0,255,136,0.3); }
+    .search-box::placeholder { color: #1e3020; }
+
+    table { width: 100%; border-collapse: collapse; }
+
+    th {
+      background: #080d08;
+      color: #3a5c3a;
+      font-size: 10px;
+      letter-spacing: 2px;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 13px 16px;
+      font-size: 12px;
+      border-bottom: 1px solid #0f180f;
+      color: var(--text);
+      vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(0,255,136,0.02); }
+
+    .stars {
+      color: var(--yellow);
+      letter-spacing: 1px;
+    }
+
+    .ip-cell {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ── IP BLOCK SECTION ── */
+    .ip-section {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .stats { grid-template-columns: 1fr 1fr; }
+    }
+
+    .ip-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .ip-card-header {
+      background: #0a110a;
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
+    }
+
+    .ip-card-title {
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+
+    .ip-card-title.block { color: var(--red); }
+    .ip-card-title.list  { color: var(--green); }
+
+    .ip-card-body { padding: 20px; }
+
+    .input-group { margin-bottom: 14px; }
+
+    .input-group label {
+      display: block;
+      color: #3a5c3a;
+      font-size: 10px;
+      letter-spacing: 2px;
+      margin-bottom: 7px;
+    }
+
+    .ip-input {
+      width: 100%;
+      background: #080d08;
+      border: 1px solid var(--border);
+      color: var(--green);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      padding: 10px 12px;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .ip-input:focus { border-color: rgba(0,255,136,0.3); }
+    .ip-input::placeholder { color: #1e3020; }
+
+    .btn-block {
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--red);
+      color: var(--red);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 2px;
+      padding: 11px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.2s;
+      margin-top: 4px;
+    }
+
+    .btn-block:hover { background: rgba(255,68,68,0.1); }
+
+    .blocked-list { list-style: none; }
+
+    .blocked-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #0f180f;
+    }
+
+    .blocked-item:last-child { border-bottom: none; }
+
+    .blocked-ip-text { color: var(--red); font-size: 13px; }
+    .blocked-reason  { color: #3a3a3a; font-size: 10px; margin-top: 2px; }
+
+    .btn-unblock {
+      background: transparent;
+      border: 1px solid #2a3a2a;
+      color: #3a5c3a;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      padding: 4px 10px;
+      cursor: pointer;
+      border-radius: 2px;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-unblock:hover { border-color: var(--green); color: var(--green); }
+
+    .empty-state {
+      color: #2a3a2a;
+      font-size: 12px;
+      text-align: center;
+      padding: 20px 0;
+      letter-spacing: 1px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 14px 20px;
+      font-size: 13px;
+      color: var(--green);
+      z-index: 9999;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      max-width: 300px;
+    }
+
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.error { color: var(--red); border-color: rgba(255,68,68,0.3); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div>
+    <span class="nav-brand">H-24</span>
+    <span class="nav-brand" style="font-size:12px">PORTAL</span>
+    <span style="color:#2a5a2a;font-size:11px;letter-spacing:2px;margin-left:12px">// viewer_session</span>
+  </div>
+  <div class="nav-right">
+    <span class="access-badge">READ ONLY</span>
+    <a href="/viewer_logout" class="logout-btn">LOGOUT</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- STATS -->
+  <p class="section-title">// OVERVIEW</p>
+  <div class="stats">
+    <div class="stat-card">
+      <p class="stat-label">TOTAL FEEDBACK</p>
+      <p class="stat-value">{{ data|length }}</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">AVG RATING</p>
+      <p class="stat-value">
+        {% if data %}
+          {{ (data | sum(attribute='stars') / data|length) | round(1) }}
+        {% else %}0{% endif %}
+      </p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">BLOCKED IPs</p>
+      <p class="stat-value" style="color:var(--red)">{{ blocked|length }}</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">5 STAR REVIEWS</p>
+      <p class="stat-value">{{ data | selectattr('stars', 'equalto', 5) | list | length }}</p>
+    </div>
+  </div>
+
+  <!-- FEEDBACK TABLE -->
+  <p class="section-title">// FEEDBACK DATABASE</p>
+  <div class="table-wrap">
+    <div class="table-header">
+      <span class="table-title">USER SUBMISSIONS</span>
+      <input class="search-box" type="text" id="searchInput" placeholder="search records..."/>
+    </div>
+    <div style="overflow-x:auto">
+      <table id="feedbackTable">
+        <thead>
+          <tr>
+            <th>#ID</th>
+            <th>USERNAME</th>
+            <th>PHONE</th>
+            <th>STARS</th>
+            <th>QUERY</th>
+            <th>IP ADDRESS</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in data %}
+          <tr>
+            <td style="color:#3a5c3a">{{ row.id }}</td>
+            <td style="color:var(--green)">{{ row.username }}</td>
+            <td>{{ row.phone }}</td>
+            <td class="stars">
+              {% for i in range(row.stars) %}★{% endfor %}{% for i in range(5 - row.stars) %}<span style="color:#1e3020">★</span>{% endfor %}
+            </td>
+            <td style="max-width:280px;word-break:break-word">{{ row.query }}</td>
+            <td>
+              <div class="ip-cell">
+                <span>{{ row.ip_address }}</span>
+              </div>
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="6" style="text-align:center;color:#2a3a2a;padding:30px">No records found.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- IP VIEW SECTION — Read Only -->
+  <p class="section-title">// BLOCKED IP LIST</p>
+  <div class="ip-section">
+    <div class="ip-card">
+      <div class="ip-card-header">
+        <p class="ip-card-title list">📋 BLOCKED IPs &nbsp;<span style="color:#2a3a2a;font-size:10px;letter-spacing:1px">— view only</span></p>
+      </div>
+      <div class="ip-card-body">
+        {%- if blocked %}
+        <ul class="blocked-list">
+          {%- for b in blocked %}
+          <li class="blocked-item">
+            <div>
+              <p class="blocked-ip-text">{{ b.ip_address }}</p>
+              <p class="blocked-reason">{{ b.reason or 'No reason given' }}</p>
+            </div>
+            <span style="color:#2a3a2a;font-size:10px;letter-spacing:2px;border:1px solid #2a3a2a;padding:3px 8px;border-radius:2px">BLOCKED</span>
+          </li>
+          {%- endfor %}
+        </ul>
+        {%- else %}
+        <p class="empty-state">// No IPs currently blocked</p>
+        {%- endif %}
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+  document.getElementById('searchInput').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('#feedbackTable tbody tr').forEach(tr => {
+      tr.style.display = tr.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  });
+</script>
+
+</body>
+</html>

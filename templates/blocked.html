@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>H-24 | Access Denied</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@900&display=swap');
+
+    body {
+      background: #060a06;
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(255,68,68,0.015) 2px, rgba(255,68,68,0.015) 4px
+      );
+      pointer-events: none;
+    }
+
+    .box {
+      text-align: center;
+      padding: 48px;
+      background: #0d0808;
+      border: 1px solid #3a1a1a;
+      border-radius: 4px;
+      max-width: 460px;
+      box-shadow: 0 0 40px rgba(255,68,68,0.07);
+      animation: fadeUp 0.5s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .code {
+      font-family: 'Orbitron', monospace;
+      font-size: 72px;
+      font-weight: 900;
+      color: #ff4444;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-family: 'Orbitron', monospace;
+      color: #cc2222;
+      font-size: 16px;
+      letter-spacing: 4px;
+      margin-bottom: 20px;
+    }
+
+    p { color: #555; font-size: 12px; letter-spacing: 1px; line-height: 1.8; }
+
+    .ip-display {
+      display: inline-block;
+      background: rgba(255,68,68,0.06);
+      border: 1px solid rgba(255,68,68,0.2);
+      color: #ff4444;
+      padding: 8px 20px;
+      border-radius: 2px;
+      font-size: 14px;
+      margin: 20px 0;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <p class="code">403</p>
+    <h1>ACCESS DENIED</h1>
+    <p>Your IP address has been blocked<br>by the H-24 Portal administrator.</p>
+    <div class="ip-display">{{ ip }}</div>
+    <p>If you believe this is a mistake,<br>contact the portal admin.</p>
+  </div>
+</body>
+</html>

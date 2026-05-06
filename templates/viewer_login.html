@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>H-24 | Viewer Access</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+
+    :root {
+      --green:  #00ff88;
+      --dim:    #00aa55;
+      --bg:     #060a06;
+      --card:   #0d120d;
+      --border: #1a2e1a;
+      --red:    #ff4444;
+      --text:   #cccccc;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Scanline overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,255,136,0.015) 2px,
+        rgba(0,255,136,0.015) 4px
+      );
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* Grid background */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .terminal-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      width: 420px;
+      position: relative;
+      z-index: 1;
+      box-shadow:
+        0 0 0 1px rgba(0,255,136,0.05),
+        0 0 40px rgba(0,255,136,0.06),
+        0 20px 60px rgba(0,0,0,0.8);
+      animation: fadeUp 0.5s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Title bar */
+    .titlebar {
+      background: #0a110a;
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot.r { background: #ff5f57; }
+    .dot.y { background: #ffbd2e; }
+    .dot.g { background: #28c840; }
+
+    .titlebar-text {
+      flex: 1;
+      text-align: center;
+      color: #444;
+      font-size: 11px;
+      letter-spacing: 2px;
+    }
+
+    /* Body */
+    .card-body { padding: 32px; }
+
+    .badge {
+      display: inline-block;
+      background: rgba(0,255,136,0.08);
+      border: 1px solid rgba(0,255,136,0.2);
+      color: var(--dim);
+      font-size: 10px;
+      letter-spacing: 3px;
+      padding: 4px 10px;
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: 'Orbitron', monospace;
+      color: var(--green);
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      color: #3a5c3a;
+      font-size: 11px;
+      letter-spacing: 1px;
+      margin-bottom: 28px;
+    }
+
+    .field { margin-bottom: 18px; }
+
+    label {
+      display: block;
+      color: var(--dim);
+      font-size: 11px;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      background: #080d08;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--green);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 14px;
+      padding: 11px 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      caret-color: var(--green);
+    }
+
+    input:focus {
+      border-color: rgba(0,255,136,0.4);
+      box-shadow: 0 0 0 3px rgba(0,255,136,0.06);
+    }
+
+    input::placeholder { color: #1e3020; }
+
+    .error-msg {
+      background: rgba(255,68,68,0.08);
+      border: 1px solid rgba(255,68,68,0.25);
+      border-radius: 3px;
+      color: var(--red);
+      font-size: 12px;
+      padding: 10px 14px;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+
+    .btn {
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--green);
+      border-radius: 3px;
+      color: var(--green);
+      font-family: 'Orbitron', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      padding: 13px;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+      margin-top: 6px;
+    }
+
+    .btn:hover {
+      background: var(--green);
+      color: #060a06;
+      box-shadow: 0 0 20px rgba(0,255,136,0.3);
+    }
+
+    .footer-note {
+      text-align: center;
+      color: #1e3020;
+      font-size: 10px;
+      letter-spacing: 1px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .access-level {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .access-level span {
+      color: #2a4a2a;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    .access-level .pill {
+      background: rgba(0,255,136,0.06);
+      border: 1px solid rgba(0,255,136,0.15);
+      color: var(--dim);
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="terminal-card">
+  <div class="titlebar">
+    <div class="dot r"></div>
+    <div class="dot y"></div>
+    <div class="dot g"></div>
+    <span class="titlebar-text">viewer_auth.sh — bash</span>
+  </div>
+
+  <div class="card-body">
+    <div class="badge">H-24 PORTAL</div>
+    <h1>VIEWER ACCESS</h1>
+    <p class="subtitle">// Read-only authentication required</p>
+
+    <div class="access-level">
+      <span>Access Level:</span>
+      <span class="pill">READ ONLY</span>
+    </div>
+
+    {% if error %}
+    <div class="error-msg">⚠ {{ error }}</div>
+    {% endif %}
+
+    <form method="POST">
+      <div class="field">
+        <label>USERNAME</label>
+        <input type="text" name="username" placeholder="enter_username" autocomplete="off" required autofocus/>
+      </div>
+      <div class="field">
+        <label>PASSWORD</label>
+        <input type="password" name="password" placeholder="••••••••" required/>
+      </div>
+      <button type="submit" class="btn">AUTHENTICATE →</button>
+    </form>
+
+    <p class="footer-note">H-24 PORTAL &nbsp;•&nbsp; UNAUTHORIZED ACCESS PROHIBITED</p>
+  </div>
+</div>
+
+</body>
+</html>
