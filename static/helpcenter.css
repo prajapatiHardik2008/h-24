@@ -1,136 +1,487 @@
-/* General Reset & Background */
+/* ========================================
+   H-24 PORTAL - MODERN HELP CENTER CSS
+   Cyberpunk + Glassmorphism Theme
+   ======================================== */
+
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* CSS Variables for Theming */
+:root {
+    --primary: #00ff88;
+    --primary-dark: #00cc6a;
+    --primary-glow: rgba(0, 255, 136, 0.3);
+    --secondary: #00b4ff;
+    --bg-dark: #0a0a0f;
+    --bg-card: rgba(18, 18, 30, 0.7);
+    --border-color: rgba(0, 255, 136, 0.2);
+    --text-white: #ffffff;
+    --text-gray: #a0a0b0;
+    --text-dim: #6b6b7a;
+    --danger: #ff4444;
+    --warning: #ffaa00;
+    --success: #00ff88;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Fira Code', 'Segoe UI', monospace; /* Tech feel ke liye */
 }
 
 body {
-    background-color: #0d1117;
-    color: #c9d1d9;
+    background: linear-gradient(135deg, #0a0a0f 0%, #0f0f1a 50%, #0a0a0f 100%);
+    color: var(--text-gray);
+    font-family: 'Inter', 'Segoe UI', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: 20px;
+    padding: 2rem;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Animated Background Grid */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Animated Gradient Orbs */
+body::after {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 40%, rgba(0, 255, 136, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(0, 180, 255, 0.06) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+    animation: rotateBackground 60s linear infinite;
+}
+
+@keyframes rotateBackground {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Main Container - Glassmorphism */
+.container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 800px;
+    backdrop-filter: blur(10px);
+}
+
+/* Header Section */
+.help-header {
     text-align: center;
+    margin-bottom: 3rem;
 }
 
-/* Heading Styling */
-body > b { /* "Help Center" text ke liye */
-    font-size: 2.5rem;
-    color: #10b981; /* Emerald Green */
+.help-header h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     text-transform: uppercase;
-    letter-spacing: 3px;
-    margin-bottom: 5px;
-    display: block;
-    text-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+    letter-spacing: 4px;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 30px var(--primary-glow);
+    animation: glowPulse 2s ease-in-out infinite;
 }
 
-p {
-    color: #8b949e;
-    margin-bottom: 30px;
-    font-size: 1rem;
+@keyframes glowPulse {
+    0%, 100% { text-shadow: 0 0 20px rgba(0, 255, 136, 0.3); }
+    50% { text-shadow: 0 0 40px rgba(0, 255, 136, 0.6); }
 }
 
-/* Input Container */
-div:has(#query) {
-    background: #161b22;
-    padding: 30px;
+.help-header .badge {
+    display: inline-block;
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid var(--primary);
+    border-radius: 50px;
+    padding: 0.3rem 1rem;
+    font-size: 0.75rem;
+    color: var(--primary);
+    letter-spacing: 1px;
+    margin-top: 0.5rem;
+}
+
+.help-header .subtitle {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    margin-top: 1rem;
+    letter-spacing: 0.5px;
+}
+
+/* Search/Input Card */
+.input-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.input-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 8px 32px rgba(0, 255, 136, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Label with Icon */
+.label-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.label-icon {
+    font-size: 1.2rem;
+}
+
+.label-group label {
+    font-weight: 600;
+    color: var(--text-white);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Input Field */
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    background: rgba(10, 10, 15, 0.8);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
-    border: 1px solid #30363d;
-    width: 100%;
-    max-width: 600px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-label {
-    display: block;
-    margin-bottom: 15px;
-    font-size: 1.1rem;
-    color: #58a6ff; /* Blue accents */
-    text-align: left;
-}
-
-input[type="text"] {
-    width: 100%;
-    padding: 12px 15px;
-    background: #0d1117;
-    border: 1px solid #30363d;
-    border-radius: 6px;
-    color: #e6edf3;
+    color: var(--text-white);
     font-size: 1rem;
-    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace;
     outline: none;
-    transition: 0.3s;
-}
-
-input[type="text"]:focus {
-    border-color: #10b981;
-    box-shadow: 0 0 8px rgba(16, 185, 129, 0.2);
-}
-
-/* Button Styling */
-#getans {
-    width: 100%;
-    padding: 12px;
-    background-color: #10b981;
-    color: #0d1117;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
     transition: all 0.3s ease;
 }
 
-#getans:hover {
-    background-color: #059669;
+.input-wrapper input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+}
+
+.input-wrapper::before {
+    content: '>';
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* Button Styles */
+.btn-primary, button {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: #0a0a0f;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before, button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-primary:hover::before, button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-primary:hover, button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+}
+
+.btn-primary:active, button:active {
+    transform: translateY(0);
+}
+
+/* Loading Animation */
+.loading {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+}
+
+.loading.active {
+    display: flex;
+}
+
+.loading-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--primary);
+    border-radius: 50%;
+    animation: loadingBounce 1.4s ease-in-out infinite both;
+}
+
+.loading-dot:nth-child(1) { animation-delay: -0.32s; }
+.loading-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes loadingBounce {
+    0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+    40% { transform: scale(1); opacity: 1; }
 }
 
 /* Result Area */
-.result {
-    margin-top: 25px;
-    width: 100%;
-    max-width: 600px;
-    padding: 20px;
-    background: rgba(16, 185, 129, 0.05);
-    border-left: 4px solid #10b981;
-    border-radius: 4px;
-    text-align: left;
-    line-height: 1.6;
-    min-height: 50px;
-    white-space: pre-wrap; /* AI ke formatting (lines) ko preserve karega */
+.result-card {
+    background: rgba(0, 255, 136, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    transition: all 0.3s ease;
 }
 
-/* Scrollbar Styling (Optional) */
-::-webkit-scrollbar {
-    width: 8px;
+.result-card:hover {
+    border-color: var(--primary);
+    background: rgba(0, 255, 136, 0.05);
 }
-::-webkit-scrollbar-thumb {
-    background: #30363d;
-    border-radius: 10px;
+
+.result-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
 }
- button
- {
-    width: 50%;
-    padding: 12px;
-    background-color: #10b981;
-    color: #0d1117;
-    border: none;
+
+.result-header .icon {
+    font-size: 1.2rem;
+}
+
+.result-header span {
+    font-size: 0.8rem;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.result-content {
+    color: var(--text-gray);
+    line-height: 1.8;
+    font-size: 0.95rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Code Block Styling inside Result */
+.result-content code {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 0.2rem 0.4rem;
     border-radius: 6px;
-    font-weight: bold;
-    font-size: 1rem;
+    color: var(--primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+}
+
+.result-content pre {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 0.5rem 0;
+    border-left: 3px solid var(--primary);
+}
+
+/* Example Questions Section */
+.examples-section {
+    margin-top: 2rem;
+}
+
+.examples-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.examples-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+.example-chip {
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid var(--border-color);
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    color: var(--text-gray);
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-button:hover {
-    background-color: #059669;
+.example-chip:hover {
+    background: rgba(0, 255, 136, 0.2);
+    border-color: var(--primary);
+    color: var(--primary);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+}
+
+/* Footer */
+.help-footer {
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.5rem;
+}
+
+.help-footer a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.help-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Status Messages */
+.status-message {
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    display: none;
+}
+
+.status-message.error {
+    display: block;
+    background: rgba(255, 68, 68, 0.1);
+    border: 1px solid var(--danger);
+    color: var(--danger);
+}
+
+.status-message.success {
+    display: block;
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid var(--success);
+    color: var(--success);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+    
+    .help-header h1 {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+    
+    .input-card {
+        padding: 1.25rem;
+    }
+    
+    .examples-grid {
+        gap: 0.5rem;
+    }
+    
+    .example-chip {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .help-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .input-wrapper input {
+        font-size: 0.9rem;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+/* Selection Color */
+::selection {
+    background: var(--primary);
+    color: #0a0a0f;
 }

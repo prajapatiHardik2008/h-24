@@ -1,4 +1,20 @@
 
+/* ---------- THEME TOGGLE ---------- */
+const themeBtn = document.querySelector("#theme-toggle");
+const savedTheme = localStorage.getItem("h24-theme");
+if (savedTheme === "light") {
+    document.body.classList.add("light-mode");
+    if (themeBtn) themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+}
+if (themeBtn) {
+    themeBtn.addEventListener("click", () => {
+        document.body.classList.toggle("light-mode");
+        const isLight = document.body.classList.contains("light-mode");
+        themeBtn.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        localStorage.setItem("h24-theme", isLight ? "light" : "dark");
+    });
+}
+ 
 const tools = document.querySelectorAll('.tool-card');
 
 let timer;

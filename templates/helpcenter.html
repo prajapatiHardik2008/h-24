@@ -2,22 +2,94 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>H-24 Portal | AI Help Center</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='helpcenter.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    Help Center
-    <p>Chat with our Ai </p>
-    <div>
-        <label for="query">Enter your query </label>
-        <input type="text" name="" id="query">
-        <button id="getans">Submit</button>
-    </div>
-    <div class="result">
 
+<div class="container">
+    <!-- Header Section -->
+    <div class="help-header">
+        <h1>H-24</h1>
+        <div class="badge">AI POWERED ASSISTANT</div>
+        <p class="subtitle">Your personal cybersecurity expert — Ask me anything, anytime</p>
     </div>
-    <button onclick="document.location='/'">Back to Home </button>
-    <script src="{{ url_for('static', filename='helpcenter.js') }}"></script>
+
+    <!-- Main Input Card -->
+    <div class="input-card">
+        <div class="label-group">
+            <span class="label-icon">🔐</span>
+            <label>ENTER YOUR QUERY</label>
+        </div>
+        
+        <div class="input-wrapper">
+            <input type="text" id="queryInput" placeholder="e.g., How to secure my website from hackers?" autocomplete="off">
+        </div>
+        
+        <div class="status-message" id="statusMsg"></div>
+        
+        <button id="submitBtn">
+            <span>⚡ GET ANSWER</span>
+        </button>
+        
+        <div class="loading" id="loading">
+            <div class="loading-dot"></div>
+            <div class="loading-dot"></div>
+            <div class="loading-dot"></div>
+            <span style="margin-left: 8px;">Analyzing with AI...</span>
+        </div>
+    </div>
+
+    <!-- Result Card -->
+    <div class="result-card" id="resultCard" style="display: none;">
+        <div class="result-header">
+            <span class="icon">🤖</span>
+            <span>AI RESPONSE</span>
+            <span class="copy-btn" id="copyBtn" style="margin-left: auto; cursor: pointer; font-size: 12px;">📋 COPY</span>
+        </div>
+        <div class="result-content" id="aiResponse"></div>
+    </div>
+
+    <!-- Example Questions Section -->
+    <div class="examples-section">
+        <div class="examples-title">// SUGGESTED QUERIES</div>
+        <div class="examples-grid" id="examplesGrid">
+            <div class="example-chip" data-query="What is SQL injection and how to prevent it?">SQL Injection</div>
+            <div class="example-chip" data-query="How to secure my API keys in production?">API Security</div>
+            <div class="example-chip" data-query="Explain how port scanning works">Port Scanning</div>
+            <div class="example-chip" data-query="Best practices for storing passwords">Password Security</div>
+            <div class="example-chip" data-query="What is Cross-Site Scripting (XSS)?">XSS Attack</div>
+            <div class="example-chip" data-query="How to check if my email is hacked?">Email Security</div>
+            <div class="example-chip" data-query="What is a DDoS attack?">DDoS Protection</div>
+            <div class="example-chip" data-query="Explain HTTPS vs HTTP">HTTPS vs HTTP</div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="stats-section" id="statsSection" style="display: none;">
+        <div class="stats-card">
+            <div class="stat-item">
+                <span class="stat-value" id="queryCount">0</span>
+                <span class="stat-label">Queries Today</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="avgTime">0</span>
+                <span class="stat-label">Avg Response (ms)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="help-footer">
+        <p>⚡ H-24 Portal — Secure • Fast • AI-Powered<br>
+        <a href="/">← Back to Home</a> | 
+        <a href="#" id="clearHistoryBtn">Clear History</a></p>
+    </div>
+</div>
+
+<!-- JavaScript File -->
+<script src="{{ url_for('static', filename=' helpcenter.js') }}"></script>
 </body>
 </html>

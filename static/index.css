@@ -42,6 +42,163 @@
     --card-height: 260px;
 }
 
+/* ---------- 1b. LIGHT MODE (Frosted Glass) ---------- */
+body.light-mode {
+    --bg-dark:          rgba(230, 235, 245, 0.85);
+    --bg-darker:        rgba(210, 218, 235, 0.90);
+    --card-bg:          rgba(255, 255, 255, 0.45);
+
+    --text-white:       #0f0f1a;
+    --text-gray:        #4a4a5a;
+    --text-mute:        #9090a8;
+
+    --border-dim:       rgba(0, 0, 0, 0.08);
+    --border-hot:       rgba(255, 10, 60, 0.30);
+
+    --shadow-deep:      0 16px 48px rgba(0, 0, 0, 0.10);
+}
+
+body.light-mode {
+    background: linear-gradient(135deg, #e8edf8 0%, #dce4f5 40%, #ede8f8 100%);
+    background-attachment: fixed;
+    color: var(--text-white);
+}
+
+/* Remove scanline in light mode */
+body.light-mode::before { display: none; }
+
+/* Navbar light */
+body.light-mode .navbar {
+    background: rgba(255, 255, 255, 0.60);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 10, 60, 0.18);
+    box-shadow: 0 3px 24px rgba(0,0,0,0.08);
+}
+
+body.light-mode .nav-links a { color: var(--text-white); }
+
+/* Search box light */
+body.light-mode .search-box {
+    background: rgba(255,255,255,0.5);
+    border-color: rgba(0,0,0,0.12);
+}
+body.light-mode .search-box input { color: var(--text-white); }
+body.light-mode .search-box input::placeholder { color: var(--text-mute); }
+
+/* Tool cards — frosted glass */
+body.light-mode .tool-card {
+    background: rgba(255, 255, 255, 0.42) !important;
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.70) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+body.light-mode .tool-card:hover {
+    background: rgba(255, 255, 255, 0.62) !important;
+    border-color: rgba(255, 10, 60, 0.30) !important;
+    box-shadow: 0 16px 48px rgba(255, 10, 60, 0.12), inset 0 1px 0 rgba(255,255,255,0.9) !important;
+    transform: translateY(-5px);
+}
+
+body.light-mode .tool-info h3 { color: #0f0f1a; }
+body.light-mode .tool-info p  { color: #4a4a5a; }
+
+/* Buttons in light mode */
+body.light-mode .btn-tool {
+    border-color: var(--neon-red);
+    color: var(--neon-red);
+    background: rgba(255,10,60,0.06);
+}
+body.light-mode .btn-tool:hover { color: #fff; }
+
+/* Stat card light */
+body.light-mode .stat-card {
+    background: rgba(255,255,255,0.50);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.75);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+}
+body.light-mode .stat-label { color: #6a6a80; }
+body.light-mode .stat-value { color: #0f0f1a; text-shadow: none; }
+
+/* Feedback form light */
+body.light-mode .feedback-card {
+    background: rgba(255,255,255,0.50) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.75) !important;
+}
+body.light-mode .form-group input,
+body.light-mode .form-group textarea {
+    background: rgba(255,255,255,0.55);
+    border-color: rgba(0,0,0,0.10);
+    color: #0f0f1a;
+}
+body.light-mode .form-group input:focus,
+body.light-mode .form-group textarea:focus {
+    background: rgba(255,255,255,0.80);
+    border-color: var(--neon-red);
+}
+body.light-mode .form-group label { color: #5a5a70; }
+body.light-mode .feedback-card h3 { color: #0f0f1a; }
+
+/* Badges light */
+body.light-mode .badge {
+    background: rgba(255,10,60,0.08);
+    border-color: rgba(255,10,60,0.25);
+}
+body.light-mode .status-tag {
+    background: rgba(245,158,11,0.10);
+}
+
+/* Footer light */
+body.light-mode footer {
+    border-top: 1px solid rgba(0,0,0,0.08);
+    color: #6a6a80;
+}
+
+/* Scrollbar light */
+body.light-mode::-webkit-scrollbar-track { background: rgba(230,235,245,0.9); }
+
+/* ---------- THEME TOGGLE BUTTON ---------- */
+.theme-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1.5px solid var(--border-dim);
+    color: var(--text-gray);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    transition: all 0.30s ease;
+    flex-shrink: 0;
+}
+.theme-btn:hover {
+    background: var(--neon-red-soft);
+    border-color: var(--neon-red);
+    color: var(--neon-red);
+    box-shadow: 0 0 12px rgba(255,10,60,0.25);
+    transform: rotate(20deg);
+}
+
+body.light-mode .theme-btn {
+    background: rgba(255,255,255,0.50);
+    border-color: rgba(0,0,0,0.10);
+    color: #4a4a5a;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+body.light-mode .theme-btn:hover {
+    background: rgba(255,10,60,0.10);
+    border-color: var(--neon-red);
+    color: var(--neon-red);
+}
+
 /* ---------- 2. RESET ---------- */
 *, *::before, *::after {
     margin: 0;

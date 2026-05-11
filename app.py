@@ -24,6 +24,8 @@ import resend
 # Port Scanner import socket
  #set bydefualt 1
 def port_scanner(TargetIp, port):
+    if TargetIp == '127.0.0.1':
+        return 0
     # Socket create kiya
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(0.3) # Fast scanning ke liye thoda kam timeout
@@ -122,7 +124,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = db_url or 'sqlite:///' + os.path.join(ba
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-# --- PEHLE CLASS LIKHO ---
+
 class Feedback(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), nullable=False)
@@ -131,7 +133,6 @@ class Feedback(db.Model):
     query = db.Column(db.Text, nullable=False)
     ip_address = db.Column(db.String(50), nullable=False)
 
-# --- PHIR TABLE CREATE KARO ---
 with app.app_context():
     db.create_all()
     print("Database synced! ✅")
@@ -230,14 +231,13 @@ def security_txt():
 @app.route("/portscan")
 def portscanner():
     return render_template("portscan.html")
-import socket
-from flask import Flask, request, jsonify
-
 @app.route('/scan_port', methods=['POST'])
 def scan_port():
     data = request.json
     target = data.get('ip')
     port = data.get('port')
+    if target == '127.0.0.1':
+        return jsonify({"status": "closed", "port": "Can't Scan Internal IP !"})
     
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(0.4) # Faster response
@@ -400,20 +400,15 @@ def send_otp_email(otp):
 
 # ============================================================
 # VIEWER LOGIN SYSTEM — Devang ke liye (Read-only access)
-# Ye sab apne existing app.py mein add karo
 # ============================================================
 
 # --- 1. IMPORTS (top pe add karo) ---
-# from datetime import timedelta  # already hoga tumhare paas
-
-# --- 2. DB MODEL (existing models ke niche add karo) ---
+# --- 2. DB MODEL () ---
 
 class BlockedIP(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ip_address = db.Column(db.String(50), unique=True, nullable=False)
     reason = db.Column(db.String(200), nullable=True)
-
-# db.create_all() wala block already handle kar lega — koi change nahi
 
 # ============================================================
 # --- 3. BLOCKED IP MIDDLEWARE (add_security_headers ke pehle) ---
@@ -519,19 +514,10 @@ def unblock_ip():
     db.session.commit()
     return jsonify({"status": "success", "msg": f"{ip} unblocked!"})
 
-
-# ============================================================
-# --- 6. .ENV MEIN YE ADD KARO ---
-# ============================================================
-# VIEWER_USER=devang
-# VIEWER_PASS=<werkzeug se generate karo>
-#
-# Password generate karna:
-# python3 -c "from werkzeug.security import generate_password_hash; print(generate_password_hash('tumhara_password'))"
-# ============================================================
 #---------------------------------------------------------
 # --- Admin Login Page ---
 # --- Login Route (Update) ---
+@limiter.limit("5 per hour")
 @app.route('/h24_login', methods=['GET', 'POST'])
 def admin_login():
     if request.method == 'POST':
@@ -591,12 +577,10 @@ def verify_2fa():
 # --- Secure Admin Dashboard ---
 @app.route('/h24_admin_portal')
 def view_db():
-    # Check karo ki kya user logged in hai?
     if not session.get('logged_in'):
         return redirect(url_for('admin_login'))
     
     data = db.session.query(Feedback).all()
-    # (Baki tumhara purana HTML table wala code yahan rahega)
    
     return render_template("view.html",data=data)
 
@@ -614,10 +598,7 @@ def challenge_lab():
 @app.route('/api/get_flag', methods=['POST'])
 def get_flag():
     data = request.get_json()
-    role = data.get('role', 'guest') # Default role 'guest' hai
-    
-    # Logic: Agar user ne JSON body mein 'role' ko change karke 'admin' kar diya
-    # toh use flag mil jayega. Isse kehte hain "Insecure Parameter Handling".
+    role = data.get('role', 'guest')
     if role == 'admin':
         return jsonify({"status": "success", "flag": "H24{LOGIC_BYPASS_SUCCESS_2026}"})
     else:
@@ -712,7 +693,9 @@ def feedBack():
     except Exception as e:
         db.session.rollback()
         return jsonify({'Ans': 'Fail',"msg":"Server Error"})
-
+@app.route('/world')
+def world_portal():
+    return render_template('world_portal.html')
 #--------------------------------------------------------------
 # For limited time admin panel 
 # @app.before_request
