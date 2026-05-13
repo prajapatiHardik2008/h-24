@@ -1,5 +1,5 @@
 import random
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for ,render_template_string,send_from_directory
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for ,render_template_string,send_from_directory , send_file
 import pybase64
 import time
 import smtplib
@@ -18,6 +18,7 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_limiter.errors import RateLimitExceeded
 import resend
+from withoutbg import WithoutBG
 #----------------------------------------------------------------------
 # tools 
 #----------------------------------------------------------------------
@@ -217,6 +218,50 @@ def rot():
 @app.route("/iplookup")
 def iplookup():
     return render_template("IPlookup.html")
+#------------------------------------------------------
+#Image Bg remover 
+@app.route("/bgremover")
+def imgremover():
+    return render_template("bgremover.html")
+@app.route("/remove_bg", methods=["POST"])
+def bgremover():
+    UPLOAD_FOLDER = "uploads"
+    OUTPUT_FOLDER = "outputs"
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+    os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+
+    file = request.files.get("file")
+    output_name = request.form.get("output_file") or "output.png"  # FIX 1: key name sahi kiya
+    
+    if not output_name.lower().endswith(('.png', '.jpg', '.jpeg')):
+        output_name += ".png"  # FIX 2: extension auto-add
+
+    if not file or file.filename == '':
+        return jsonify({"status": "error", "message": "No file selected!"})
+
+    input_path = os.path.join(UPLOAD_FOLDER, file.filename)
+    output_path = os.path.join(OUTPUT_FOLDER, output_name)  # FIX 3: custom naam use karo
+    file.save(input_path)
+
+    result = remove_background(input_path, output_path)
+    if "successfully" in result:
+        return send_file(output_path, mimetype='image/png', as_attachment=True, download_name=output_name)
+    else:
+        return jsonify({"status": "error", "message": result})#----------------------------------------------------------------------
+#Image bg remover 
+def remove_background(path,output_img_name):
+    if not os.path.exists(path):
+        return "Error: The file does not exist."
+    if not output_img_name.lower().endswith(('.png', '.jpg', '.jpeg')):
+        return "Error: Output image name must end with .png, .jpg, or .jpeg"
+    img = WithoutBG.opensource()
+    try:            
+        result = img.remove_background(path)
+        result.save(output_img_name)
+        return "Background removed successfully."
+    except Exception as e:
+        return f"An error occurred: {e}"
+    
 #-------------------------------------------------------
 #./well-known/securit.txt page 
 @app.route('/.well-known/security.txt')

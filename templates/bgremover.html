@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>H-24 | Access Denied</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='imgre.css') }}">
+<style>
+  .wrap { max-width: 480px; margin: 2rem auto; padding: 0 1rem; }
+  .card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 2rem; }
+  .header { text-align: center; margin-bottom: 2rem; }
+  .icon-circle { width: 56px; height: 56px; border-radius: 50%; background: var(--color-background-info); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+  .icon-circle i { font-size: 26px; color: var(--color-text-info); }
+  h1 { font-size: 20px; font-weight: 500; margin: 0 0 4px; color: var(--color-text-primary); }
+  .subtitle { font-size: 13px; color: var(--color-text-secondary); margin: 0; }
+  .field { margin-bottom: 1.25rem; }
+  label { display: block; font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 6px; }
+  .drop-zone { border: 1.5px dashed var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 2rem 1rem; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; background: var(--color-background-secondary); }
+  .drop-zone:hover { border-color: var(--color-border-primary); background: var(--color-background-tertiary); }
+  .drop-zone i { font-size: 28px; color: var(--color-text-secondary); display: block; margin-bottom: 8px; }
+  .drop-zone .dz-text { font-size: 14px; color: var(--color-text-secondary); margin: 0; }
+  .drop-zone .dz-hint { font-size: 12px; color: var(--color-text-tertiary); margin: 4px 0 0; }
+  #file-input { display: none; }
+  .file-name { font-size: 13px; color: var(--color-text-info); margin-top: 8px; display: none; }
+  .submit-btn { width: 100%; padding: 10px; background: var(--color-text-primary); color: var(--color-background-primary); border: none; border-radius: var(--border-radius-md); font-size: 15px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.2s; }
+  .submit-btn:hover { opacity: 0.85; }
+  .note { font-size: 12px; color: var(--color-text-tertiary); text-align: center; margin-top: 1rem; }
+</style>
+</head>
+<div class="wrap">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Background remover upload form</h2>
+  <div class="card">
+    <div class="header">
+      <div class="icon-circle"><i class="ti ti-photo-scan" aria-hidden="true"></i></div>
+      <h1>Background remover</h1>
+      <p class="subtitle">Upload an image and get a clean cutout instantly</p>
+    </div>
+
+    <form action="/remove_bg" method="post" enctype="multipart/form-data" id="bgForm">
+      <div class="field">
+        <label for="file-input">Image</label>
+        <div class="drop-zone" id="dropZone" onclick="document.getElementById('file-input').click()">
+          <i class="ti ti-upload" aria-hidden="true"></i>
+          <p class="dz-text">Click to choose an image</p>
+          <p class="dz-hint">PNG, JPG, WEBP — max 10 MB</p>
+        </div>
+        <input type="file" id="file-input" name="file" accept="image/*" required onchange="showName(this)">
+        <p class="file-name" id="fname"></p>
+      </div>
+
+      <div class="field">
+        <label for="output_file">Output filename <span style="font-weight:400;color:var(--color-text-tertiary)">(optional)</span></label>
+        <input type="text" id="output_file" name="output_file" placeholder="e.g. result.png" style="width:100%; box-sizing:border-box;">
+      </div>
+
+      <button type="submit" class="submit-btn">
+        <i class="ti ti-eraser" aria-hidden="true"></i> Remove background
+      </button>
+    </form>
+    
+    <p class="note">Your image is processed securely and not stored.</p>
+</div>
+</div>
+<button onclick="document.location.href='/'" class="homebtn">
+  <span>Back to Home</span>
+</button>
+<script>
+function showName(input) {
+  const el = document.getElementById('fname');
+  if (input.files && input.files[0]) {
+    el.textContent = '✓ ' + input.files[0].name;
+    el.style.display = 'block';
+  }
+}
+const dz = document.getElementById('dropZone');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.style.borderColor = 'var(--color-border-primary)'; });
+dz.addEventListener('dragleave', () => { dz.style.borderColor = ''; });
+dz.addEventListener('drop', e => {
+  e.preventDefault();
+  dz.style.borderColor = '';
+  const fi = document.getElementById('file-input');
+  fi.files = e.dataTransfer.files;
+  showName(fi);
+});
+</script>
+</html>

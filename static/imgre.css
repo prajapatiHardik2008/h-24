@@ -1,0 +1,436 @@
+/* =========================================================
+   BACKGROUND REMOVER — Complete CSS
+   Theme: Clean, minimal, accessible
+   ========================================================= */
+
+/* ---------- 1. CSS VARIABLES (Design Tokens) ---------- */
+:root {
+  /* Background colors */
+  --color-background-primary:   #ffffff;
+  --color-background-secondary: #f8f9fa;
+  --color-background-tertiary:  #f1f3f5;
+  --color-background-info:      #e7f3ff;
+
+  /* Text colors */
+  --color-text-primary:         #1a1a2e;
+  --color-text-secondary:       #4a4a68;
+  --color-text-tertiary:        #8a8a9a;
+  --color-text-info:            #0066cc;
+
+  /* Border colors */
+  --color-border-primary:       #1a1a2e;
+  --color-border-secondary:     #c5c5d3;
+  --color-border-tertiary:      #e0e0e8;
+
+  /* Border radius */
+  --border-radius-sm:  6px;
+  --border-radius-md:  10px;
+  --border-radius-lg:  16px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.10);
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+}
+
+/* ---------- 2. DARK MODE SUPPORT (Optional) ---------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background-primary:   #1a1a2e;
+    --color-background-secondary: #252540;
+    --color-background-tertiary:  #303050;
+    --color-background-info:      #1a3a5c;
+
+    --color-text-primary:         #f1f1f4;
+    --color-text-secondary:       #a0a0b8;
+    --color-text-tertiary:        #6a6a80;
+    --color-text-info:            #4da3ff;
+
+    --color-border-primary:       #f1f1f4;
+    --color-border-secondary:     #4a4a68;
+    --color-border-tertiary:      #353550;
+  }
+}
+
+/* ---------- 3. RESET & BASE ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- 4. LAYOUT WRAPPER ---------- */
+.wrap {
+  max-width: 480px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* ---------- 5. CARD ---------- */
+.card {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+  transition: box-shadow var(--transition-base);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+/* ---------- 6. HEADER ---------- */
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.icon-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-background-info);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  transition: transform var(--transition-base);
+}
+
+.icon-circle:hover {
+  transform: scale(1.05);
+}
+
+.icon-circle i {
+  font-size: 26px;
+  color: var(--color-text-info);
+}
+
+h1 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: var(--color-text-primary);
+  letter-spacing: -0.3px;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* ---------- 7. FORM FIELDS ---------- */
+.field {
+  margin-bottom: 1.25rem;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-bottom: 6px;
+}
+
+/* Text input */
+input[type="text"] {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--color-background-secondary);
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-md);
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  outline: none;
+}
+
+input[type="text"]:hover {
+  border-color: var(--color-border-secondary);
+}
+
+input[type="text"]:focus {
+  border-color: var(--color-text-info);
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.12);
+}
+
+input[type="text"]::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+/* ---------- 8. DROP ZONE ---------- */
+.drop-zone {
+  border: 1.5px dashed var(--color-border-secondary);
+  border-radius: var(--border-radius-md);
+  padding: 2rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--transition-base), background var(--transition-base), transform var(--transition-fast);
+  background: var(--color-background-secondary);
+}
+
+.drop-zone:hover {
+  border-color: var(--color-border-primary);
+  background: var(--color-background-tertiary);
+  transform: translateY(-1px);
+}
+
+.drop-zone:active {
+  transform: translateY(0);
+}
+
+.drop-zone i {
+  font-size: 28px;
+  color: var(--color-text-secondary);
+  display: block;
+  margin-bottom: 8px;
+  transition: color var(--transition-base);
+}
+
+.drop-zone:hover i {
+  color: var(--color-text-info);
+}
+
+.drop-zone .dz-text {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin: 0;
+  font-weight: 500;
+}
+
+.drop-zone .dz-hint {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  margin: 4px 0 0;
+}
+
+/* Drag active state (added via JS) */
+.drop-zone.drag-over {
+  border-color: var(--color-text-info);
+  background: var(--color-background-info);
+  border-style: solid;
+}
+
+.drop-zone.drag-over i {
+  color: var(--color-text-info);
+}
+
+/* File input hidden */
+#file-input {
+  display: none;
+}
+
+/* File name display */
+.file-name {
+  font-size: 13px;
+  color: var(--color-text-info);
+  margin-top: 8px;
+  display: none;
+  font-weight: 500;
+  padding: 6px 10px;
+  background: var(--color-background-info);
+  border-radius: var(--border-radius-sm);
+  animation: fadeIn 0.3s ease;
+}
+
+/* ---------- 9. SUBMIT BUTTON ---------- */
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--color-text-primary);
+  color: var(--color-background-primary);
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity var(--transition-base), transform var(--transition-fast), box-shadow var(--transition-base);
+  font-family: inherit;
+}
+
+.submit-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.submit-btn:focus-visible {
+  outline: 2px solid var(--color-text-info);
+  outline-offset: 2px;
+}
+
+.submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.submit-btn i {
+  font-size: 18px;
+}
+
+/* ---------- 10. NOTE ---------- */
+.note {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  text-align: center;
+  margin-top: 1rem;
+  line-height: 1.4;
+}
+
+/* ---------- 11. SCREEN READER ONLY ---------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- 12. ANIMATIONS ---------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- 13. RESPONSIVE ---------- */
+@media (max-width: 520px) {
+  .wrap {
+    margin: 1rem auto;
+    padding: 0 0.75rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+
+  .drop-zone {
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* ---------- 14. ACCESSIBILITY ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/* ========== H-24 CYBER HOME BUTTON ========== */
+.homebtn {
+  /* Base */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: transparent;
+  color: var(--neon-red, #ff0a3c);
+  border: 1.5px solid var(--neon-red, #ff0a3c);
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  
+  /* Neon glow */
+  box-shadow: 
+    0 0 8px rgba(255, 10, 60, 0.2),
+    inset 0 0 8px rgba(255, 10, 60, 0.05);
+  transition: all 0.3s ease;
+}
+
+/* Fill animation on hover */
+.homebtn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--neon-red, #ff0a3c);
+  transform: translateX(-101%);
+  transition: transform 0.35s ease;
+  z-index: 0;
+}
+
+.homebtn span,
+.homebtn::after { 
+  position: relative; 
+  z-index: 1; 
+}
+
+/* Arrow icon */
+.homebtn::after {
+  content: "←";
+  font-size: 1.1em;
+  transition: transform 0.3s ease;
+}
+
+.homebtn:hover {
+  color: #fff;
+  box-shadow: 
+    0 0 20px rgba(255, 10, 60, 0.4),
+    0 0 40px rgba(255, 10, 60, 0.2),
+    inset 0 0 12px rgba(255, 10, 60, 0.1);
+  transform: translateY(-2px);
+}
+
+.homebtn:hover::before {
+  transform: translateX(0);
+}
+
+.homebtn:hover::after {
+  transform: translateX(-4px);
+}
+
+.homebtn:active {
+  transform: translateY(0);
+  box-shadow: 0 0 10px rgba(255, 10, 60, 0.3);
+}
+
+/* Focus for accessibility */
+.homebtn:focus-visible {
+  outline: 2px solid var(--neon-red, #ff0a3c);
+  outline-offset: 3px;
+}
