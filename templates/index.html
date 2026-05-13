@@ -16,7 +16,7 @@
         <div class="nav-links">
             <button id="theme-toggle" class="theme-btn">
                 <i class="fas fa-moon"></i>
-        </button>
+            </button>
             <a href="/aboutus">About Us</a>
             <a href="/contactus">Contact Us</a>
             <a href="/help">Help</a>
@@ -26,12 +26,14 @@
             <button><i class="fas fa-search"></i></button>
         </div>
     </nav>
-<div class="user-stats-container">
-    <div class="stat-card">
-        <span class="stat-label">System Rating</span>
-        <h2 class="stat-value">{{ Rating }} <span class="red-text">★</span></h2>
+
+    <div class="user-stats-container">
+        <div class="stat-card">
+            <span class="stat-label">System Rating</span>
+            <h2 class="stat-value">{{ Rating }} <span class="red-text">★</span></h2>
+        </div>
     </div>
-</div>
+
     <main class="content">
         <header class="hero">
             <h1>Welcome, I'm <span class="neon-text">H-24</span></h1>
@@ -39,7 +41,8 @@
         </header>
 
         <section class="tools-container">
-            <!-- -->
+
+            <!-- Base64 -->
             <div class="tool-card" data-tool="base64" data-icon="🔐">
                 <div class="tool-info">
                     <h3>Base64 Encoder/Decoder</h3>
@@ -47,40 +50,46 @@
                 </div>
                 <button onclick="location.href='/base64_tool'" class="btn-tool">Open Tool</button>
             </div>
+
             <!-- BG Remover -->
-<div class="tool-card" data-tool="bgremover" data-icon="🖼️">
-  <div class="tool-info">
-    <div class="tool-icon">🖼️</div>
-    <div class="status-tag">AI Powered</div>
-    <h3>BG Remover</h3>
-    <p>Instantly erase image backgrounds using AI. Get clean PNG cutouts ready for any use.</p>
-  </div>
-  <button class="btn-tool" onclick="document.location='/bgremover'">Launch Tool</button>
-</div>
-    <div class="tool-card"  data-tool="github" data-icon="📊">
-        <div class="tool-info">
-            <h3>GitHub Stats Analyzer</h3>
-            <p>Fetch repository insights and star distributions in a graphical interface.</p>
-        </div>
-        <button onclick="location.href='/git_config'" class="btn-tool">Open Tool</button>
-    </div>
-</div>
-<div class="tool-card"data-tool="news" data-icon="📰" >
-    <div class="tool-info">
-        <h3>H-24 Intelligence Feed</h3>
-        <p>Live cybersecurity news and threat intelligence, summarized and analyzed by Nexa AI.</p>
-    </div>
-    <button onclick="location.href='/news'" class="btn-tool">Access Feed</button>
-</div>
-            <!-- -->
-            <div class="tool-card"data-tool="nexa" data-icon="🤖" >
+            <div class="tool-card" data-tool="bgremover" data-icon="🖼️">
+                <div class="tool-info">
+                    <div class="tool-icon">🖼️</div>
+                    <div class="status-tag">AI Powered</div>
+                    <h3>BG Remover</h3>
+                    <p>Instantly erase image backgrounds using AI. Get clean PNG cutouts ready for any use.</p>
+                </div>
+                <button class="btn-tool" onclick="document.location='https://github.com/prajapatiHardik2008/PixelShifter.git'">Download Tool</button>
+            </div>
+
+            <!-- GitHub Stats -->
+            <div class="tool-card" data-tool="github" data-icon="📊">
+                <div class="tool-info">
+                    <h3>GitHub Stats Analyzer</h3>
+                    <p>Fetch repository insights and star distributions in a graphical interface.</p>
+                </div>
+                <button onclick="location.href='/git_config'" class="btn-tool">Open Tool</button>
+            </div>
+
+            <!-- News Feed -->
+            <div class="tool-card" data-tool="news" data-icon="📰">
+                <div class="tool-info">
+                    <h3>H-24 Intelligence Feed</h3>
+                    <p>Live cybersecurity news and threat intelligence, summarized and analyzed by Nexa AI.</p>
+                </div>
+                <button onclick="location.href='/news'" class="btn-tool">Access Feed</button>
+            </div>
+
+            <!-- Nexa AI -->
+            <div class="tool-card" data-tool="nexa" data-icon="🤖">
                 <div class="tool-info">
                     <h3>Nexa AI Assistant</h3>
                     <p>Voice-activated Python assistant for browsing and automation.</p>
                 </div>
                 <button class="btn-tool" onclick="document.location='https://github.com/prajapatiHardik2008/Nexa'">Download</button>
             </div>
-        <!-- -->    
+
+            <!-- Web Dir Scanner -->
             <div class="tool-card" data-tool="dir-scanner" data-icon="🕵️">
                 <div class="tool-info">
                     <h3>Web-Dir-Scanner</h3>
@@ -88,172 +97,184 @@
                 </div>
                 <button class="btn-tool" onclick="document.location='https://github.com/prajapatiHardik2008/web-directory-scanner.git'">Download</button>
             </div>
-        <!-- Base 16 -->
-            <div class="tool-card"  data-tool="base16" data-icon="🔢">
+
+            <!-- Base 16 -->
+            <div class="tool-card" data-tool="base16" data-icon="🔢">
                 <div class="tool-info">
-                    <h3>Base 16 </h3>
-                    <p> Base 16 Encoding and Decoing Tool </p>
+                    <h3>Base 16</h3>
+                    <p>Base 16 Encoding and Decoding Tool</p>
                 </div>
                 <button class="btn-tool" onclick="document.location='/base16'">Open Tool</button>
             </div>
-        <!-- Digital Forensics  -->
-         <div class="tool-card" data-tool="forensics" data-icon="🔬">
+
+            <!-- Digital Forensics -->
+            <div class="tool-card" data-tool="forensics" data-icon="🔬">
                 <div class="tool-info">
-                    <h3> Forensics Lab</h3>
-                    <p> </p>
+                    <h3>Forensics Lab</h3>
+                    <p>Digital forensics analysis and investigation toolkit.</p>
                 </div>
                 <button class="btn-tool" onclick="document.location='/Forensics_tool'">Open Tool</button>
             </div>
-             <!--  Certificates -->
-       <div class="tool-card highlight-card" data-tool="certs" data-icon="🏅">
-        <div class="tool-info">
-            <div class="tool-icon">🏅</div>
-            <h3>Achievements</h3>
-            <p>Validated credentials from picoCTF, NPTEL, and Cybersecurity workshops.</p>
-        </div>
-        <button class="btn-tool" onclick="document.location='/certificates'">View Gallery</button>
-    </div>
-</div>
-                <!-- Custom_Ransomware -->
-         <div class="tool-card" data-tool="malware" data-icon="☠️">
+
+            <!-- Certificates -->
+            <div class="tool-card highlight-card" data-tool="certs" data-icon="🏅">
                 <div class="tool-info">
-                    <h3>  Custom Ransomware</h3>
+                    <div class="tool-icon">🏅</div>
+                    <h3>Achievements</h3>
+                    <p>Validated credentials from picoCTF, NPTEL, and Cybersecurity workshops.</p>
+                </div>
+                <button class="btn-tool" onclick="document.location='/certificates'">View Gallery</button>
+            </div>
+
+            <!-- Custom Ransomware -->
+            <div class="tool-card" data-tool="malware" data-icon="☠️">
+                <div class="tool-info">
+                    <h3>Custom Ransomware</h3>
                     <p>
                         <strong>Custom_Ransomware</strong> is a Python-based security research project designed to demonstrate the mechanics of file-system encryption. Utilizing the <strong>AES-256 algorithm</strong>, this tool illustrates how automated cryptographic scripts interact with local directories. It is intended strictly for educational purposes, malware analysis, and understanding defensive cybersecurity measures.
                     </p>
                 </div>
                 <button class="btn-tool" onclick="document.location='https://github.com/prajapatiHardik2008/Custom-Ransomware.git'">Download</button>
             </div>
-                <!-- Keylogger  -->
-         <div class="tool-card" data-tool="keylogger" data-icon="⌨️">
+
+            <!-- Keylogger -->
+            <div class="tool-card" data-tool="keylogger" data-icon="⌨️">
                 <div class="tool-info">
-                    <h3>Keylogger </h3>
+                    <h3>Keylogger</h3>
                     <p>
                         <strong>Advanced Keylogger</strong> is a Python-based monitoring tool designed to capture and log keystrokes in real-time. This project demonstrates <strong>event-driven programming</strong> using system hooks to record user input, which is then securely stored for activity auditing. It is an essential project for understanding how background processes and input-capture mechanisms function within an operating system.
                     </p>
                 </div>
                 <button class="btn-tool" onclick="document.location='https://github.com/prajapatiHardik2008/Keylogger-.git'">Download</button>
             </div>
-            <!-- PICO challanges   -->
-         <div class="tool-card" data-tool="ctf" data-icon="🏴">
+
+            <!-- PICO CTF -->
+            <div class="tool-card" data-tool="ctf" data-icon="🏴">
                 <div class="tool-info">
-                    <h3>PICO CTF Challenges </h3>
-                   <p>
-                        <strong>Cybersecurity Milestones:</strong> I have successfully solved <strong>118 challenges</strong> on the picoCTF platform, covering domains such as Web Exploitation, Cryptography, and Reverse Engineering. Notably, I achieved a significant <strong>International Rank in picoCTF 2026 :- #2669 </strong>, demonstrating my ability to compete at a global level. I am committed to continuous learning and will be regularly updating this tracker as I capture more flags and master new exploitation techniques.
+                    <h3>PICO CTF Challenges</h3>
+                    <p>
+                        <strong>Cybersecurity Milestones:</strong> I have successfully solved <strong>118 challenges</strong> on the picoCTF platform, covering domains such as Web Exploitation, Cryptography, and Reverse Engineering. Notably, I achieved a significant <strong>International Rank in picoCTF 2026 :- #2669</strong>, demonstrating my ability to compete at a global level. I am committed to continuous learning and will be regularly updating this tracker as I capture more flags and master new exploitation techniques.
                     </p>
                 </div>
                 <button class="btn-tool" onclick="document.location='https://github.com/prajapatiHardik2008/pico-CTF-solve-challanges.git'">Download</button>
             </div>
-            <div class="tool-card">
-    <div class="tool-info" data-tool="ai-image" data-icon="🎨">
-        <div class="tool-header">
-            <h3><i class="fas fa-magic"></i> AI Image Generator</h3>
-            <span class="badge ai-badge">Active - Flux Model</span>
-        </div>
-        <p>
-            An advanced generative AI tool integrated directly into the portal. This tool leverages the power of open-source models like <strong>Flux.1</strong> (via Pollinations.ai API) to transform text descriptions into stunning, high-resolution visuals. Built using <strong>Vanilla JavaScript</strong> for the frontend, it supports dynamic prompt encoding, real-time generation feedback, and a built-in download function, bridging creative expression with modern web technology.
-        </p>
-        <div class="tech-stack">
-            <span>#GenerativeAI</span> <span>#FluxModel</span> <span>#API_Integration</span> <span>#VanillaJS</span>
-        </div>
-    </div>
-    <div class="tool-action">
-        <button class="btn-tool btn-ai" onclick="document.location='/image'">
-            <i class="fas fa-paint-brush"></i> Create Art
-        </button>
-    </div>
-</div>
-<!-- Port Scanner  -->
- <div class="tool-card scanner-highlight" data-tool="port-scan" data-icon="📡"> 
-    <div class="tool-info">
-        <div class="tool-icon">📡</div>
-        <div class="status-tag pulse">Experimental</div>
-        <h3>Port Scanner</h3>
-        <p>Perform stealth reconnaissance to identify open ports and active services on any target IP.</p>
-    </div>
-    <button class="btn-tool" onclick="document.location='/portscan'">Launch Scanner</button>
-</div>
-<!-- Rot  -->
- <div class="tools-grid">
-    <div class="tool-card" data-tool="rot" data-icon="🔄">
-        <div class="tool-info">
-            <div class="tool-icon">🔄</div>
-            <h3>ROT Cipher</h3>
-            <p>Advanced Caesar shift encryption & decryption tool for secure messaging.</p>
-        </div>
-        <button class="btn-tool" onclick="document.location='/rot'">Open Tool</button>
-    </div>
-    <!-- IP Look Up -->
-     <div class="tool-card" data-tool="iplookup" data-icon="🌐">
-    <div class="tool-info">
-        <div class="tool-icon">🌐</div>
-        <div class="status-tag">Live API</div>
-        <h3>IP Intelligence</h3>
-        <p>Trace geographic locations, ISP details, and network ownership data in real-time.</p>
-    </div>
-    <button class="btn-tool" onclick="document.location='/iplookup'">Scan Network</button>
-    </div>
 
-            <!-- terminal  -->
-             <div class="tool-card">
-    <div class="tool-info">
-        <div class="tool-header">
-            <h3><i class="fas fa-terminal"></i> Web-based Terminal</h3>
-            <span class="badge">v1.0 - Active</span>
-        </div>
-        <p>
-            <strong>WolfShell-Web v1.0</strong> is an interactive, web-based terminal simulator that brings a Linux-style shell environment directly to the browser. Built with <strong>Vanilla JavaScript</strong>, it features a custom command engine supporting specialized functions like admin authentication (WS-root) and ASCII art rendering. With its cyberpunk retro aesthetic, this project bridges the gap between web design and command-line utility, providing a unique way to explore my developer profile and CTF links.
-        </p>
-        <div class="tech-stack">
-            <span>#JavaScript</span> <span>#LinuxSim</span> <span>#CyberpunkUI</span> <span>#WS-Root</span>
-        </div>
-    </div>
-    <div class="tool-action">
-        <button class="btn-tool" onclick="document.location='/webTerminal'">
-            <i class="fas fa-external-link-alt"></i> Launch Shell
-        </button>
-    </div>
-</div>
+            <!-- AI Image Generator -->
+            <div class="tool-card" data-tool="ai-image" data-icon="🎨">
+                <div class="tool-info">
+                    <div class="tool-header">
+                        <h3><i class="fas fa-magic"></i> AI Image Generator</h3>
+                        <span class="badge ai-badge">Active - Flux Model</span>
+                    </div>
+                    <p>
+                        An advanced generative AI tool integrated directly into the portal. This tool leverages the power of open-source models like <strong>Flux.1</strong> (via Pollinations.ai API) to transform text descriptions into stunning, high-resolution visuals. Built using <strong>Vanilla JavaScript</strong> for the frontend, it supports dynamic prompt encoding, real-time generation feedback, and a built-in download function, bridging creative expression with modern web technology.
+                    </p>
+                    <div class="tech-stack">
+                        <span>#GenerativeAI</span> <span>#FluxModel</span> <span>#API_Integration</span> <span>#VanillaJS</span>
+                    </div>
+                </div>
+                <div class="tool-action">
+                    <button class="btn-tool btn-ai" onclick="document.location='/image'">
+                        <i class="fas fa-paint-brush"></i> Create Art
+                    </button>
+                </div>
+            </div>
+
+            <!-- Port Scanner -->
+            <div class="tool-card scanner-highlight" data-tool="port-scan" data-icon="📡">
+                <div class="tool-info">
+                    <div class="tool-icon">📡</div>
+                    <div class="status-tag pulse">Experimental</div>
+                    <h3>Port Scanner</h3>
+                    <p>Perform stealth reconnaissance to identify open ports and active services on any target IP.</p>
+                </div>
+                <button class="btn-tool" onclick="document.location='/portscan'">Launch Scanner</button>
+            </div>
+
+            <!-- ROT Cipher -->
+            <div class="tool-card" data-tool="rot" data-icon="🔄">
+                <div class="tool-info">
+                    <div class="tool-icon">🔄</div>
+                    <h3>ROT Cipher</h3>
+                    <p>Advanced Caesar shift encryption & decryption tool for secure messaging.</p>
+                </div>
+                <button class="btn-tool" onclick="document.location='/rot'">Open Tool</button>
+            </div>
+
+            <!-- IP Look Up -->
+            <div class="tool-card" data-tool="iplookup" data-icon="🌐">
+                <div class="tool-info">
+                    <div class="tool-icon">🌐</div>
+                    <div class="status-tag">Live API</div>
+                    <h3>IP Intelligence</h3>
+                    <p>Trace geographic locations, ISP details, and network ownership data in real-time.</p>
+                </div>
+                <button class="btn-tool" onclick="document.location='/iplookup'">Scan Network</button>
+            </div>
+
+            <!-- Web Terminal -->
+            <div class="tool-card" data-tool="terminal" data-icon="💻">
+                <div class="tool-info">
+                    <div class="tool-header">
+                        <h3><i class="fas fa-terminal"></i> Web-based Terminal</h3>
+                        <span class="badge">v1.0 - Active</span>
+                    </div>
+                    <p>
+                        <strong>WolfShell-Web v1.0</strong> is an interactive, web-based terminal simulator that brings a Linux-style shell environment directly to the browser. Built with <strong>Vanilla JavaScript</strong>, it features a custom command engine supporting specialized functions like admin authentication (WS-root) and ASCII art rendering. With its cyberpunk retro aesthetic, this project bridges the gap between web design and command-line utility, providing a unique way to explore my developer profile and CTF links.
+                    </p>
+                    <div class="tech-stack">
+                        <span>#JavaScript</span> <span>#LinuxSim</span> <span>#CyberpunkUI</span> <span>#WS-Root</span>
+                    </div>
+                </div>
+                <div class="tool-action">
+                    <button class="btn-tool" onclick="document.location='/webTerminal'">
+                        <i class="fas fa-external-link-alt"></i> Launch Shell
+                    </button>
+                </div>
+            </div>
+
         </section>
+
         <section class="feedback-section">
-    <div class="tool-card feedback-card">
-        <h3><i class="fas fa-comment-alt"></i> Feedback Form</h3>
-        <form id="feedbackForm">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" placeholder="Enter your name" required>
+            <div class="tool-card feedback-card">
+                <h3><i class="fas fa-comment-alt"></i> Feedback Form</h3>
+                <form id="feedbackForm">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phonenumber">Phone Number</label>
+                        <input type="tel" id="phonenumber" placeholder="10-digit number" pattern="[0-9]{10}">
+                    </div>
+                    <div class="form-group">
+                        <label>Rate your experience:</label>
+                        <div class="star-rating">
+                            <input type="radio" name="rating" id="star5" value="5"><label for="star5" class="fas fa-star"></label>
+                            <input type="radio" name="rating" id="star4" value="4"><label for="star4" class="fas fa-star"></label>
+                            <input type="radio" name="rating" id="star3" value="3"><label for="star3" class="fas fa-star"></label>
+                            <input type="radio" name="rating" id="star2" value="2"><label for="star2" class="fas fa-star"></label>
+                            <input type="radio" name="rating" id="star1" value="1"><label for="star1" class="fas fa-star"></label>
+                        </div>
+                        <input type="hidden" id="selected-rating" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="discry">Your Query or Complaint</label>
+                        <textarea id="discry" rows="4" placeholder="How can I help you?" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-tool full-width">Submit Feedback</button>
+                </form>
             </div>
-            
-            <div class="form-group">
-                <label for="phonenumber">Phone Number</label>
-                <input type="tel" id="phonenumber" placeholder="10-digit number" pattern="[0-9]{10}">
-            </div>
-            <div class="form-group">
-            <label>Rate your experience:</label>
-            <div class="star-rating">
-                <input type="radio" name="rating" id="star5" value="5"><label for="star5" class="fas fa-star"></label>
-                <input type="radio" name="rating" id="star4" value="4"><label for="star4" class="fas fa-star"></label>
-                <input type="radio" name="rating" id="star3" value="3"><label for="star3" class="fas fa-star"></label>
-                <input type="radio" name="rating" id="star2" value="2"><label for="star2" class="fas fa-star"></label>
-                <input type="radio" name="rating" id="star1" value="1"><label for="star1" class="fas fa-star"></label>
-            </div>
-            <input type="hidden" id="selected-rating" value="0">
-        </div>
-            <div class="form-group">
-                <label for="discry">Your Query or Complaint</label>
-                <textarea id="discry" rows="4" placeholder="How can I help you?" required></textarea>
-            </div>
-            
-            <button type="submit" class="btn-tool full-width">Submit Feedback</button>
-        </form>
-    </div>
-</section>
+        </section>
+
     </main>
+
     <footer>
         <p>Keep Securing. Keep Building.</p>
         <p>Made with <span class="heart">❤</span> by H-24</p>
     </footer>
+
     <script src="{{ url_for('static', filename='index.js') }}"></script>
-    
+
 </body>
 </html>

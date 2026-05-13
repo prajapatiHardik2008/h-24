@@ -220,34 +220,34 @@ def iplookup():
     return render_template("IPlookup.html")
 #------------------------------------------------------
 #Image Bg remover 
-@app.route("/bgremover")
-def imgremover():
-    return render_template("bgremover.html")
-@app.route("/remove_bg", methods=["POST"])
-def bgremover():
-    UPLOAD_FOLDER = "uploads"
-    OUTPUT_FOLDER = "outputs"
-    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-    os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+# @app.route("/bgremover")
+# def imgremover():
+#     return render_template("bgremover.html")
+# @app.route("/remove_bg", methods=["POST"])
+# def bgremover():
+#     UPLOAD_FOLDER = "uploads"
+#     OUTPUT_FOLDER = "outputs"
+#     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+#     os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
-    file = request.files.get("file")
-    output_name = request.form.get("output_file") or "output.png"  # FIX 1: key name sahi kiya
+#     file = request.files.get("file")
+#     output_name = request.form.get("output_file") or "output.png"  # FIX 1: key name sahi kiya
     
-    if not output_name.lower().endswith(('.png', '.jpg', '.jpeg')):
-        output_name += ".png"  # FIX 2: extension auto-add
+#     if not output_name.lower().endswith(('.png', '.jpg', '.jpeg')):
+#         output_name += ".png"  # FIX 2: extension auto-add
 
-    if not file or file.filename == '':
-        return jsonify({"status": "error", "message": "No file selected!"})
+#     if not file or file.filename == '':
+#         return jsonify({"status": "error", "message": "No file selected!"})
 
-    input_path = os.path.join(UPLOAD_FOLDER, file.filename)
-    output_path = os.path.join(OUTPUT_FOLDER, output_name)  # FIX 3: custom naam use karo
-    file.save(input_path)
+#     input_path = os.path.join(UPLOAD_FOLDER, file.filename)
+#     output_path = os.path.join(OUTPUT_FOLDER, output_name)  # FIX 3: custom naam use karo
+#     file.save(input_path)
 
-    result = remove_background(input_path, output_path)
-    if "successfully" in result:
-        return send_file(output_path, mimetype='image/png', as_attachment=True, download_name=output_name)
-    else:
-        return jsonify({"status": "error", "message": result})#----------------------------------------------------------------------
+#     result = remove_background(input_path, output_path)
+#     if "successfully" in result:
+#         return send_file(output_path, mimetype='image/png', as_attachment=True, download_name=output_name)
+#     else:
+#         return jsonify({"status": "error", "message": result})#----------------------------------------------------------------------
 #Image bg remover 
 def remove_background(path,output_img_name):
     if not os.path.exists(path):
