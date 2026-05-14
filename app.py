@@ -194,6 +194,16 @@ def challange():
 @app.route('/image')
 def image():
     return render_template("createimage.html")
+# #------------------------------------------------------
+# #Run Command
+# @app.route('/run_command_page', methods=['POST'])
+# def run_command():
+#     return render_template("terminal.html")
+# @app.route('/run_command', methods=['POST'])
+# def execute_command():
+#     command = request.form.get('command')
+#     if not command:
+#         return
 #------------------------------------------------------
 # Help
 @app.route('/help')
