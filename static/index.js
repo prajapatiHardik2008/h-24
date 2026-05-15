@@ -1,4 +1,3 @@
-
 /* ---------- THEME TOGGLE ---------- */
 const themeBtn = document.querySelector("#theme-toggle");
 const savedTheme = localStorage.getItem("h24-theme");
@@ -81,3 +80,23 @@ if(feedbackForm) {
         }
     });
 }
+
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        const loader = document.getElementById('loading-state');
+        const content = document.getElementById('actual-content');
+
+        // Step 1: block all interaction immediately
+        loader.style.pointerEvents = 'none';
+
+        // Step 2: start fade animation
+        loader.classList.add('fade-out');
+
+        // Step 3: after fade completes, fully remove from layout
+        setTimeout(() => {
+            loader.style.display = 'none';
+            loader.style.visibility = 'hidden';
+            content.style.display = 'block';
+        }, 520); // slightly more than 500ms fade duration
+    }, 1500);
+});

@@ -8,10 +8,73 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <div id="loading-state">
+        <!-- Corner Brackets -->
+        <div class="bracket tl"></div>
+        <div class="bracket tr"></div>
+        <div class="bracket bl"></div>
+        <div class="bracket br"></div>
 
+        <!-- Mangekyou Sharingan -->
+        <div class="load-eye-wrap">
+            <div class="glow-aura"></div>
+            <div class="orbit-ring"></div>
+            <div class="orbit-ring-2"></div>
+            <svg class="load-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="49" fill="#cc0000"/>
+                <g fill="#0d0000">
+                    <path d="M50 48 C53 35,66 16,58 7 C53 2,45 5,40 11 C33 19,30 32,33 43 C35 48,40 51,46 50 C48 49,50 48,50 48 Z"/>
+                    <path d="M50 48 C53 35,66 16,58 7 C53 2,45 5,40 11 C33 19,30 32,33 43 C35 48,40 51,46 50 C48 49,50 48,50 48 Z" transform="rotate(120 50 50)"/>
+                    <path d="M50 48 C53 35,66 16,58 7 C53 2,45 5,40 11 C33 19,30 32,33 43 C35 48,40 51,46 50 C48 49,50 48,50 48 Z" transform="rotate(240 50 50)"/>
+                    <circle cx="50" cy="50" r="10"/>
+                </g>
+                <circle cx="50" cy="50" r="5" fill="#cc0000"/>
+                <circle cx="50" cy="50" r="2.5" fill="#880000"/>
+                <circle cx="50" cy="50" r="48" fill="none" stroke="#000" stroke-width="2.5"/>
+            </svg>
+        </div>
+
+        <!-- Logo Text -->
+        <div class="load-logo">H<span class="ld">-</span>24</div>
+
+        <!-- Status -->
+        <div class="load-status">Initializing Systems</div>
+
+        <!-- Progress Bar -->
+        <div class="load-bar-wrap">
+            <div class="load-bar"></div>
+        </div>
+
+        <!-- Boot Lines -->
+        <div class="init-lines">
+            <div class="init-line"><span>✓</span> MANGEKYOU SHARINGAN — ACTIVATED</div>
+            <div class="init-line"><span>✓</span> CYBER DASHBOARD — LOADING MODULES</div>
+            <div class="init-line"><span>></span> H-24 PORTAL — ESTABLISHING CONNECTION</div>
+        </div>
+    </div>
+<div id="actual-content">
     <nav class="navbar">
         <div class="nav-logo">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="H-24 Logo">
+            <div class="logo-container">
+  <div class="mangekyou-wrap">
+    <div class="glow-ring"></div>
+    <svg class="eye-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="49" fill="#cc0000"/>
+      <g fill="#0d0000">
+        <path d="M50 48 C53 35,66 16,58 7 C53 2,45 5,40 11 C33 19,30 32,33 43 C35 48,40 51,46 50 C48 49,50 48,50 48 Z"/>
+        <path d="M50 48 C53 35,66 16,58 7 C53 2,45 5,40 11 C33 19,30 32,33 43 C35 48,40 51,46 50 C48 49,50 48,50 48 Z" transform="rotate(120 50 50)"/>
+        <path d="M50 48 C53 35,66 16,58 7 C53 2,45 5,40 11 C33 19,30 32,33 43 C35 48,40 51,46 50 C48 49,50 48,50 48 Z" transform="rotate(240 50 50)"/>
+        <circle cx="50" cy="50" r="10"/>
+      </g>
+      <circle cx="50" cy="50" r="5"   fill="#cc0000"/>
+      <circle cx="50" cy="50" r="2.5" fill="#880000"/>
+      <circle cx="50" cy="50" r="48" fill="none" stroke="#000" stroke-width="2.5"/>
+    </svg>
+  </div>
+
+  <h1 class="logo-text" data-text="H-24">H<span class="dash">-</span>24</h1>
+</div>
+
         </div>
         <div class="nav-links">
             <button id="theme-toggle" class="theme-btn">
@@ -273,7 +336,7 @@
         <p>Keep Securing. Keep Building.</p>
         <p>Made with <span class="heart">❤</span> by H-24</p>
     </footer>
-
+</div>
     <script src="{{ url_for('static', filename='index.js') }}"></script>
 
 </body>
