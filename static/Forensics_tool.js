@@ -1,7 +1,7 @@
 // --- 1. STRING EXTRACTION LOGIC ---
 function extractStrings(file) {
     if (!file) {
-        alert("Bhai, pehle file toh select karo!");
+        alert("Select a file first, bro!");
         return;
     }
 
@@ -36,12 +36,12 @@ function extractStrings(file) {
 }
 
 // --- 2. METADATA LOGIC ---
-function getmetadate() {
+function getmetadata() {
     let fileElement = document.querySelector("#filein");
     let file = fileElement.files[0];
 
     if (!file) {
-        alert("Bhai, pehle file toh select karo!");
+        alert("Select a file first, bro!");
         return;
     }
 

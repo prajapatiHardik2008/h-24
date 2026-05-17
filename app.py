@@ -10,6 +10,7 @@ import os
 import socket
 from flask_sqlalchemy import SQLAlchemy
 import hashlib
+from pymsgbox import password
 from werkzeug.security import generate_password_hash, check_password_hash
 import requests
 from flask_talisman import Talisman
@@ -751,6 +752,103 @@ def feedBack():
 @app.route('/world')
 def world_portal():
     return render_template('world_portal.html')
+
+from flask import request, render_template_string, abort
+import datetime
+
+# Fake Login Page HTML (Attacker ko ullu banane ke liye)
+FAKE_LOGIN_TEMPLATE = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>H-24 Administrative Portal - Login</title>
+    <style>
+        body { background-color: #0d1117; color: #58a6ff; font-family: monospace; padding: 50px; text-align: center; }
+        .login-box { border: 1px solid #21262d; padding: 40px; display: inline-block; background: #161b22; border-radius: 5px; }
+        input { display: block; margin: 10px auto; padding: 10px; background: #0d1117; border: 1px solid #30363d; color: white; }
+        button { background: #238636; color: white; padding: 10px 20px; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>🔒 H-24 INTERNAL SYSTEM ACCESS</h2>
+        <p style="color: #f85149;">Authorized Personnel Only!</p>
+        <form method="POST" action="/admin-auth-trap">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>
+"""
+
+# ------------------------------------------------------------
+# Honey Pot Routes
+@app.route('/admin')
+@app.route('/administrator')
+@app.route('/root')
+@app.route('/adminlogin')
+@app.route('/phpmyadmin')
+@app.route('/wp-admin')
+@app.route('/admin.php')   
+def honey_pot():
+    ip = request.remote_addr
+    user_agent = request.headers.get('User-Agent')
+    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    attempted_url = request.path
+
+    # 🚨 1. Terminal par Red Alert Print karo
+    print("\n" + "="*60)
+    print(f"🚨 [HONEYPOT TRIGGERED] 🚨")
+    print(f"🕒 Time: {current_time}")
+    print(f"🌐 IP Address: {ip}")
+    print(f"📍 Target URL: {attempted_url}")
+    print(f"🖥️ User-Agent: {user_agent}")
+    print("="*60 + "\n")
+    
+    try:
+        resend.api_key = os.getenv("RESEND_API")
+        r = resend.Emails.send({
+            "from": "onboarding@resend.dev",
+            "to": "hardikprajapati242008@gmail.com",
+            "subject": f" Honeypot Alert: {ip} tried to access {attempted_url} \n 🖥️ User-Agent: {user_agent} ",
+        
+        })
+        print("Email sent successfully")
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return False
+    # 📝 2. Isko ek log file me save karo taaki tum baad me analysis kar sako
+    with open("honeypot_intruders.log", "a") as log_file:
+        log_file.write(f"[{current_time}] IP: {ip} | URL: {attempted_url} | UA: {user_agent}\n")
+
+    # 🎭 3. Attacker ko fake login page dikhao taaki woh aur ulajh jaye
+    return render_template_string(FAKE_LOGIN_TEMPLATE)
+
+
+# 🕵️‍♂️ 4. Fake Authorization Trap (Agar woh fake page pr credentials dale toh)
+@app.route('/admin-auth-trap', methods=['POST'])
+def admin_auth_trap():
+    ip = request.remote_addr
+    username = request.form.get('username')
+    password = request.form.get('password')
+    
+    print("\n" + "💥"*20)
+    print(f"💥 [HONEYPOT CREDENTIAL TRAP] 💥")
+    print(f"🌐 IP: {ip}")
+    print(f"👤 Attempted Username: {username}")
+    print(f"🔑 Attempted Password: {password}")
+    print("💥"*20 + "\n")
+
+    with open("honeypot_intruders.log", "a", encoding="utf-8") as log_file:
+        log_file.write(f"  └─ [CREDENTIALS TRIED] User: {username} | Pass: {password}\n")
+        
+    # Uska mood kharab karne ke liye hamesha 'Invalid Credentials' ka error do
+    return "<p style='color:red; font-family:monospace; text-align:center; padding-top:50px;'>Error 500: Database connection timed out. IP logged.</p>", 403
+#-------------------------------------------------------------
 #--------------------------------------------------------------
 # For limited time admin panel 
 # @app.before_request
