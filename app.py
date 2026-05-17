@@ -813,8 +813,13 @@ def honey_pot():
         r = resend.Emails.send({
             "from": "onboarding@resend.dev",
             "to": "hardikprajapati242008@gmail.com",
-            "subject": f" Honeypot Alert: {ip} tried to access {attempted_url} \n 🖥️ User-Agent: {user_agent} ",
-        
+            "subject": f"🚨 Honeypot Alert: {ip} hit {attempted_url}",
+            "html": f"""
+            <h3>🚨 H-24 Honeypot Triggered 🚨</h3>
+            <p><b>IP Address:</b> {ip}</p>
+            <p><b>Target URL:</b> {attempted_url}</p>
+            <p><b>User-Agent:</b> {user_agent}</p>
+            """
         })
         print("Email sent successfully")
 
@@ -822,7 +827,7 @@ def honey_pot():
         print(f"Error: {e}")
         return False
     # 📝 2. Isko ek log file me save karo taaki tum baad me analysis kar sako
-    with open("honeypot_intruders.log", "a") as log_file:
+    with open("honeypot_intruders.log", "a" , encoding="utf-8") as log_file:
         log_file.write(f"[{current_time}] IP: {ip} | URL: {attempted_url} | UA: {user_agent}\n")
 
     # 🎭 3. Attacker ko fake login page dikhao taaki woh aur ulajh jaye
