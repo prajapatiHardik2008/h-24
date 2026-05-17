@@ -10,7 +10,6 @@ import os
 import socket
 from flask_sqlalchemy import SQLAlchemy
 import hashlib
-from pymsgbox import password
 from werkzeug.security import generate_password_hash, check_password_hash
 import requests
 from flask_talisman import Talisman
