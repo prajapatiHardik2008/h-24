@@ -4,12 +4,10 @@ import pybase64
 import time
 import smtplib
 from email.message import EmailMessage
-import threading
 from dotenv import load_dotenv
 import os
 import socket
 from flask_sqlalchemy import SQLAlchemy
-import hashlib
 from werkzeug.security import generate_password_hash, check_password_hash
 import requests
 from flask_talisman import Talisman
@@ -18,7 +16,6 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_limiter.errors import RateLimitExceeded
 import resend
-from withoutbg import WithoutBG
 #----------------------------------------------------------------------
 # tools 
 #----------------------------------------------------------------------
