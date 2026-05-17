@@ -821,10 +821,9 @@ def honey_pot():
             """
         })
         print("Email sent successfully")
-
     except Exception as e:
         print(f"Error: {e}")
-        return False
+        return render_template_string(FAKE_LOGIN_TEMPLATE)
     # 📝 2. Isko ek log file me save karo taaki tum baad me analysis kar sako
     with open("honeypot_intruders.log", "a" , encoding="utf-8") as log_file:
         log_file.write(f"[{current_time}] IP: {ip} | URL: {attempted_url} | UA: {user_agent}\n")
