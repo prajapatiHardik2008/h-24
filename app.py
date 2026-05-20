@@ -59,14 +59,8 @@ def Aiprocess(command):
 #----------------------------------------------------------------------
 #-----------------------------------------------------
 
-def encodebase64(text):
-    text = pybase64.encodebytes(text)
-    text = text.decode()
-    return text
 #-----------------------------------------------------------------------
-def decodebase64(text):
-    DecodeText = pybase64.b64decode(text)
-    return DecodeText.decode()
+
 def emailSender():
     load_dotenv()
     emailAdd = os.getenv('EMAIL_USER')
@@ -256,18 +250,7 @@ def iplookup():
 #     else:
 #         return jsonify({"status": "error", "message": result})#----------------------------------------------------------------------
 #Image bg remover 
-def remove_background(path,output_img_name):
-    if not os.path.exists(path):
-        return "Error: The file does not exist."
-    if not output_img_name.lower().endswith(('.png', '.jpg', '.jpeg')):
-        return "Error: Output image name must end with .png, .jpg, or .jpeg"
-    img = WithoutBG.opensource()
-    try:            
-        result = img.remove_background(path)
-        result.save(output_img_name)
-        return "Background removed successfully."
-    except Exception as e:
-        return f"An error occurred: {e}"
+
     
 #-------------------------------------------------------
 #./well-known/securit.txt page 
@@ -699,26 +682,6 @@ def GITHUB():
 
 
 #----------------------------------------------------
-# base 64 Encoding and decoding API 
-@app.route('/base64E',methods=['POST'])
-def base64Enod():
-    data = request.get_json()
-    text = data.get('plainText')
-    try:
-        EText = encodebase64(text.encode())
-        return jsonify({"EncodedText": EText})
-    except:
-        return jsonify({"EncodedText": "Something went wrong !"})
-    
-@app.route('/base64D',methods=['POST'])
-def base64Deco():
-    data = request.get_json()
-    encText = data.get('encText')
-    try:
-        DecodeText = decodebase64(encText)
-        return jsonify({"DecodedText":DecodeText})
-    except:
-        return jsonify({"DecodedText": "Something went wrong !"})
 @app.route('/feedBack', methods=["POST"])
 def feedBack():
     data = request.get_json()

@@ -3,18 +3,10 @@ let encode= document.querySelector("#encodebase64");
 async function Encode()
 {
     const plainText = document.querySelector('#enb64').value;
-    const response = await fetch('/base64E',
-        {
-            "method":"POST",
-            "headers":{
-                "Content-Type":"application/json"
-                },
-            "body":JSON.stringify({"plainText":plainText})
-        });
-    const data = await response.json();
-    let encodedText = data.EncodedText;
+
+    const encoded = btoa(plainText);
     let result = document.querySelector("#enresult")
-    result.innerText = encodedText;
+    result.innerText = encoded;
 }
 
 
@@ -22,16 +14,7 @@ let decode = document.querySelector("#decode-btn");
 
 async function Decode() {
     const encText = document.querySelector("#decodeText").value;
-    console.log(encText); // remove after testing
-    const response = await fetch('/base64D',{
-        "method":"POST",
-        "headers":{
-            "Content-Type":"application/json"
-        },
-        "body":JSON.stringify({"encText":encText})
-    });
-    const data = await response.json();
-    let Decode_Text = data.DecodedText;
+    const Decode_Text = atob(encText);
     let result = document.querySelector("#decoresult");
     result.innerText = Decode_Text;
 
