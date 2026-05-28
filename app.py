@@ -746,7 +746,6 @@ FAKE_LOGIN_TEMPLATE = """
 # ------------------------------------------------------------
 # Honey Pot Routes
 @app.route('/admin')
-
 @app.route('/administrator')
 @app.route('/root')
 @app.route('/adminlogin')
