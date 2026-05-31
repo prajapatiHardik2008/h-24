@@ -140,6 +140,11 @@ def index():
     
     return render_template('index.html',Rating = round(rating_val,1))
 #------------------------------------------------------
+#NEXA GUIDE Book 
+@app.route('/nexa_guide')
+def nexaguide():
+    return render_template('book.html')
+#------------------------------------------------------
 #Base 64 page 
 @app.route('/base64_tool')
 def base64():
