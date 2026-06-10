@@ -53,9 +53,11 @@ def port_scanner(TargetIp, port):
 # AI 
 def Aiprocess(command):
     prompt = f"Answer in 1-2 lines. If it's a coding task, provide only the code without explanation: {command}"
-    
-    response = requests.get(f"https://text.pollinations.ai/{prompt}?model=openai")
-    return response.text
+    try:
+        response = requests.get(f"https://text.pollinations.ai/{prompt}?model=openai")
+        return response.text
+    except Exception as e:
+        return f"Error processing AI request: {e}"
 #----------------------------------------------------------------------
 #-----------------------------------------------------
 
@@ -128,6 +130,7 @@ class Feedback(db.Model):
 with app.app_context():
     db.create_all()
     print("Database synced! ✅")
+    
 #index  Page 
 @app.route('/')
 def index():
