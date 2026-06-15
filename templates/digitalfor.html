@@ -16,6 +16,8 @@
 }
     </style>
      <link rel="stylesheet" href="{{ url_for('static', filename='digitalfor.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+
 </head>
 <body><div class="forensics-container">
     <h2 class="title">🕵️ Forensics <span class="red-text">Lab</span></h2>
@@ -40,7 +42,7 @@
         <div class="glass-card">
             <h3>Metadata Analysis</h3>
             <p class="desc">Extract EXIF tags (Camera, GPS, Time).</p>
-            <button class="cyber-btn red-btn" onclick="getmetadate()">
+            <button class="cyber-btn red-btn" onclick="getmetadata()">
                 Analyze Metadata
             </button>
             <pre id="Exif-result" class="terminal-box"></pre>
@@ -48,7 +50,6 @@
         
     </div>
 </div>
-    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
     <script src="{{ url_for('static', filename='Forensics_tool.js') }}"></script>
 </body>
 </html>

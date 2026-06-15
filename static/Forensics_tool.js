@@ -23,8 +23,7 @@ function extractStrings(file) {
                 currentstring = "";
             }
         }
-    
-        // Nayi ID ko target kar rahe hain
+
         let resultBox = document.querySelector("#result");
         if (allStrings.length > 0) {
             resultBox.innerText = allStrings.join("\n");
@@ -34,8 +33,6 @@ function extractStrings(file) {
     };
     reader.readAsArrayBuffer(file);
 }
-
-// --- 2. METADATA LOGIC ---
 function getmetadata() {
     let fileElement = document.querySelector("#filein");
     let file = fileElement.files[0];
@@ -45,8 +42,14 @@ function getmetadata() {
         return;
     }
 
-    // EXIF.getData (D capital)
+    // Zaruri: Check karein kya library load hui hai
+    if (typeof EXIF === 'undefined') {
+        alert("EXIF library load nahi hui hai! Script tag check karein.");
+        return;
+    }
+
     EXIF.getData(file, function() {
+        // Yahan 'this' file ko refer karega
         let allmetaData = EXIF.getAllTags(this);
         let resultBox = document.querySelector('#Exif-result');
 
@@ -54,12 +57,11 @@ function getmetadata() {
             let make = EXIF.getTag(this, "Make") || "Unknown";
             let model = EXIF.getTag(this, "Model") || "Unknown";
             
-            // JSON format mein sundar dikhane ke liye
             let formattedData = JSON.stringify(allmetaData, null, 2);
-            
-            resultBox.innerText = `Make: ${make} \nModel: ${model} \n\n--- Full Metadata ---\n${formattedData}`;
+            resultBox.innerText = `Make: ${make} \nModel: ${model} \n\nFull Metadata:\n${formattedData}`;
         } else {
             resultBox.innerText = "No EXIF data found!";
         }
     });
 }
+
