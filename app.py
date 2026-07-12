@@ -208,6 +208,12 @@ def image():
 @app.route('/help')
 def help():
     return render_template("helpcenter.html")
+#----------------------------------------------------
+#Site map 
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'sitemap.xml')
+
 @app.route("/getaians",methods=["POST","GET"])
 def getans():
     data = request.get_json()
