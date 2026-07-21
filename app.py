@@ -193,6 +193,11 @@ def challange():
 @app.route('/image')
 def image():
     return render_template("createimage.html")
+#-------------------------------------------------------
+#Password Strength Checker
+@app.route("/passstr")
+def passwordStr():
+    return render_template("passwordSt.html")
 # #------------------------------------------------------
 # #Run Command
 # @app.route('/run_command_page', methods=['POST'])
